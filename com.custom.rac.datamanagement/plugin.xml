@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="com.custom.rac.datamanagement.commands.category"
+            name="Sample Category">
+      </category>
+      <command
+            categoryId="com.custom.rac.datamanagement.commands.category"
+            name="Sample Command"
+            id="com.custom.rac.datamanagement.commands.sampleCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.custom.rac.datamanagement.handlers.TestHandler"
+            commandId="com.custom.rac.datamanagement.commands.sampleCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="com.custom.rac.datamanagement.commands.sampleCommand"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="com.custom.rac.datamanagement.menus.sampleMenu"
+               label="Sample Menu"
+               mnemonic="M">
+            <command
+                  commandId="com.custom.rac.datamanagement.commands.sampleCommand"
+                  id="com.custom.rac.datamanagement.menus.sampleCommand"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="com.custom.rac.datamanagement.views.ExcelTableViewPart"
+            id="com.custom.rac.datamanagement.views.ExcelTableViewPart"
+            name="数据视图">
+      </view>
+   </extension>
+   <extension
+       point="com.teamcenter.rac.aifrcp.application">
+	    <aif_app_item
+	       class="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
+	          groupName="My Group"
+	          icon="icons/sample.png"
+	          id="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
+	          name="数据导入"
+	       perspective_id="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
+	          session="com.teamcenter.rac.kernel.TCSession">
+	    </aif_app_item>
+ 	</extension>
+
+	 <extension
+	       point="org.eclipse.ui.perspectives">
+	       <perspective
+	       class="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
+	       icon="icons/sample.png"
+	       id="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
+	       name="数据导入" />
+	 </extension>
+
+</plugin>
