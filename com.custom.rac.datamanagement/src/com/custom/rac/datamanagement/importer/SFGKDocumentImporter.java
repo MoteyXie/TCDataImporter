@@ -1,6 +1,5 @@
 package com.custom.rac.datamanagement.importer;
 
-import com.custom.rac.datamanagement.driver.IImportDriver;
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.PropertyContainer;
 import com.teamcenter.rac.kernel.TCComponentItemType;
