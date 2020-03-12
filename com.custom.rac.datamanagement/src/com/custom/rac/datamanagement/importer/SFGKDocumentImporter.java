@@ -35,8 +35,6 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	@Override
 	public void onSingleFinish(int index) {
 		System.out.println("在结束后，要导入数据集");
-		
-		System.out.println("dddhhihdjskahk");
 	}
 
 	@Override
