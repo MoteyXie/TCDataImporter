@@ -38,7 +38,7 @@ public class SFGKPartImporter extends AbstractImporter {
 		System.out.println("加入分类");
 		
 		//如果加入分类失败就直接抛出异常
-		putClassification(null, "123");
+		putClassification(null, "456");
 	}
 	
 	private void putClassification(TCComponent comp, String ics) throws Exception{
