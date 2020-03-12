@@ -17,20 +17,9 @@ public class SFGKPartImporter extends AbstractImporter {
 		System.out.println("执行 ： " + getName());
 	}
 
-	@Override
-	public void loadData(Object data) {
-		
-	}
-
-	@Override
-	public void loadDriver(IImportDriver driver) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public TCComponentItemType getItemType(int index) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -46,6 +35,7 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleFinish(int index) {
+		System.out.println("加入分类");
 	}
 
 	@Override
@@ -55,7 +45,6 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public void onStart() {
-		// TODO Auto-generated method stub
 		
 	}
 
