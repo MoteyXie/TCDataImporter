@@ -42,7 +42,7 @@ public class SFGKPartImporter extends AbstractImporter {
 	}
 	
 	private void putClassification(TCComponent comp, String ics) throws Exception{
-		System.out.println("执行加入分类程序");
+		System.out.println("执行加入分类程序TT");
 	}
 
 	@Override
