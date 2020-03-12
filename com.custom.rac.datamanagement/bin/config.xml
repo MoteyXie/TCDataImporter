@@ -1,0 +1,11 @@
+<config>
+	<importers>
+		<importer id="com.custom.rac.datamanagement.importer.SFGKPartImporter" />
+		<importer id="com.custom.rac.datamanagement.importer.SFGKDocumentImporter"/>
+		<importer id="com.custom.rac.datamanagement.importer.TestImporter"/>
+		<importer id="com.custom.rac.datamanagement.importer.Test2Importer"/>
+	</importers>
+	<actions>
+		<action id="sss"/>
+	</actions>
+</config>
