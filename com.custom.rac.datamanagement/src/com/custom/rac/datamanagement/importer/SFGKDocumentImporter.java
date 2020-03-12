@@ -29,13 +29,12 @@ public class SFGKDocumentImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) {
-		System.out.println("这里需要导入数据集");
+		
 	}
 
 	@Override
 	public void onSingleFinish(int index) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("在结束后，要导入数据集");
 	}
 
 	@Override
