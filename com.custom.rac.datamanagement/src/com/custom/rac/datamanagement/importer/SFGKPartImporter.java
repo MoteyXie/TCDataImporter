@@ -30,19 +30,19 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) {
-		
+		System.out.println("test1");
 	}
 
 	@Override
 	public void onSingleFinish(int index) throws Exception{
-		System.out.println("加入分类");
+		System.out.println("加入分类123");
 		
 		//如果加入分类失败就直接抛出异常
-		putClassification(null, "123");
+		putClassification(null, "456");
 	}
 	
 	private void putClassification(TCComponent comp, String ics) throws Exception{
-		System.out.println("执行加入分类程序");
+		System.out.println("执行加入分类程序TT");
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public String getName() {
-		return null;
+		return "Õº÷Ωµº»Î≥Ã–Ú";
 	}
 
 	@Override
