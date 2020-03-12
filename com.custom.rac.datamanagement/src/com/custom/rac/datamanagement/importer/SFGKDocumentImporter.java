@@ -18,16 +18,6 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	}
 
 	@Override
-	public void loadData(Object data) {
-		
-	}
-
-	@Override
-	public void loadDriver(IImportDriver driver) {
-		
-	}
-
-	@Override
 	public TCComponentItemType getItemType(int index) {
 		return null;
 	}
@@ -39,8 +29,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("这里需要导入数据集");
 	}
 
 	@Override
@@ -57,7 +46,6 @@ public class SFGKDocumentImporter extends AbstractImporter {
 
 	@Override
 	public void onStart() {
-		// TODO Auto-generated method stub
 		
 	}
 
