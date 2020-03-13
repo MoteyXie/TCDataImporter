@@ -1,6 +1,7 @@
 package com.custom.rac.datamanagement.util;
 
 import com.custom.rac.datamanagement.driver.IImportDriver;
+import com.teamcenter.rac.kernel.TCComponent;
 
 public interface IImporter {
 	
@@ -14,7 +15,7 @@ public interface IImporter {
 	
 	void onSingleStart(int index)throws Exception;
 	
-	void onSingleFinish(int index)throws Exception;
+	void onSingleFinish(int index, TCComponent tcc)throws Exception;
 	
 	void onSingleError(int index, Exception e)throws Exception;
 	

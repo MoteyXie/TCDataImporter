@@ -3,6 +3,7 @@ package com.custom.rac.datamanagement.importer;
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.PropertyContainer;
 import com.teamcenter.rac.aifrcp.AIFUtility;
+import com.teamcenter.rac.kernel.TCComponent;
 import com.teamcenter.rac.kernel.TCComponentItemType;
 import com.teamcenter.rac.kernel.TCException;
 import com.teamcenter.rac.kernel.TCSession;
@@ -60,7 +61,7 @@ public class Test2Importer extends AbstractImporter {
 	}
 
 	@Override
-	public void onSingleFinish(int index) {
+	public void onSingleFinish(int index, TCComponent tcc) throws Exception{
 
 	}
 

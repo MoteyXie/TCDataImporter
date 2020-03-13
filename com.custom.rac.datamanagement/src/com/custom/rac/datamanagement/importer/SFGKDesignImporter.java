@@ -2,6 +2,7 @@ package com.custom.rac.datamanagement.importer;
 
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.PropertyContainer;
+import com.teamcenter.rac.kernel.TCComponent;
 import com.teamcenter.rac.kernel.TCComponentItemType;
 
 /**
@@ -47,7 +48,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	}
 
 	@Override
-	public void onSingleFinish(int index) throws Exception {
+	public void onSingleFinish(int index, TCComponent tcc) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
@@ -93,5 +94,6 @@ public class SFGKDesignImporter extends AbstractImporter {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

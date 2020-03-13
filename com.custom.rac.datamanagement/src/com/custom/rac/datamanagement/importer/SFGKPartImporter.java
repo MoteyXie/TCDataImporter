@@ -34,7 +34,7 @@ public class SFGKPartImporter extends AbstractImporter {
 	}
 
 	@Override
-	public void onSingleFinish(int index) throws Exception{
+	public void onSingleFinish(int index, TCComponent tcc) throws Exception{
 		System.out.println("加入分类123");
 		
 		//如果加入分类失败就直接抛出异常
