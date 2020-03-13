@@ -2,7 +2,10 @@ package com.custom.rac.datamanagement.importer;
 
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.PropertyContainer;
+import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponentItemType;
+import com.teamcenter.rac.kernel.TCException;
+import com.teamcenter.rac.kernel.TCSession;
 
 public class SFGKDocumentImporter extends AbstractImporter {
 
@@ -17,8 +20,15 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	}
 
 	@Override
-	public TCComponentItemType getItemType(int index) {
-		return null;
+	public TCComponentItemType getItemType(int index) throws Exception{
+		TCSession session = (TCSession) AIFUtility.getDefaultSession();
+		TCComponentItemType type = null;
+		try {
+			type = (TCComponentItemType) session.getTypeComponent("SF8_Document");
+		} catch (TCException e) {
+			e.printStackTrace();
+		}
+		return type;
 	}
 
 	@Override
