@@ -30,11 +30,11 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) {
-		
+		System.out.println("test1");
 	}
 
 	@Override
-	public void onSingleFinish(int index) throws Exception{
+	public void onSingleFinish(int index, TCComponent tcc) throws Exception{
 		System.out.println("加入分类123");
 		
 		//如果加入分类失败就直接抛出异常
@@ -82,6 +82,7 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public boolean ignoreRow(int index) {
+		System.err.println("11111");
 		return false;
 	}
 

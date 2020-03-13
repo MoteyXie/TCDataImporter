@@ -53,9 +53,9 @@ public abstract class AbstractImporter implements IImporter {
 		this.values = values;
 	}
 	
-	public abstract TCComponentItemType getItemType(int index);
+	public abstract TCComponentItemType getItemType(int index) throws Exception;
 	
-	public TCComponentItemRevisionType getItemRevisionType(int index) {
+	public TCComponentItemRevisionType getItemRevisionType(int index) throws Exception{
 		return getItemType(index).getItemRevisionType();
 	}
 	
@@ -78,7 +78,7 @@ public abstract class AbstractImporter implements IImporter {
 	
 	public abstract void onSingleStart(int index) throws Exception;
 
-	public abstract void onSingleFinish(int index) throws Exception;
+	public abstract void onSingleFinish(int index, TCComponent newInstance) throws Exception;
 	
 	public abstract void onSingleError(int index, Exception e) throws Exception;
 	
@@ -307,7 +307,7 @@ public abstract class AbstractImporter implements IImporter {
 						driver.onSetPropertyError(i, propertyDisplayName, e);
 					}
 				}
-				onSingleFinish(i);
+				onSingleFinish(i, newInstance);
 				driver.onSingleFinish(i);
 			} catch (Exception e) {
 				//TODO “Ï≥£¥¶¿Ì
