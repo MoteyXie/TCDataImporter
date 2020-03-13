@@ -82,6 +82,7 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public boolean ignoreRow(int index) {
+		System.err.println("11111");
 		return false;
 	}
 

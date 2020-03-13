@@ -53,9 +53,9 @@ public abstract class AbstractImporter implements IImporter {
 		this.values = values;
 	}
 	
-	public abstract TCComponentItemType getItemType(int index);
+	public abstract TCComponentItemType getItemType(int index) throws Exception;
 	
-	public TCComponentItemRevisionType getItemRevisionType(int index) {
+	public TCComponentItemRevisionType getItemRevisionType(int index) throws Exception{
 		return getItemType(index).getItemRevisionType();
 	}
 	
