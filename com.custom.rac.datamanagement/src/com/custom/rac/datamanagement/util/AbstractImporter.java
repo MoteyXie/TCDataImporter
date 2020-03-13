@@ -66,9 +66,6 @@ public abstract class AbstractImporter implements IImporter {
 			return getItemType(index);
 		}else if(pc == PropertyContainer.itemRevision) {
 			return getItemRevisionType(index);
-		}else if(pc == PropertyContainer.itemRevisionMasterForm) {
-			//这种情况少，先不做处理了
-			return null;
 		}
 		
 		return null;
@@ -206,22 +203,24 @@ public abstract class AbstractImporter implements IImporter {
 		TCComponentItemType itemType = getItemType(index);
 		
 		String itemId = getItemId(index);
-		if(itemId != null && itemId.length() > 0) {
-//			itemUtil.find(itemId);
-			TCComponentItem oldItem = itemType.find(itemId);
-			if(oldItem != null && deleteOldItemWhenItemIdExist(index)) {
-				itemUtil.deleteItem(oldItem, true);
-			}
-		}else {
+		TCComponentItem item = null;
+		if(itemId == null || itemId.length() == 0) {
 			itemId = newItemId(index);
+		} else {
+			item = itemType.find(itemId);
+			if(item != null && deleteOldItemWhenItemIdExist(index)) {
+				itemUtil.deleteItem(item, true);
+				item = null;
+			}
 		}
-		TCComponentItem newItem = itemType.create(
+		
+		TCComponentItem newItem = item != null ? item : itemType.create(
 				getItemId(index), 
 				getItemRevId(index), 
 				itemType.getTypeName(), 
 				getItemObjectName(index), null, null, null, null);
 		
-		return newItem.getLatestItemRevision();
+		return getPropertyContainer(index) == PropertyContainer.item ? newItem : newItem.getLatestItemRevision();
 	}
 	
 	/**
