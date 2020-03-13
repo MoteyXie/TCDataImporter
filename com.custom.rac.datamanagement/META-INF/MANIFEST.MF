@@ -34,3 +34,5 @@ Bundle-ClassPath: lib/commons-logging.jar,
  lib/swing2swt.jar,
  .,
  lib/xstream-1.4.11.1.jar
+Import-Package: com.teamcenter.services.rac.workflow,
+ com.teamcenter.services.rac.workflow._2007_06
