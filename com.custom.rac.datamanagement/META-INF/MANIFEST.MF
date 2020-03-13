@@ -24,7 +24,9 @@ Require-Bundle: org.eclipse.ui,
  com.teamcenter.rac.ui;bundle-version="12000.3.0",
  org.apache.poi.315;bundle-version="3.15.0",
  org.junit;bundle-version="4.12.0",
- org.apache.log4j;bundle-version="1.2.15"
+ org.apache.log4j;bundle-version="1.2.15",
+ com.teamcenter.rac.classification.icm;bundle-version="12000.3.0",
+ com.teamcenter.rac.tcapps;bundle-version="12000.3.0"
 Automatic-Module-Name: com.custom.rac.datamanger
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: lib/commons-logging.jar,
