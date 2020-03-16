@@ -13,7 +13,12 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import com.custom.rac.datamanagement.util.MyCharNumber;
+
 import javax.xml.parsers.ParserConfigurationException;
+
+import static org.junit.jupiter.api.Assumptions.assumingThat;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @autor jasmine
@@ -103,7 +109,7 @@ public class ExcelEventParser {
     	
     	protected String sheetName;
         protected MyRow myRow;
-     
+        protected int columnNum = 1;
         
         public void setSheetName(String sheetName) {
         	this.sheetName = sheetName;
@@ -112,6 +118,7 @@ public class ExcelEventParser {
         @Override
         public void startRow(int rowNum) {
         	myRow = new MyRow(rowNum);
+        	columnNum = 1;
         }
 
         @Override
@@ -136,9 +143,22 @@ public class ExcelEventParser {
          */
         @Override
         public void cell(String cellReference, String formattedValue) {
-//        	System.out.println(cellReference);
-//            row.add(formattedValue);
+//        	System.out.println(cellReference + ", " + formattedValue);''
+        	String description = Pattern.compile("[\\d]").matcher(cellReference).replaceAll("");
+            MyCharNumber myCharNumber = new MyCharNumber(description);
+//          System.out.println(myCharNumber.getValue() + ", " + columnNum);
+            //数据在表格中的实际列号
+            int cn = myCharNumber.getValue();
+            //如果和程序中顺序计算的列号不符，则需要手动补齐
+            if(cn > columnNum){
+            	int len = cn - columnNum;
+            	for(int i = 0; i < len; i++) {
+            		myRow.cells.add(new MyCell("", cellReference));
+            		columnNum ++;
+            	}
+            }
             myRow.cells.add(new MyCell(formattedValue, cellReference));
+            columnNum ++;
         }
 
         @Override
