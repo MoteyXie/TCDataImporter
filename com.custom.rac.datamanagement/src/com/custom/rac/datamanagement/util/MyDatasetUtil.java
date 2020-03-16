@@ -61,6 +61,8 @@ public class MyDatasetUtil {
 			refType = "JPEG_Reference";
 		} else if (fileType.contains("Text")) {
 			refType = "Text";
+		} else if (fileType.contains("SF8_DWG")) {
+			refType = "SF8_DWG";
 		}
 
 		if (refType == null) {
@@ -105,6 +107,8 @@ public class MyDatasetUtil {
 			datesetType = "JPEG";
 		} else if (fileName.endsWith("txt")) {
 			datesetType = "Text";
+		} else if (fileName.endsWith("dwg")) {
+			datesetType = "SF8_DWG";
 		}
 
 		if (datesetType == null) {
