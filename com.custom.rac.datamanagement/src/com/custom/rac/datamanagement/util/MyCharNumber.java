@@ -1,11 +1,14 @@
 package com.custom.rac.datamanagement.util;
 
+import java.util.regex.Pattern;
+
 public class MyCharNumber {
 	
 	private String str;
 	
 	public MyCharNumber(String str) {
-		this.str = str.toUpperCase();
+		//去除数字，只保留字母
+		this.str = Pattern.compile("[\\d]").matcher(str).replaceAll("").toUpperCase();
 	}
 	
 	public int getASCII() {
@@ -16,6 +19,10 @@ public class MyCharNumber {
 		return str;
 	}
 	
+	/**
+	 * 将字符串转换成26进制的数
+	 * @return
+	 */
 	public int getValue() {
 		
 		String ascii = stringToAscii(str);

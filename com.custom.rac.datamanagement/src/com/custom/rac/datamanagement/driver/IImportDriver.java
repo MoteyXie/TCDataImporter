@@ -1,5 +1,7 @@
 package com.custom.rac.datamanagement.driver;
 
+import com.custom.rac.datamanagement.util.IImporter;
+
 public interface IImportDriver {
 
 	void onSingleStart(int index);
@@ -18,5 +20,7 @@ public interface IImportDriver {
 	
 	void onNewItemId(int index, String itemId);
 	
-	void onNewItemRevId(int index, String itemId);
+	void onNewItemRevId(int index, String itemRevId);
+	
+	void setImporter(IImporter importer);
 }

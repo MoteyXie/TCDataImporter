@@ -10,7 +10,5 @@ public class MyCell {
 		this.value = value;
 		this.cellReference = cellReference;
 	}
-	
-	
 
 }

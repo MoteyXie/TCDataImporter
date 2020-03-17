@@ -42,6 +42,7 @@ public abstract class AbstractImporter implements IImporter {
 	@Override
 	public void loadDriver(IImportDriver driver) {
 		this.driver = driver;
+		driver.setImporter(this);
 	}
 	
 	
@@ -135,6 +136,23 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
+	 * -根据真实值获取显示值
+	 * @param index
+	 * @param realName
+	 * @return
+	 * @throws Exception
+	 */
+	public String getDisplayNameFromRealName(int index, String realName) throws Exception {
+		
+		TCComponentType type = getPropertyContainerType(index);
+		TCPropertyDescriptor desc = type.getPropertyDescriptor(realName);
+		Class<?> cls = TCPropertyDescriptor.class;
+		Field field =cls.getDeclaredField("m_displayName");
+		field.setAccessible(true);
+		return (String)field.get(desc);
+	}
+	
+	/**
 	 * -根据显示名获取指定行的属性
 	 * @param index
 	 * @param propertyDisplayName
@@ -218,7 +236,7 @@ public abstract class AbstractImporter implements IImporter {
 		
 		if(itemRev == null || itemRev.length() == 0) {
 			itemRev = newItemRevId(index);
-			driver.onNewItemRevId(index, itemId);
+			driver.onNewItemRevId(index, itemRev);
 		}
 		
 		TCComponentItem newItem = item != null ? item : itemType.create(
@@ -269,10 +287,8 @@ public abstract class AbstractImporter implements IImporter {
 				return (String)entry.getValue();
 			}
 		}
-		
 		return null;
 	}
-	
 	
 	public String newItemId(int index) throws Exception {
 		TCComponentItemType itemType = getItemType(index);
@@ -311,13 +327,14 @@ public abstract class AbstractImporter implements IImporter {
 //						System.out.println(e.toString());
 						onSetPropertyError(i, propertyDisplayName, e);
 						driver.onSetPropertyError(i, propertyDisplayName, e);
+						throw e;
 					}
 				}
 				onSingleFinish(i, newInstance);
 				driver.onSingleFinish(i);
 			} catch (Exception e) {
 				//TODO 异常处理
-//				e.printStackTrace();
+				e.printStackTrace();
 				onSingleError(i, e);
 				driver.onSingleError(i, e);
 			}

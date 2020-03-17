@@ -144,8 +144,7 @@ public class ExcelEventParser {
         @Override
         public void cell(String cellReference, String formattedValue) {
 //        	System.out.println(cellReference + ", " + formattedValue);''
-        	String description = Pattern.compile("[\\d]").matcher(cellReference).replaceAll("");
-            MyCharNumber myCharNumber = new MyCharNumber(description);
+            MyCharNumber myCharNumber = new MyCharNumber(cellReference);
 //          System.out.println(myCharNumber.getValue() + ", " + columnNum);
             //数据在表格中的实际列号
             int cn = myCharNumber.getValue();

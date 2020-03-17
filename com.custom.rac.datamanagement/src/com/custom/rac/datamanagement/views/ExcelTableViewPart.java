@@ -42,6 +42,7 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 	public ImporterReader importerReader;
 	private MyTable myTable;
 	private ProgressCircle circle;
+	private boolean executing;
 	
 	private ToolBarItemBean[] centerToolBarItems = new ToolBarItemBean[] {
 			new ToolBarItemBean("加载", "More_Normal.png", "OpenFileAction"),
@@ -54,11 +55,21 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 	
 	private ToolBarItemBean[] rightToolBarItems = new ToolBarItemBean[] {
 			
+			new ToolBarItemBean("导出", "Down_Normal.png", "ExportTaleAction"),
+			new ToolBarItemBean("保存", "Load_Normal.png", "SaveResultAction"),
 			new ToolBarItemBean("关于", "Info_Normal.png", ""),
 			new ToolBarItemBean("设置", "Setting_Normal.png", ""),
 	};
 	private SWTWorkbook swtWorkbook;
 	private ProgressBar progressBar;
+	
+	public boolean isExecuting() {
+		return executing;
+	}
+	
+	public void setExecuting(boolean flag) {
+		this.executing = flag;
+	}
 	
 	public SWTWorkbook getSWTWorkbook() {
 		return swtWorkbook;
