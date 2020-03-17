@@ -1,5 +1,7 @@
 package com.custom.rac.datamanagement.util;
 
+import java.util.HashMap;
+
 import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponent;
 import com.teamcenter.rac.kernel.TCSession;
@@ -10,12 +12,23 @@ import com.teamcenter.soa.client.model.ServiceData;
 
 //Require-Bundle: TcSoaWorkflowRac
 public class MyStatusUtil {
+	
 	public static final String OP_APPEND = "Append";
 	public static final String OP_DELETE = "Delete";
+	public static HashMap<String, String> map = null;	
+	static {
+		map = new HashMap<>();		
+	    map.put("发布", "TCM Released");
+	    map.put("失效", "SF8_Invalid");
+	    map.put("限用", "SF8_Restrict");
+	    map.put("量产", "SF8_Valid");		
+	}
+	
 	
 	public static String setStatus(TCComponent obj, String statusName) {
-		String ret = null;
 		
+		statusName = map.get(statusName);
+		String ret = null;		
 		try {
 			if (obj == null) {
 				return "Target object should not be NULL";
