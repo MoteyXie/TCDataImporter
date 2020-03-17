@@ -62,7 +62,7 @@ public class MyClassifyManager {
 		
 		// 获取分类的应用
 		ICSApplicationObject icsApp = g4mUserAppContext.getICSApplicationObject();
-		// 判断对象是否已经分类,如果已经分类,获取该分类视图,否则创建一个新的视图。??
+		// 判断对象是否已经分类,如果已经分类,获取该分类视图,否则创建一个新的视图。
 		// 创建分类id
 		TCComponentICO[] icos = tcc.getClassificationObjects();
 		if (icos != null && icos.length > 0) {

@@ -46,7 +46,6 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public TCComponentItemType getItemType(int index) throws TCException {
-		TCSession session = (TCSession) AIFUtility.getDefaultSession();
 		String type = getValue(index, "Õº÷Ω¿‡–Õ") + "";
 		TCComponentItemType itemType = null;
 		switch (type) {
