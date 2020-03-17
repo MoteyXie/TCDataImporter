@@ -203,9 +203,11 @@ public abstract class AbstractImporter implements IImporter {
 		TCComponentItemType itemType = getItemType(index);
 		
 		String itemId = getItemId(index);
+		String itemRev = getItemRevId(index);
 		TCComponentItem item = null;
 		if(itemId == null || itemId.length() == 0) {
 			itemId = newItemId(index);
+			driver.onNewItemId(index, itemId);
 		} else {
 			item = itemType.find(itemId);
 			if(item != null && deleteOldItemWhenItemIdExist(index)) {
@@ -214,9 +216,14 @@ public abstract class AbstractImporter implements IImporter {
 			}
 		}
 		
+		if(itemRev == null || itemRev.length() == 0) {
+			itemRev = newItemRevId(index);
+			driver.onNewItemRevId(index, itemId);
+		}
+		
 		TCComponentItem newItem = item != null ? item : itemType.create(
-				getItemId(index), 
-				getItemRevId(index), 
+				itemId, 
+				itemRev, 
 				itemType.getTypeName(), 
 				getItemObjectName(index), null, null, null, null);
 		
@@ -224,7 +231,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -获取item_id,如果属性未填写则创建新的ID
+	 * -获取界面上填写的item_id
 	 * @param index
 	 * @return
 	 * @throws Exception
@@ -238,7 +245,7 @@ public abstract class AbstractImporter implements IImporter {
 	public String getItemRevId(int index) throws Exception {
 		
 		String value = getValueFromRealName(index, "item_revision_id");
-		return value == null ? newItemRevId(index) : value;
+		return value;
 	}
 	
 	public String getItemObjectName(int index) throws Exception {

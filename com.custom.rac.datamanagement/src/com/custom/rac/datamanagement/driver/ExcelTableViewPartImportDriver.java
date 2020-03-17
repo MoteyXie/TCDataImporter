@@ -38,6 +38,7 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 			public void run() {
 				tableViewPart.setProgressValue(index+startRowNum);
 				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "导入完成");
 			}
 		});
 		
@@ -50,6 +51,7 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 			public void run() {
 				tableViewPart.setProgressValue(index+startRowNum);
 				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.error);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, e.getMessage());
 			}
 		});
 	}
@@ -75,6 +77,16 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 
 	@Override
 	public void onSetPropertyError(int index, String propertyDisplayName, Exception e) {
+		
+	}
+
+	@Override
+	public void onNewItemId(int index, String itemId) {
+		
+	}
+
+	@Override
+	public void onNewItemRevId(int index, String itemId) {
 		
 	}
 

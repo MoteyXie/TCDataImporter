@@ -15,4 +15,8 @@ public interface IImportDriver {
 	void onSetPropertyFinish(int index, String propertyDisplayName);
 	
 	void onSetPropertyError(int index, String propertyDisplayName, Exception e);
+	
+	void onNewItemId(int index, String itemId);
+	
+	void onNewItemRevId(int index, String itemId);
 }
