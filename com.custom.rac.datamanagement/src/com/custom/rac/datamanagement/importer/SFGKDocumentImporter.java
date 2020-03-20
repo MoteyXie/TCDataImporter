@@ -96,14 +96,10 @@ public class SFGKDocumentImporter extends AbstractImporter {
 			if (user != null) {
 				tcc.changeOwner(user, user.getLoginGroup());
 			}
-		} else if (propertyDisplayName.equals("文档分类ID")) {
+		} else if (propertyDisplayName.equals("图文档分类ID")) {
 			cls_manger.saveItemInNode(tcc, value);			
 		} else if (propertyDisplayName.equals("电子档存放地址")) {
-			if (value != null && value.length() > 0) {
-				if (!value.startsWith("\\") && !value.startsWith("/")) {
-					value = "\\" + value;
-				}
-				value = shared_directory_path + value;
+			if (value != null && value.length() > 0) {				
 				File file = new File(value);
 				if (file != null && file.exists() &&file.isFile()) {
 					MyDatasetUtil.createDateset(tcc, file.getName(), file, "IMAN_specification");
