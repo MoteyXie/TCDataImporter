@@ -29,12 +29,11 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	
 	@Override
 	public String getName() {
-		return "上风高科文档导入程序";
+		return "文档导入程序";
 	}
 
 	@Override
 	public TCComponentItemType getItemType(int index) throws Exception{
-		TCSession session = (TCSession) AIFUtility.getDefaultSession();
 		TCComponentItemType type = (TCComponentItemType) session.getTypeComponent("SF8_Document");
 		return type;
 	}
@@ -66,7 +65,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		TCComponentFolderType folderType = (TCComponentFolderType) session.getTypeComponent("Folder");
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String name = "图纸历史数据导入" + format.format(date);
+		String name = "文档历史数据导入" + format.format(date);
 		folder = folderType.create(name, "", "Folder");
 		session.getUser().getHomeFolder().add("contents", folder);
 	}
@@ -97,14 +96,10 @@ public class SFGKDocumentImporter extends AbstractImporter {
 			if (user != null) {
 				tcc.changeOwner(user, user.getLoginGroup());
 			}
-		} else if (propertyDisplayName.equals("文档分类ID")) {
+		} else if (propertyDisplayName.equals("图文档分类ID")) {
 			cls_manger.saveItemInNode(tcc, value);			
 		} else if (propertyDisplayName.equals("电子档存放地址")) {
-			if (value != null && value.length() > 0) {
-				if (!value.startsWith("\\") && !value.startsWith("/")) {
-					value = "\\" + value;
-				}
-				value = shared_directory_path + value;
+			if (value != null && value.length() > 0) {				
 				File file = new File(value);
 				if (file != null && file.exists() &&file.isFile()) {
 					MyDatasetUtil.createDateset(tcc, file.getName(), file, "IMAN_specification");

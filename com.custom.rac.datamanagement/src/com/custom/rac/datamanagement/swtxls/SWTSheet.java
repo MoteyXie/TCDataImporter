@@ -63,6 +63,7 @@ public class SWTSheet extends TabItem implements ISWTObject{
 	}
 	
 	public void load(MySheet sheet) {
+		
 		this.sheet = sheet;
 		setText(sheet.name);
 		
@@ -76,8 +77,7 @@ public class SWTSheet extends TabItem implements ISWTObject{
 		
 		final int rowNum = sheet.rows.size();
 		
-		MyRow firstRow = sheet.getRow(0);
-		
+//		MyRow firstRow = sheet.getRow(0);
 		int columnNum = sheet.getColumnNum();
 		
 		TableColumn tableColumn0 = new TableColumn(table, SWT.BORDER_SOLID | SWT.CENTER);
@@ -99,6 +99,11 @@ public class SWTSheet extends TabItem implements ISWTObject{
 			
 			columns[j - 2] = tableColumn;
 		}
+		
+		TableColumn tableColumn = new TableColumn(table, SWT.BORDER_SOLID | SWT.CENTER);
+		tableColumn.setWidth(220);
+		tableColumn.setText("R");
+		
 		
 		int[] columnMaxWidth = new int[columnNum];
 		//内容
@@ -180,7 +185,9 @@ public class SWTSheet extends TabItem implements ISWTObject{
 	}
 	
 	public void setInfomation(int rowNum, String infomation) {
-		int columnNum = sheet.getColumnNum() + 1;
+		
+		//最大列数加1，再加上表格固定的前两列显示列
+		int columnNum = sheet.getColumnNum() + 2;
 		table.getItem(rowNum).setText(columnNum, infomation);
 	}
 	
