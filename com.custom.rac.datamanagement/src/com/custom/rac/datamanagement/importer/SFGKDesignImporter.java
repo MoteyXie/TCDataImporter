@@ -24,7 +24,6 @@ import com.teamcenter.rac.util.MessageBox;
  */
 public class SFGKDesignImporter extends AbstractImporter {
 
-	String shared_directory_path = "\\\\192.168.25.11";
 	TCSession session = (TCSession) AIFUtility.getDefaultSession();
 	MyClassifyManager cls_manger = new MyClassifyManager(session);
 	TCComponentFolder folder = null;
@@ -131,10 +130,6 @@ public class SFGKDesignImporter extends AbstractImporter {
 			cls_manger.saveItemInNode(tcc, value);			
 		} else if (propertyDisplayName.equals("电子档存放地址")) {
 			if (value != null && value.length() > 0) {
-				if (!value.startsWith("\\") && !value.startsWith("/")) {
-					value = "\\" + value;
-				}
-				value = shared_directory_path + value;
 				File file = new File(value);
 				if (file != null && file.exists() &&file.isFile()) {
 					MyDatasetUtil.createDateset(tcc, file.getName(), file, "IMAN_specification");
