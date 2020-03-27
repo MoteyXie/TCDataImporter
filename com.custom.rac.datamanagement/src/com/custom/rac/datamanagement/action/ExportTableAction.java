@@ -17,7 +17,7 @@ public class ExportTableAction extends AbstractTableAction {
 		//先判断程序是否在进行中
 		boolean isExecuting = tableViewPart.isExecuting();
 		if(isExecuting) {
-			throw new Exception("程序执行中，无法导出数据777！");
+			throw new Exception("程序执行中，无法导出数据888！");
 		}
 		
 		String lastSelectedFilePath = OpenFileAction.lastSelectFile;
