@@ -12,18 +12,12 @@ import java.text.SimpleDateFormat;
 import org.apache.poi.ss.formula.eval.ErrorEval;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -63,6 +57,7 @@ public class SWTSheet extends TabItem implements ISWTObject{
 	}
 	
 	public void load(MySheet sheet) {
+		
 		this.sheet = sheet;
 		setText(sheet.name);
 		
@@ -76,8 +71,7 @@ public class SWTSheet extends TabItem implements ISWTObject{
 		
 		final int rowNum = sheet.rows.size();
 		
-		MyRow firstRow = sheet.getRow(0);
-		
+//		MyRow firstRow = sheet.getRow(0);
 		int columnNum = sheet.getColumnNum();
 		
 		TableColumn tableColumn0 = new TableColumn(table, SWT.BORDER_SOLID | SWT.CENTER);
@@ -99,6 +93,11 @@ public class SWTSheet extends TabItem implements ISWTObject{
 			
 			columns[j - 2] = tableColumn;
 		}
+		
+		TableColumn tableColumn = new TableColumn(table, SWT.BORDER_SOLID | SWT.CENTER);
+		tableColumn.setWidth(220);
+		tableColumn.setText("R");
+		
 		
 		int[] columnMaxWidth = new int[columnNum];
 		//内容
@@ -180,7 +179,9 @@ public class SWTSheet extends TabItem implements ISWTObject{
 	}
 	
 	public void setInfomation(int rowNum, String infomation) {
-		int columnNum = sheet.getColumnNum() + 1;
+		
+		//最大列数加1，再加上表格固定的前两列显示列
+		int columnNum = sheet.getColumnNum() + 2;
 		table.getItem(rowNum).setText(columnNum, infomation);
 	}
 	
