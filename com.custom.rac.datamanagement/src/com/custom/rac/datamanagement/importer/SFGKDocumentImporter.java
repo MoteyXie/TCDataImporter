@@ -110,7 +110,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 			} else {
 				throw new Exception("电子档存放地址不能为空");
 			}			
-		} else {
+		} else if(!propertyDisplayName.equals("ID")){
 			super.setValue(tcc, index, propertyDisplayName);
 		}
 	}
