@@ -215,7 +215,9 @@ public abstract class AbstractImporter implements IImporter {
 		}
 		
 		TCComponentItem newItem = item != null ? item : itemType.create(
-				itemId, getItemRevId(index), itemType.getTypeName(), 
+				getItemId(index), 
+				getItemRevId(index), 
+				itemType.getTypeName(), 
 				getItemObjectName(index), null, null, null, null);
 		
 		return getPropertyContainer(index) == PropertyContainer.item ? newItem : newItem.getLatestItemRevision();
