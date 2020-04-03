@@ -53,18 +53,23 @@ public class SaveResultAction extends AbstractTableAction {
 			XSSFSheet sheet = wb.getSheet(name);
 			XSSFRow row = sheet.getRow(0);
 			XSSFCell cell = row.createCell(scol);
-			XSSFCellStyle cellStyle = row.getCell(scol - 1).getCellStyle();
+			XSSFCellStyle cellStyle = wb.createCellStyle();
+			cellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN); // 下边框
+			cellStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);// 左边框
+			cellStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);// 上边框
+			cellStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);// 右边框
+			cellStyle.setWrapText(true);
 			sheet.setColumnWidth(scol, 256 * 50 + 184);// 设置列宽
 			cell.setCellStyle(cellStyle);
-			cell.setCellValue("R");
-			cellStyle = sheet.getRow(1).getCell(scol - 1).getCellStyle();
 			for (int i = 1; i < trow; i++) {
-				TableItem tableItem = table.getItem(i);// 获取第i行数据
-				String value = tableItem.getText(tcol - 1);// 获取第j列数据
-				row = sheet.getRow(i);
-				cell = row.createCell(scol);
-				cell.setCellValue(value);
-				cell.setCellStyle(cellStyle);
+				for (int j = 2; j < tcol; j++) {
+					TableItem tableItem = table.getItem(i);// 获取第i行数据
+					String value = tableItem.getText(j);// 获取第j列数据
+					row = sheet.getRow(i);
+					cell = row.createCell(j - 2);
+					cell.setCellValue(value);
+					cell.setCellStyle(cellStyle);
+				}
 			}
 			out = new FileOutputStream(lastSelectedFilePath);
 			wb.write(out);
