@@ -9,6 +9,7 @@ import com.custom.rac.datamanagement.util.MyClassifyManager;
 import com.custom.rac.datamanagement.util.MyDatasetUtil;
 import com.custom.rac.datamanagement.util.MyStatusUtil;
 import com.custom.rac.datamanagement.util.PropertyContainer;
+import com.sfgk.sie.webservice.SFGKServiceProxy;
 import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponent;
 import com.teamcenter.rac.kernel.TCComponentFolder;
@@ -22,10 +23,10 @@ import com.teamcenter.rac.util.MessageBox;
 
 public class SFGKDocumentImporter extends AbstractImporter {
 
-	String shared_directory_path = "\\\\192.168.25.11";
 	TCSession session = (TCSession) AIFUtility.getDefaultSession();
 	MyClassifyManager cls_manger = new MyClassifyManager(session);
 	TCComponentFolder folder = null;
+	SFGKServiceProxy proxy = new SFGKServiceProxy();
 	
 	@Override
 	public String getName() {
@@ -109,9 +110,18 @@ public class SFGKDocumentImporter extends AbstractImporter {
 			} else {
 				throw new Exception("电子档存放地址不能为空");
 			}			
-		} else {
+		} else if(!propertyDisplayName.equals("ID")){
 			super.setValue(tcc, index, propertyDisplayName);
 		}
+	}
+	
+	public String newItemId(int index) throws Exception {
+		String value = getValue(index, "图文档分类ID")+ "";
+		if (value == null || value.length() == 0) {
+			throw new Exception("图文档分类ID不能为空！");
+		}
+		String id = proxy.getID(value, 4);
+		return id;
 	}
 		
 	@Override
