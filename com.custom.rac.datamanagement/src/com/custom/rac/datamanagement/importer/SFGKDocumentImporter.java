@@ -32,10 +32,53 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	public String getName() {
 		return "文档导入程序";
 	}
+	public String getType(String node_id) {
+		String prefix = node_id.substring(0, 4);
+		String type = "";
+		switch (prefix) {
+		case "SF-A":
+			type = "SF8_GFBZDocument";
+			break;
+		case "SF-B":
+			type = "SF8_SJZLDocument";
+			break;
+		case "SF-C":
+			type = "SF8_YBZLDocument";
+			break;
+		case "SF-D":
+			type = "SF8_GYZLDocument";
+			break;
+		case "SF-E":
+			type = "SF8_XLHDocument";
+			break;
+		case "SF-F":
+			type = "SF8_HTXMDocument";
+			break;
+		case "SF-G":
+			type = "SF8_YFXMDocument";
+			break;
+		case "SF-H":
+			type = "SF8_TBXMDocument";
+			break;
+		case "SF-J":
+			type = "SF8_SYZXDocument";
+			break;
+		case "SF-K":
+			type = "SF8_JSGLDocument";
+			break;
+		case "SF-X":
+			type = "SF8_XHDocument";
+			break;
+		default:
+			break;
+		}
+		return type;
+	}
 
 	@Override
-	public TCComponentItemType getItemType(int index) throws Exception{
-		TCComponentItemType type = (TCComponentItemType) session.getTypeComponent("SF8_Document");
+	public TCComponentItemType getItemType(int index) throws Exception {
+		String ics_id = getValue(index, "图文档分类ID") + "";
+		TCComponentItemType type = (TCComponentItemType) session.getTypeComponent(getType(ics_id));
 		return type;
 	}
 
@@ -92,10 +135,12 @@ public class SFGKDocumentImporter extends AbstractImporter {
 			MyStatusUtil.setStatus(tcc, value);
 		} else if (propertyDisplayName.equals("所有者")) {
 			String user_name = getValue(index, propertyDisplayName)+ "";
-			TCComponentUserType userType = (TCComponentUserType) session.getTypeComponent("User");
-			TCComponentUser user = userType.find(user_name);
-			if (user != null) {
-				tcc.changeOwner(user, user.getLoginGroup());
+			if (user_name != null && !user_name.isEmpty()) {
+				TCComponentUserType userType = (TCComponentUserType) session.getTypeComponent("User");
+				TCComponentUser user = userType.find(user_name);
+				if (user != null) {
+					tcc.changeOwner(user, user.getLoginGroup());
+				}
 			}
 		} else if (propertyDisplayName.equals("图文档分类ID")) {
 			cls_manger.saveItemInNode(tcc, value);			
