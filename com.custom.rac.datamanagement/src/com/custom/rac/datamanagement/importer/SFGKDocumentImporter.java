@@ -193,5 +193,10 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	public boolean deleteOldItemWhenItemIdExist(int index) {
 		return true;
 	}
+	@Override
+	public void onSingleMessage(int index, String msg) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

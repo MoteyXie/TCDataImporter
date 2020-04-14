@@ -14,6 +14,7 @@ import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponent;
 import com.teamcenter.rac.kernel.TCComponentFolder;
 import com.teamcenter.rac.kernel.TCComponentFolderType;
+import com.teamcenter.rac.kernel.TCComponentItemRevision;
 import com.teamcenter.rac.kernel.TCComponentItemType;
 import com.teamcenter.rac.kernel.TCComponentType;
 import com.teamcenter.rac.kernel.TCException;
@@ -27,6 +28,7 @@ public class SFGKPartImporter extends AbstractImporter {
 	private MyClassifyManager cls_manger = new MyClassifyManager(session);
 	private TCComponentItemType itemType = null;
 	private TCComponentFolder folder = null;
+	private TCComponentItemRevision rev = null;
 	protected int folderChildIndex = 0;
 	
 	static {
@@ -49,13 +51,16 @@ public class SFGKPartImporter extends AbstractImporter {
 	
 
 	@Override
-	public TCComponentItemType getItemType(int index) {
+	public TCComponentItemType getItemType(int index) throws Exception{
 		String type = (String) getValue(index, "物料类型");
 		String reltype = typeMap.get(type);	
 		try {		
 			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
 		} catch (TCException e) {
 			e.printStackTrace();
+		}	
+		if(itemType==null) {
+			throw new Exception("物料类型不存在");
 		}	
 		return itemType;
 	}
@@ -67,6 +72,9 @@ public class SFGKPartImporter extends AbstractImporter {
 			MyStatusUtil.setStatus(tcComponent, value);
 		}else if(propertyDisplayName.equals("物料分类ID")){
 			cls_manger.saveItemInNode(tcComponent, value);	
+		}else if(propertyDisplayName.equals("度量单位")) {
+			rev = (TCComponentItemRevision) tcComponent;
+			rev.getItem().setProperty("uom_tag", value);
 		}else {
 			super.setValue(tcComponent, index, propertyDisplayName);
 		}		
@@ -114,6 +122,7 @@ public class SFGKPartImporter extends AbstractImporter {
 		ignoreList.add("序号");
 		ignoreList.add("物料号");
 		ignoreList.add("名称");
+		ignoreList.add("物料类型");
 	}
 
 	@Override
@@ -207,6 +216,12 @@ public class SFGKPartImporter extends AbstractImporter {
 		folder = ft.create(folderName, "用于存放导入的历史数据", "Folder");
 		folderChildIndex = 0;
 		session.getUser().getHomeFolder().add("contents", folder);
+		
+	}
+
+	@Override
+	public void onSingleMessage(int index, String msg) throws Exception {
+		// TODO Auto-generated method stub
 		
 	}
 

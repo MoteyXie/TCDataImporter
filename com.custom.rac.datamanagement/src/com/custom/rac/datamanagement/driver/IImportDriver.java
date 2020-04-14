@@ -14,6 +14,8 @@ public interface IImportDriver {
 	
 	void onFinish();
 	
+	void onSingleMessage(int index,String msg);
+	
 	void onSetPropertyFinish(int index, String propertyDisplayName);
 	
 	void onSetPropertyError(int index, String propertyDisplayName, Exception e);
