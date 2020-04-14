@@ -103,4 +103,10 @@ public class Test2Importer extends AbstractImporter {
 		
 	}
 
+	@Override
+	public void onSingleMessage(int index, String msg) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
