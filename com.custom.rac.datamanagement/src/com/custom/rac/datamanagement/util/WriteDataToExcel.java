@@ -52,6 +52,12 @@ public class WriteDataToExcel {
 				cell.setCellValue(value);
 				cell.setCellStyle(cellStyle);
 			}
+			TableItem tableItem = table.getItem(i);// 获取第i行数据
+			Object state = tableItem.getData("state");
+			row = sheet.getRow(i);
+			cell = row.createCell(tcol - 2);
+			cell.setCellValue(state.toString());
+			cell.setCellStyle(cellStyle);
 		}
 		out = new FileOutputStream(filePath);
 		wb.write(out);
