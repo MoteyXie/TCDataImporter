@@ -99,4 +99,10 @@ public class TestImporter extends AbstractImporter {
 		return true;
 	}
 
+	@Override
+	public void onSingleMessage(int index, String msg) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
