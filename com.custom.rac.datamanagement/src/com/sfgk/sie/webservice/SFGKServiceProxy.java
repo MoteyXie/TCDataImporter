@@ -44,16 +44,10 @@ public class SFGKServiceProxy implements com.sfgk.sie.webservice.SFGKService {
     return sFGKService;
   }
   
-  public java.lang.String getID(java.lang.String arg0, int arg1) throws java.rmi.RemoteException, com.sfgk.sie.webservice.Exception{
+  public java.lang.String getID(java.lang.String arg0, int arg1) throws java.rmi.RemoteException{
     if (sFGKService == null)
       _initSFGKServiceProxy();
     return sFGKService.getID(arg0, arg1);
-  }
-  
-  public java.lang.String getDQIDByParent(java.lang.String arg0) throws java.rmi.RemoteException, com.sfgk.sie.webservice.Exception{
-    if (sFGKService == null)
-      _initSFGKServiceProxy();
-    return sFGKService.getDQIDByParent(arg0);
   }
   
   public java.lang.String classify(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException{
@@ -62,13 +56,7 @@ public class SFGKServiceProxy implements com.sfgk.sie.webservice.SFGKService {
     return sFGKService.classify(arg0, arg1);
   }
   
-  public java.lang.String getDesignPartIDByParent(java.lang.String arg0) throws java.rmi.RemoteException, com.sfgk.sie.webservice.Exception{
-    if (sFGKService == null)
-      _initSFGKServiceProxy();
-    return sFGKService.getDesignPartIDByParent(arg0);
-  }
-  
-  public java.lang.String getDesignIDRuleXML() throws java.rmi.RemoteException, com.sfgk.sie.webservice.Exception{
+  public java.lang.String getDesignIDRuleXML() throws java.rmi.RemoteException{
     if (sFGKService == null)
       _initSFGKServiceProxy();
     return sFGKService.getDesignIDRuleXML();
