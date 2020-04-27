@@ -33,6 +33,7 @@ public class WriteDataToExcel {
 		input = new FileInputStream(lastSelectedFilePath);
 		XSSFWorkbook wb = new XSSFWorkbook(input);
 		XSSFSheet sheet = wb.getSheet(name);
+		int rowNum = sheet.getLastRowNum() + 1;// 获取excel表总行数
 		XSSFRow row = sheet.getRow(0);
 		XSSFCell cell = row.createCell(scol);
 		XSSFCellStyle cellStyle = wb.createCellStyle();
@@ -44,20 +45,21 @@ public class WriteDataToExcel {
 		sheet.setColumnWidth(scol, 256 * 50 + 184);// 设置列宽
 		cell.setCellStyle(cellStyle);
 		for (int i = 1; i < trow; i++) {
+			TableItem tableItem = table.getItem(i);// 获取第i行数据
+			row = sheet.createRow(i);
 			for (int j = 2; j < tcol; j++) {
-				TableItem tableItem = table.getItem(i);// 获取第i行数据
 				String value = tableItem.getText(j);// 获取第j列数据
-				row = sheet.getRow(i);
 				cell = row.createCell(j - 2);
 				cell.setCellValue(value);
 				cell.setCellStyle(cellStyle);
 			}
-			TableItem tableItem = table.getItem(i);// 获取第i行数据
 			Object state = tableItem.getData("state");
-			row = sheet.getRow(i);
 			cell = row.createCell(tcol - 2);
 			cell.setCellValue(state.toString());
 			cell.setCellStyle(cellStyle);
+		}
+		for (int k = trow; k < rowNum; k++) {
+			row = sheet.createRow(k);
 		}
 		out = new FileOutputStream(filePath);
 		wb.write(out);
