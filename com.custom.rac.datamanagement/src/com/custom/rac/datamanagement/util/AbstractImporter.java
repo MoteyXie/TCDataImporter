@@ -246,7 +246,7 @@ public abstract class AbstractImporter implements IImporter {
 				itemRev, 
 				itemType.getTypeName(), 
 				getItemObjectName(index), null, null, null, null);
-		
+		newItem.setLogicalProperty("sf8_if_history_data", true);
 		return getPropertyContainer(index) == PropertyContainer.item ? newItem : newItem.getLatestItemRevision();
 	}
 	

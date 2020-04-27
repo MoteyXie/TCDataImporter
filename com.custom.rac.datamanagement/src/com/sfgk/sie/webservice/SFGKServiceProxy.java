@@ -44,7 +44,7 @@ public class SFGKServiceProxy implements com.sfgk.sie.webservice.SFGKService {
     return sFGKService;
   }
   
-  public java.lang.String getID(java.lang.String arg0, int arg1) throws java.rmi.RemoteException, com.sfgk.sie.webservice.Exception{
+  public java.lang.String getID(java.lang.String arg0, int arg1) throws java.rmi.RemoteException{
     if (sFGKService == null)
       _initSFGKServiceProxy();
     return sFGKService.getID(arg0, arg1);
@@ -54,6 +54,12 @@ public class SFGKServiceProxy implements com.sfgk.sie.webservice.SFGKService {
     if (sFGKService == null)
       _initSFGKServiceProxy();
     return sFGKService.classify(arg0, arg1);
+  }
+  
+  public java.lang.String getDesignIDRuleXML() throws java.rmi.RemoteException{
+    if (sFGKService == null)
+      _initSFGKServiceProxy();
+    return sFGKService.getDesignIDRuleXML();
   }
   
   

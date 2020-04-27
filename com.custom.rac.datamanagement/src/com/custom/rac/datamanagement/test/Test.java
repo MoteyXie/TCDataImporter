@@ -3,12 +3,6 @@ package com.custom.rac.datamanagement.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
-
-import com.custom.rac.datamanagement.swtxls.ExcelEventParser;
-import com.custom.rac.datamanagement.swtxls.MyTable;
-
 public class Test {
 
 	public static void main(String[] args) {

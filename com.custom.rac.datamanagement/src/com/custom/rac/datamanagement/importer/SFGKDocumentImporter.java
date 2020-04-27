@@ -9,6 +9,7 @@ import com.custom.rac.datamanagement.util.MyClassifyManager;
 import com.custom.rac.datamanagement.util.MyDatasetUtil;
 import com.custom.rac.datamanagement.util.MyStatusUtil;
 import com.custom.rac.datamanagement.util.PropertyContainer;
+import com.custom.rac.datamanagement.util.XMLResult;
 import com.sfgk.sie.webservice.SFGKServiceProxy;
 import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponent;
@@ -165,8 +166,17 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		if (value == null || value.length() == 0) {
 			throw new Exception("图文档分类ID不能为空！");
 		}
-		String id = proxy.getID(value, 4);
-		return id;
+		return getID(value, 4);
+	}
+	
+	public String getID(String prefix, int serialLength) throws Exception{
+		String xml = proxy.getID(prefix, serialLength);
+		XMLResult result = XMLResult.read(xml);
+		String error = result.error;
+		if (error != null && !error.isEmpty()) {
+			throw new Exception(error);
+		}
+        return result.value;
 	}
 		
 	@Override
