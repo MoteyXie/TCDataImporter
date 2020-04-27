@@ -173,7 +173,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		String xml = proxy.getID(prefix, serialLength);
 		XMLResult result = XMLResult.read(xml);
 		String error = result.error;
-        if (error == null || error.isEmpty()) {
+		if (error != null && !error.isEmpty()) {
 			throw new Exception(error);
 		}
         return result.value;
