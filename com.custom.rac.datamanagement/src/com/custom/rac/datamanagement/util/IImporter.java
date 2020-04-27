@@ -26,4 +26,6 @@ public interface IImporter {
 	void onStart() throws Exception;
 	
 	void onFinish() throws Exception;
+	
+	void onSingleMessage(int index,String msg) throws Exception;
 }

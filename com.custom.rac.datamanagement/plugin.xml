@@ -59,7 +59,7 @@
 	    <aif_app_item
 	       class="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
 	          groupName="My Group"
-	          icon="icons/sample.png"
+	          icon="icons/database_16.png"
 	          id="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
 	          name="数据导入"
 	       perspective_id="com.custom.rac.datamanagement.perspectives.DataManagementViewPerspective"
