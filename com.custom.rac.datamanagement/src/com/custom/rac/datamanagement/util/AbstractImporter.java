@@ -37,7 +37,7 @@ public abstract class AbstractImporter implements IImporter {
 	 */
 	protected Map<String, Map<String, String>> propertyRealNameMap = new HashMap<>();
 	
-	IImportDriver driver;
+	protected IImportDriver driver;
 
 	@Override
 	public void loadDriver(IImportDriver driver) {
@@ -89,6 +89,8 @@ public abstract class AbstractImporter implements IImporter {
 	public abstract boolean ignoreRow(int index) throws Exception;
 	
 	public abstract boolean deleteOldItemWhenItemIdExist(int index) throws Exception;
+	
+	public abstract void onSingleMessage(int index,String msg) throws Exception;
 	
 	/**
 	 * 
