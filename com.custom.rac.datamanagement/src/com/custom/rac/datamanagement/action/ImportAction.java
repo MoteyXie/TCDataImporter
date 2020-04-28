@@ -12,8 +12,9 @@ import com.custom.rac.datamanagement.util.AbstractTableAction;
 import com.custom.rac.datamanagement.util.IImporter;
 import com.custom.rac.datamanagement.util.ImporterReader;
 import com.custom.rac.datamanagement.views.ExcelTableViewPart;
+import com.teamcenter.rac.util.MessageBox;
 
-public class ImportAction extends AbstractTableAction {
+public class ImportAction extends AbstractTableAction{
 
 	public ImportAction(ExcelTableViewPart tableViewPart) {
 		super(tableViewPart);
@@ -46,6 +47,7 @@ public class ImportAction extends AbstractTableAction {
 				try {
 					importer.execute();
 				} catch (Exception e) {
+					MessageBox.post(e.toString(),"´íÎó",MessageBox.ERROR);
 					e.printStackTrace();
 				}
 			}

@@ -142,4 +142,17 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 		this.importer = (AbstractImporter) importer;
 	}
 
+	@Override
+	public void onSingleMessage(int index, String msg) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				tableViewPart.setProgressValue(index+startRowNum);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, msg);
+			}
+		});
+		
+	}
+
 }
