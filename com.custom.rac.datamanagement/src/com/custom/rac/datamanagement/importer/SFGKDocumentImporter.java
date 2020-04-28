@@ -34,8 +34,11 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		return "文档导入程序";
 	}
 	public String getType(String node_id) {
-		String prefix = node_id.substring(0, 4);
 		String type = "";
+		if (node_id.length() <= 4) {
+			return type;
+		}
+		String prefix = node_id.substring(0, 4);
 		switch (prefix) {
 		case "SF-A":
 			type = "SF8_GFBZDocument";
@@ -79,6 +82,9 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	@Override
 	public TCComponentItemType getItemType(int index) throws Exception {
 		String ics_id = getValue(index, "图文档分类ID") + "";
+		if (ics_id == null || ics_id.length() < 4) {
+			throw new Exception("分类ID不能为空！");
+		}
 		TCComponentItemType type = (TCComponentItemType) session.getTypeComponent(getType(ics_id));
 		return type;
 	}
@@ -166,7 +172,9 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		if (value == null || value.length() == 0) {
 			throw new Exception("图文档分类ID不能为空！");
 		}
-		return getID(value, 4);
+		SimpleDateFormat format = new SimpleDateFormat("yyMM");
+		String date = format.format(new Date());
+		return getID(value +date, 4);
 	}
 	
 	public String getID(String prefix, int serialLength) throws Exception{
