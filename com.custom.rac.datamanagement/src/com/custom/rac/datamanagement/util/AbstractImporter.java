@@ -201,8 +201,13 @@ public abstract class AbstractImporter implements IImporter {
 					if(value instanceof Date) {
 						tcp.setDateValue((Date)value);
 					}else {
-						Date date = new Date((String)value);
-						tcp.setDateValue(date);
+						String str = (String) value;
+						if (str.isEmpty()) {
+							tcp.setDateValue(null);
+						} else {
+							tcp.setDateValue(new Date(str));
+						}
+						
 					}
 					tcComponent.setTCProperty(tcp);
 					break;

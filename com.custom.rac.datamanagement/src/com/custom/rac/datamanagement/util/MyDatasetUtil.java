@@ -101,7 +101,7 @@ public class MyDatasetUtil {
 			datesetType = "MSProwerPointX";
 		} else if (fileName.endsWith("zip") || fileName.endsWith("rar") || fileName.endsWith("7z")) {
 			datesetType = "Zip";
-		} else if (fileName.endsWith("pdf")) {
+		} else if (fileName.endsWith("pdf") || fileName.endsWith("PDF")) {
 			datesetType = "PDF";
 		} else if (fileName.endsWith("jpg") || fileName.endsWith("jpeg")) {
 			datesetType = "JPEG";

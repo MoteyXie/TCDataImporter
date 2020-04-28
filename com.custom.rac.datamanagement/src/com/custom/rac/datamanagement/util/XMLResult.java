@@ -12,15 +12,18 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 public class XMLResult {
 
 	@XStreamAsAttribute
-	public String value;
+	public String value = "";
 	
 	@XStreamAsAttribute
-	public String error;	
+	public String error = "";	
 	
 	@XStreamOmitField
 	private static XStream xstream = new XStream(new DomDriver("GBK", new XmlFriendlyNameCoder("-_", "_")));
-	
+	static {
+		xstream.alias("result", XMLResult.class);
+	}
 	public static XMLResult read(String xml) {
+		
 		return (XMLResult) xstream.fromXML(xml);
 	}	
 }

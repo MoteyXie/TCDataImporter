@@ -182,6 +182,9 @@ public class SWTSheet extends TabItem implements ISWTObject{
 		
 		//最大列数加1，再加上表格固定的前两列显示列
 		int columnNum = sheet.getColumnNum() + 2;
+		if (infomation == null) {
+			infomation = "";
+		}
 		table.getItem(rowNum).setText(columnNum, infomation);
 	}
 	
