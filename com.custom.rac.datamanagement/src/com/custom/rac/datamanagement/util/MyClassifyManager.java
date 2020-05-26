@@ -16,7 +16,9 @@ public class MyClassifyManager {
 	public TCSession session;
 	private ClassificationService classificationService = null;
 	private G4MUserAppContext g4mUserAppContext = null;
-	private String partClassifyRootId = "ICM";
+	private String classifyRootId = "ICM";
+	private G4MTree tree;
+	private TCClassificationService icsService;
 	public MyClassifyManager(TCSession session){
 		this.session = session;
 		initData();
@@ -25,30 +27,36 @@ public class MyClassifyManager {
 	private void initData(){
 		try {
 			classificationService = new ClassificationService();
-			g4mUserAppContext = new G4MUserAppContext(classificationService, partClassifyRootId);
+			g4mUserAppContext = new G4MUserAppContext(classificationService, classifyRootId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public G4MTree getClassificationTree(){
+		if (tree == null) {
+			tree = new G4MTree(g4mUserAppContext);
+		}
+		G4MTreeNode root = getNode(classifyRootId);
+		tree.setRootNode(root, true);
 		
-		//获得分类树应用
-		G4MTree tree = new G4MTree(g4mUserAppContext);
-		//获得分类根节点
-		TCClassificationService icsService = g4mUserAppContext.getClassificationService();
-		
-		ICSHierarchyNodeDescriptor icsNodeDescriptor = icsService.describeNode(partClassifyRootId, 0);
-		
+		return tree;
+	}
+	
+	public G4MTreeNode getNode(String ics_id) {
+		if (tree == null) {
+			tree = new G4MTree(g4mUserAppContext);
+		}
+		if (icsService == null) {
+			icsService = g4mUserAppContext.getClassificationService();
+		}
+		ICSHierarchyNodeDescriptor icsNodeDescriptor = icsService.describeNode(ics_id, 0);
 		if(icsNodeDescriptor == null){
 			System.out.println("获取分类节点失败!");
 			return null;
 		}
-		
 		G4MTreeNode root = new G4MTreeNode(tree, icsNodeDescriptor);
-		tree.setRootNode(root, true);
-		
-		return tree;
+		return root;
 	}
 	
 	/**
@@ -58,7 +66,10 @@ public class MyClassifyManager {
 	 * @throws TCException
 	 */
 	public void saveItemInNode(TCComponent tcc, String ics_id) throws TCException{
-		
+		G4MTreeNode node = getNode(ics_id);
+		if (node != null) {
+			tcc.setProperty("sf8_type", node.getNodeLabel());
+		}
 		
 		// 获取分类的应用
 		ICSApplicationObject icsApp = g4mUserAppContext.getICSApplicationObject();

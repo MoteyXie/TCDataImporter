@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.TableItem;
 import com.custom.rac.datamanagement.swtxls.MySheet;
 import com.custom.rac.datamanagement.swtxls.SWTSheet;
 import com.custom.rac.datamanagement.views.ExcelTableViewPart;
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 
 public class WriteDataToExcel {
 	public static void WriteData(ExcelTableViewPart tableViewPart, String lastSelectedFilePath, String filePath)
@@ -55,7 +56,7 @@ public class WriteDataToExcel {
 			}
 			Object state = tableItem.getData("state");
 			cell = row.createCell(tcol - 2);
-			cell.setCellValue(state.toString());
+			cell.setCellValue(state == null ? "" :state.toString());
 			cell.setCellStyle(cellStyle);
 		}
 		for (int k = trow; k < rowNum; k++) {
