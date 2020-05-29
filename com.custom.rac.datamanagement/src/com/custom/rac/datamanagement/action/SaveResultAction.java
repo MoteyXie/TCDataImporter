@@ -23,6 +23,9 @@ public class SaveResultAction extends AbstractTableAction {
 		}
 		// 文件打开路径
 		String lastSelectedFilePath = OpenFileAction.lastSelectFile;
+		if (lastSelectedFilePath == null) {
+			throw new Exception("没有数据保存！");
+		}
 		WriteDataToExcel.WriteData(tableViewPart, lastSelectedFilePath, lastSelectedFilePath);
 		MessageBox.post("保存成功，保存路径：" + lastSelectedFilePath, "提示", MessageBox.INFORMATION);
 

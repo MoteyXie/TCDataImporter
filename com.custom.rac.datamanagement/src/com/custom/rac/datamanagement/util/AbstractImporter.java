@@ -201,8 +201,13 @@ public abstract class AbstractImporter implements IImporter {
 					if(value instanceof Date) {
 						tcp.setDateValue((Date)value);
 					}else {
-						Date date = new Date((String)value);
-						tcp.setDateValue(date);
+						String str = (String) value;
+						if (str.isEmpty()) {
+							tcp.setDateValue(null);
+						} else {
+							tcp.setDateValue(new Date(str));
+						}
+						
 					}
 					tcComponent.setTCProperty(tcp);
 					break;
@@ -246,7 +251,7 @@ public abstract class AbstractImporter implements IImporter {
 				itemRev, 
 				itemType.getTypeName(), 
 				getItemObjectName(index), null, null, null, null);
-		
+		newItem.setLogicalProperty("sf8_if_history_data", true);
 		return getPropertyContainer(index) == PropertyContainer.item ? newItem : newItem.getLatestItemRevision();
 	}
 	
