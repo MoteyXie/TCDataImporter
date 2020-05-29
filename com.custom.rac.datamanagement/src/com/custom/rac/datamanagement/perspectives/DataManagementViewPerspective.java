@@ -91,7 +91,7 @@ public class DataManagementViewPerspective implements IPerspectiveFactory{
 					list.add(selection);
 					Method method = null;
 					
-					//ÔÚ²é¿´Æ÷ÖĞÏÔÊ¾Ñ¡ÖĞµÄ¶ÔÏóĞÅÏ¢
+					//åœ¨æŸ¥çœ‹å™¨ä¸­æ˜¾ç¤ºé€‰ä¸­çš„å¯¹è±¡ä¿¡æ¯
 					ViewerViewPart viewerViewPart = getViewerViewPart();
 					
 					if(viewerViewPart != null) {
@@ -100,7 +100,7 @@ public class DataManagementViewPerspective implements IPerspectiveFactory{
 						method.invoke(viewerViewPart, null, list);
 					}
 					
-					//ÔÚ×é¼şÊÓÍ¼ÖĞÏÔÊ¾Ñ¡ÖĞµÄ¶ÔÏó
+					//åœ¨ç»„ä»¶è§†å›¾ä¸­æ˜¾ç¤ºé€‰ä¸­çš„å¯¹è±¡
 					TCComponentView componentView = getTCComponentView();
 					
 					if(componentView != null) {
@@ -108,7 +108,7 @@ public class DataManagementViewPerspective implements IPerspectiveFactory{
 						method.setAccessible(true);
 						method.invoke(componentView, null, list);
 						
-						//Òş²Ø×é¼şÊÓÍ¼µ×²¿ÏÔÊ¾°æ±¾µÄ´°¿Ú
+						//éšè—ç»„ä»¶è§†å›¾åº•éƒ¨æ˜¾ç¤ºç‰ˆæœ¬çš„çª—å£
 						Field field = componentView.getClass().getDeclaredField("m_bottomForm");
 						field.setAccessible(true);
 						ViewForm bottomForm = (ViewForm) field.get(componentView);
@@ -153,7 +153,7 @@ public class DataManagementViewPerspective implements IPerspectiveFactory{
 	
 	
 	/**
-	 * Ìí¼ÓÒ»¸öÊÓÍ¼,Òì²½Ïß³Ì
+	 * æ·»åŠ ä¸€ä¸ªè§†å›¾,å¼‚æ­¥çº¿ç¨‹
 	 * @param viewPartClass
 	 */
 	public static void createViewPartOnAsyncExec(final Class viewPartClass) {
@@ -168,7 +168,7 @@ public class DataManagementViewPerspective implements IPerspectiveFactory{
 	}
 	
 	/**
-	 * Ìí¼ÓÒ»¸öÊÓÍ¼
+	 * æ·»åŠ ä¸€ä¸ªè§†å›¾
 	 * @param <T>
 	 * @param viewPartClass
 	 * @return

@@ -16,7 +16,7 @@ public class MyTable {
 	
 	public void addSheet(String sheetName, MySheet sheet) throws Exception {
 		if(sheets.containsKey(sheetName))
-			throw new Exception("¹¤×÷±í¡¾"+sheetName+"¡¿ÒÑ´æÔÚ£¡");
+			throw new Exception("å·¥ä½œè¡¨ã€"+sheetName+"ã€‘å·²å­˜åœ¨ï¼");
 		
 		sheets.put(sheetName, sheet);
 	}

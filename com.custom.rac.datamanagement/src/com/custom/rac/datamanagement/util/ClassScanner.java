@@ -13,87 +13,87 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;  
   
 /** 
- * ÀàÉ¨ÃèÆ÷£¬É¨Ãè¸ø¶¨°ü¼°Æä×Ó°üÖĞµÄËùÓĞÀà 
+ * ç±»æ‰«æå™¨ï¼Œæ‰«æç»™å®šåŒ…åŠå…¶å­åŒ…ä¸­çš„æ‰€æœ‰ç±» 
  * 
  */  
 public class ClassScanner {  
   
 /** 
- * ´Ó°üpackageÖĞ»ñÈ¡ËùÓĞµÄClass 
+ * ä»åŒ…packageä¸­è·å–æ‰€æœ‰çš„Class 
  *  
  * @param pack 
  * @return 
  */  
 public static Set<Class<?>> getClasses(String pack) {  
   
-  // µÚÒ»¸öclassÀàµÄ¼¯ºÏ  
+  // ç¬¬ä¸€ä¸ªclassç±»çš„é›†åˆ  
   Set<Class<?>> classes = new LinkedHashSet<Class<?>>();  
-  // ÊÇ·ñÑ­»·µü´ú  
+  // æ˜¯å¦å¾ªç¯è¿­ä»£  
   boolean recursive = true;  
-  // »ñÈ¡°üµÄÃû×Ö ²¢½øĞĞÌæ»»  
+  // è·å–åŒ…çš„åå­— å¹¶è¿›è¡Œæ›¿æ¢  
   String packageName = pack;  
   String packageDirName = packageName.replace('.', '/');  
-  // ¶¨ÒåÒ»¸öÃ¶¾ÙµÄ¼¯ºÏ ²¢½øĞĞÑ­»·À´´¦ÀíÕâ¸öÄ¿Â¼ÏÂµÄthings  
+  // å®šä¹‰ä¸€ä¸ªæšä¸¾çš„é›†åˆ å¹¶è¿›è¡Œå¾ªç¯æ¥å¤„ç†è¿™ä¸ªç›®å½•ä¸‹çš„things  
   Enumeration<URL> dirs;  
   try {  
     dirs = Thread.currentThread()  
     .getContextClassLoader()  
     .getResources(packageDirName);  
-    // Ñ­»·µü´úÏÂÈ¥  
+    // å¾ªç¯è¿­ä»£ä¸‹å»  
     while (dirs.hasMoreElements()) {  
-     // »ñÈ¡ÏÂÒ»¸öÔªËØ  
+     // è·å–ä¸‹ä¸€ä¸ªå…ƒç´   
       URL url = dirs.nextElement();  
-     // µÃµ½Ğ­ÒéµÄÃû³Æ  
+     // å¾—åˆ°åè®®çš„åç§°  
       String protocol = url.getProtocol();  
-     // Èç¹ûÊÇÒÔÎÄ¼şµÄĞÎÊ½±£´æÔÚ·şÎñÆ÷ÉÏ  
+     // å¦‚æœæ˜¯ä»¥æ–‡ä»¶çš„å½¢å¼ä¿å­˜åœ¨æœåŠ¡å™¨ä¸Š  
       if ("file".equals(protocol)) {  
-       System.err.println("fileÀàĞÍµÄÉ¨Ãè");  
-       // »ñÈ¡°üµÄÎïÀíÂ·¾¶  
+       System.err.println("fileç±»å‹çš„æ‰«æ");  
+       // è·å–åŒ…çš„ç‰©ç†è·¯å¾„  
         String filePath = URLDecoder.decode(url.getFile(), "UTF-8");  
-       // ÒÔÎÄ¼şµÄ·½Ê½É¨ÃèÕû¸ö°üÏÂµÄÎÄ¼ş ²¢Ìí¼Óµ½¼¯ºÏÖĞ  
+       // ä»¥æ–‡ä»¶çš„æ–¹å¼æ‰«ææ•´ä¸ªåŒ…ä¸‹çš„æ–‡ä»¶ å¹¶æ·»åŠ åˆ°é›†åˆä¸­  
         findAndAddClassesInPackageByFile(packageName,   
                     filePath, recursive, classes);  
      } else if ("jar".equals(protocol)) {  
-       // Èç¹ûÊÇjar°üÎÄ¼ş  
-        // ¶¨ÒåÒ»¸öJarFile  
-       System.err.println("jarÀàĞÍµÄÉ¨Ãè");  
+       // å¦‚æœæ˜¯jaråŒ…æ–‡ä»¶  
+        // å®šä¹‰ä¸€ä¸ªJarFile  
+       System.err.println("jarç±»å‹çš„æ‰«æ");  
        JarFile jar;  
        try {  
-         // »ñÈ¡jar  
+         // è·å–jar  
          jar = ((JarURLConnection) url.openConnection()).getJarFile();  
-         // ´Ó´Ëjar°ü µÃµ½Ò»¸öÃ¶¾ÙÀà  
+         // ä»æ­¤jaråŒ… å¾—åˆ°ä¸€ä¸ªæšä¸¾ç±»  
           Enumeration<JarEntry> entries = jar.entries();  
-         // Í¬ÑùµÄ½øĞĞÑ­»·µü´ú  
+         // åŒæ ·çš„è¿›è¡Œå¾ªç¯è¿­ä»£  
           while (entries.hasMoreElements()) {  
-           // »ñÈ¡jarÀïµÄÒ»¸öÊµÌå ¿ÉÒÔÊÇÄ¿Â¼ ºÍÒ»Ğ©jar°üÀïµÄÆäËûÎÄ¼ş ÈçMETA-INFµÈÎÄ¼ş  
+           // è·å–jaré‡Œçš„ä¸€ä¸ªå®ä½“ å¯ä»¥æ˜¯ç›®å½• å’Œä¸€äº›jaråŒ…é‡Œçš„å…¶ä»–æ–‡ä»¶ å¦‚META-INFç­‰æ–‡ä»¶  
              JarEntry entry = entries.nextElement();  
             String name = entry.getName();  
-            // Èç¹ûÊÇÒÔ/¿ªÍ·µÄ  
+            // å¦‚æœæ˜¯ä»¥/å¼€å¤´çš„  
              if (name.charAt(0) == '/') {  
-              // »ñÈ¡ºóÃæµÄ×Ö·û´®  
+              // è·å–åé¢çš„å­—ç¬¦ä¸²  
                 name = name.substring(1);  
             }  
-            // Èç¹ûÇ°°ë²¿·ÖºÍ¶¨ÒåµÄ°üÃûÏàÍ¬  
+            // å¦‚æœå‰åŠéƒ¨åˆ†å’Œå®šä¹‰çš„åŒ…åç›¸åŒ  
               if (name.startsWith(packageDirName)) {  
             int idx = name.lastIndexOf('/');  
-            // Èç¹ûÒÔ"/"½áÎ² ÊÇÒ»¸ö°ü  
+            // å¦‚æœä»¥"/"ç»“å°¾ æ˜¯ä¸€ä¸ªåŒ…  
               if (idx != -1) {  
-              // »ñÈ¡°üÃû °Ñ"/"Ìæ»»³É"."  
+              // è·å–åŒ…å æŠŠ"/"æ›¿æ¢æˆ"."  
               packageName = name.substring(0, idx).replace('/', '.');  
              }  
-             // Èç¹û¿ÉÒÔµü´úÏÂÈ¥ ²¢ÇÒÊÇÒ»¸ö°ü  
+             // å¦‚æœå¯ä»¥è¿­ä»£ä¸‹å» å¹¶ä¸”æ˜¯ä¸€ä¸ªåŒ…  
                if ((idx != -1) || recursive) {  
-               // Èç¹ûÊÇÒ»¸ö.classÎÄ¼ş ¶øÇÒ²»ÊÇÄ¿Â¼  
+               // å¦‚æœæ˜¯ä¸€ä¸ª.classæ–‡ä»¶ è€Œä¸”ä¸æ˜¯ç›®å½•  
                  if (name.endsWith(".class")&& !entry.isDirectory()) {  
-                 // È¥µôºóÃæµÄ".class" »ñÈ¡ÕæÕıµÄÀàÃû  
+                 // å»æ‰åé¢çš„".class" è·å–çœŸæ­£çš„ç±»å  
                    String className = name.substring(  
                               packageName.length() + 1, name.length() - 6);  
                  try {  
-                   // Ìí¼Óµ½classes  
+                   // æ·»åŠ åˆ°classes  
                    classes.add(Class.forName(packageName + '.'+ className));  
                  } catch (ClassNotFoundException e) {  
                    // log  
-                   // .error("Ìí¼ÓÓÃ»§×Ô¶¨ÒåÊÓÍ¼Àà´íÎó ÕÒ²»µ½´ËÀàµÄ.classÎÄ¼ş");  
+                   // .error("æ·»åŠ ç”¨æˆ·è‡ªå®šä¹‰è§†å›¾ç±»é”™è¯¯ æ‰¾ä¸åˆ°æ­¤ç±»çš„.classæ–‡ä»¶");  
                    e.printStackTrace();  
                  }  
                }  
@@ -101,7 +101,7 @@ public static Set<Class<?>> getClasses(String pack) {
            }  
          }  
        } catch (IOException e) {  
-         // log.error("ÔÚÉ¨ÃèÓÃ»§¶¨ÒåÊÓÍ¼Ê±´Ójar°ü»ñÈ¡ÎÄ¼ş³ö´í");  
+         // log.error("åœ¨æ‰«æç”¨æˆ·å®šä¹‰è§†å›¾æ—¶ä»jaråŒ…è·å–æ–‡ä»¶å‡ºé”™");  
          e.printStackTrace();  
        }  
      }  
@@ -114,7 +114,7 @@ return classes;
 }  
       
 /** 
- * ÒÔÎÄ¼şµÄĞÎÊ½À´»ñÈ¡°üÏÂµÄËùÓĞClass 
+ * ä»¥æ–‡ä»¶çš„å½¢å¼æ¥è·å–åŒ…ä¸‹çš„æ‰€æœ‰Class 
  *  
  * @param packageName 
  * @param packagePath 
@@ -123,42 +123,42 @@ return classes;
 */  
 public static void findAndAddClassesInPackageByFile(String packageName,  
     String packagePath, final boolean recursive, Set<Class<?>> classes) {  
-// »ñÈ¡´Ë°üµÄÄ¿Â¼ ½¨Á¢Ò»¸öFile  
+// è·å–æ­¤åŒ…çš„ç›®å½• å»ºç«‹ä¸€ä¸ªFile  
 File dir = new File(packagePath);  
-// Èç¹û²»´æÔÚ»òÕß Ò²²»ÊÇÄ¿Â¼¾ÍÖ±½Ó·µ»Ø  
+// å¦‚æœä¸å­˜åœ¨æˆ–è€… ä¹Ÿä¸æ˜¯ç›®å½•å°±ç›´æ¥è¿”å›  
 if (!dir.exists() || !dir.isDirectory()) {  
-  // log.warn("ÓÃ»§¶¨Òå°üÃû " + packageName + " ÏÂÃ»ÓĞÈÎºÎÎÄ¼ş");  
+  // log.warn("ç”¨æˆ·å®šä¹‰åŒ…å " + packageName + " ä¸‹æ²¡æœ‰ä»»ä½•æ–‡ä»¶");  
   return;  
 }  
-// Èç¹û´æÔÚ ¾Í»ñÈ¡°üÏÂµÄËùÓĞÎÄ¼ş °üÀ¨Ä¿Â¼  
+// å¦‚æœå­˜åœ¨ å°±è·å–åŒ…ä¸‹çš„æ‰€æœ‰æ–‡ä»¶ åŒ…æ‹¬ç›®å½•  
 File[] dirfiles = dir.listFiles(new FileFilter() {  
-  // ×Ô¶¨Òå¹ıÂË¹æÔò Èç¹û¿ÉÒÔÑ­»·(°üº¬×ÓÄ¿Â¼) »òÔòÊÇÒÔ.class½áÎ²µÄÎÄ¼ş(±àÒëºÃµÄjavaÀàÎÄ¼ş)  
+  // è‡ªå®šä¹‰è¿‡æ»¤è§„åˆ™ å¦‚æœå¯ä»¥å¾ªç¯(åŒ…å«å­ç›®å½•) æˆ–åˆ™æ˜¯ä»¥.classç»“å°¾çš„æ–‡ä»¶(ç¼–è¯‘å¥½çš„javaç±»æ–‡ä»¶)  
   public boolean accept(File file) {  
     return (recursive && file.isDirectory())||   
                     (file.getName().endsWith(".class"));  
 }  
 });  
-// Ñ­»·ËùÓĞÎÄ¼ş  
+// å¾ªç¯æ‰€æœ‰æ–‡ä»¶  
 for (File file : dirfiles) {  
-// Èç¹ûÊÇÄ¿Â¼ Ôò¼ÌĞøÉ¨Ãè  
+// å¦‚æœæ˜¯ç›®å½• åˆ™ç»§ç»­æ‰«æ  
 if (file.isDirectory()) {  
 findAndAddClassesInPackageByFile(packageName + "."  
         + file.getName(), file.getAbsolutePath(), recursive,  
         classes);  
 } else {  
-// Èç¹ûÊÇjavaÀàÎÄ¼ş È¥µôºóÃæµÄ.class Ö»ÁôÏÂÀàÃû  
+// å¦‚æœæ˜¯javaç±»æ–‡ä»¶ å»æ‰åé¢çš„.class åªç•™ä¸‹ç±»å  
 String className = file.getName().substring(0,  
                     file.getName().length() - 6);  
 try {  
-// Ìí¼Óµ½¼¯ºÏÖĞÈ¥  
+// æ·»åŠ åˆ°é›†åˆä¸­å»  
 //classes.add(Class.forName(packageName + '.' + className));  
-//¾­¹ı»Ø¸´Í¬Ñ§µÄÌáĞÑ£¬ÕâÀïÓÃforNameÓĞÒ»Ğ©²»ºÃ£¬»á´¥·¢static·½·¨£¬  
-//Ã»ÓĞÊ¹ÓÃclassLoaderµÄload¸É¾»  
+//ç»è¿‡å›å¤åŒå­¦çš„æé†’ï¼Œè¿™é‡Œç”¨forNameæœ‰ä¸€äº›ä¸å¥½ï¼Œä¼šè§¦å‘staticæ–¹æ³•ï¼Œ  
+//æ²¡æœ‰ä½¿ç”¨classLoaderçš„loadå¹²å‡€  
 classes.add(Thread.currentThread()  
         .getContextClassLoader()  
         .loadClass(packageName + '.' + className));    
 } catch (ClassNotFoundException e) {  
-// log.error("Ìí¼ÓÓÃ»§×Ô¶¨ÒåÊÓÍ¼Àà´íÎó ÕÒ²»µ½´ËÀàµÄ.classÎÄ¼ş");  
+// log.error("æ·»åŠ ç”¨æˆ·è‡ªå®šä¹‰è§†å›¾ç±»é”™è¯¯ æ‰¾ä¸åˆ°æ­¤ç±»çš„.classæ–‡ä»¶");  
 e.printStackTrace();  
 }  
 }  

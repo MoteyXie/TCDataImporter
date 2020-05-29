@@ -34,13 +34,13 @@ public class SFGKBomImporter extends AbstractImporter {
 	@Override
 	public String getName() {
 		
-		return "ÉÏ·ç¸ß¿ÆBOMµ¼Èë³ÌĞò";
+		return "ä¸Šé£é«˜ç§‘BOMå¯¼å…¥ç¨‹åº";
 		
 	}
 	
 	@Override
 	public void onSingleMessage(int index, String msg) throws Exception {
-		System.out.println("µÚ" +index+ "ĞĞ:"+msg);		
+		System.out.println("ç¬¬" +index+ "è¡Œ:"+msg);		
 	}	
 	
 
@@ -72,7 +72,7 @@ public class SFGKBomImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) throws Exception {
-		System.out.println("µÚ" +index+ "ĞĞ¿ªÊ¼");		
+		System.out.println("ç¬¬" +index+ "è¡Œå¼€å§‹");		
 	}
 
 	@Override
@@ -84,12 +84,12 @@ public class SFGKBomImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleError(int index, Exception e) throws Exception {
-		System.out.println("µÚ" +index+ "ĞĞÒì³££º" + e.getMessage());
+		System.out.println("ç¬¬" +index+ "è¡Œå¼‚å¸¸ï¼š" + e.getMessage());
 	}
 
 	@Override
 	public void onStart() throws Exception {
-		System.out.println("BOMµ¼Èë¿ªÊ¼");		
+		System.out.println("BOMå¯¼å…¥å¼€å§‹");		
 		
 	}
 
@@ -146,16 +146,16 @@ public class SFGKBomImporter extends AbstractImporter {
 		int i = 0;
 		while(i<=values.size()-1){
 			
-			driver.onSingleMessage(i, "µ¼Èë¿ªÊ¼...");			
+			driver.onSingleMessage(i, "å¯¼å…¥å¼€å§‹...");			
 			int lastRow = i;
 			int lineCount = 0;
-			parentId = getValue(i, "¸¸ÏîID")+ "";
-			lineId = getValue(i, "×ÓÏîID")+"";
+			parentId = getValue(i, "çˆ¶é¡¹ID")+ "";
+			lineId = getValue(i, "å­é¡¹ID")+"";
 			if (lineId.length()>0) {
 				lineCount++;
 			}
 			for (int j=i+1; j<values.size(); j++) {
-				parentId2 = getValue(j,"¸¸ÏîID" )+ "";
+				parentId2 = getValue(j,"çˆ¶é¡¹ID" )+ "";
 				if (parentId.equals(parentId2)) {
 					lineCount++;
 					lastRow = j;
@@ -165,20 +165,20 @@ public class SFGKBomImporter extends AbstractImporter {
 				}
 			}
 			if (lineCount == 0) {
-				driver.onSingleError(i, new Exception("Ã»ÓĞ½á¹¹BOM£¬ºöÂÔ´ËĞĞ"));
+				driver.onSingleError(i, new Exception("æ²¡æœ‰ç»“æ„BOMï¼Œå¿½ç•¥æ­¤è¡Œ"));
 
 			}
 			parentObj = queryObj(parentId);
 			if (parentObj == null) {
 				hasError = true;				
-				driver.onSingleError(i, new Exception("¸¸ÏîÎïÁÏ²»´æÔÚ£¬ÎŞ·¨µ¼Èëµ±Ç°BOM¡£"));
+				driver.onSingleError(i, new Exception("çˆ¶é¡¹ç‰©æ–™ä¸å­˜åœ¨ï¼Œæ— æ³•å¯¼å…¥å½“å‰BOMã€‚"));
 				
 			}
 			boolean linesOK = true;
 			children.clear();
 
 			for (int j=i; j<=lastRow; j++) {
-				lineId = getValue(j, "×ÓÏîID")+"";
+				lineId = getValue(j, "å­é¡¹ID")+"";
 				if (lineId.length() == 0) {
 					continue;
 				}				
@@ -186,22 +186,22 @@ public class SFGKBomImporter extends AbstractImporter {
 				if (lineObj == null) {
 					linesOK = false;
 					hasError = true;
-					driver.onSingleError(j, new Exception("´Ë×ÓÏî¶ÔÏó²»´æÔÚ£¬Õû¸öBOMÎŞ·¨µ¼Èë"));
+					driver.onSingleError(j, new Exception("æ­¤å­é¡¹å¯¹è±¡ä¸å­˜åœ¨ï¼Œæ•´ä¸ªBOMæ— æ³•å¯¼å…¥"));
 					continue;
 				}				
 				if (parentObj!=null&&lineObj!=null) {
-					driver.onSingleMessage(j, ">>×ÓBOMĞĞ¼ì²éok");
+					driver.onSingleMessage(j, ">>å­BOMè¡Œæ£€æŸ¥ok");
 					children.put(j, lineObj);
 				}
 			}
 			if(!linesOK) {
 				for (int z = i; z <=lastRow ; z++) {
-					driver.onSingleError(z, new Exception(">>µ¼ÈëÊ§°Ü£¡²¿·Ö×ÓÏîÊı¾İ¼ì²éÊ§°Ü£¬ÎŞ·¨µ¼Èëµ±Ç°BOM£¡"));
+					driver.onSingleError(z, new Exception(">>å¯¼å…¥å¤±è´¥ï¼éƒ¨åˆ†å­é¡¹æ•°æ®æ£€æŸ¥å¤±è´¥ï¼Œæ— æ³•å¯¼å…¥å½“å‰BOMï¼"));
 				}
 			}
 			if(parentObj==null) {
 				for (int z = i; z <=lastRow ; z++) {
-					driver.onSingleError(z, new Exception(">>µ¼ÈëÊ§°Ü£¡¸¸ÏîÎïÁÏ²»´æÔÚ£¬ÎŞ·¨µ¼Èëµ±Ç°BOM¡£"));
+					driver.onSingleError(z, new Exception(">>å¯¼å…¥å¤±è´¥ï¼çˆ¶é¡¹ç‰©æ–™ä¸å­˜åœ¨ï¼Œæ— æ³•å¯¼å…¥å½“å‰BOMã€‚"));
 				}
 			}
 			i = lastRow;
@@ -216,18 +216,18 @@ public class SFGKBomImporter extends AbstractImporter {
 				oldBvr = BOMUtil.findBVR(parentObj, viewType);
 				if (oldBvr != null) {
 					if (ForceUpdateFlag) {
-						driver.onSingleMessage(i-1, ">>½á¹¹BOMÒÑ¾­´æÔÚ£¬½«±»É¾³ıÖØ½¨£¡");
+						driver.onSingleMessage(i-1, ">>ç»“æ„BOMå·²ç»å­˜åœ¨ï¼Œå°†è¢«åˆ é™¤é‡å»ºï¼");
 						removeFlag = -1;
 					}
 					else {
-						driver.onSingleMessage(i-1, ">>½á¹¹BOMÒÑ¾­´æÔÚ£¬²»ÔÙÖØ¸´µ¼Èë´ËBOM£¡");
+						driver.onSingleMessage(i-1, ">>ç»“æ„BOMå·²ç»å­˜åœ¨ï¼Œä¸å†é‡å¤å¯¼å…¥æ­¤BOMï¼");
 						continue;
 					}
 				}
 			}
 			catch(Exception ex) {
 				hasError = true;
-				driver.onSingleMessage(i-1, "´´½¨BOMÊ§°Ü"+ex.toString());
+				driver.onSingleMessage(i-1, "åˆ›å»ºBOMå¤±è´¥"+ex.toString());
 				continue;
 			}
 
@@ -238,12 +238,12 @@ public class SFGKBomImporter extends AbstractImporter {
 				ret = createStructureBOM(parentObj, children, null);
 			}
 			
-			//µ¼Èë±£´æ
+			//å¯¼å…¥ä¿å­˜
 			if (ret == null) {
-				driver.onSingleMessage(i-1, ">>½á¹¹BOMµ¼Èë³É¹¦£¡");
+				driver.onSingleMessage(i-1, ">>ç»“æ„BOMå¯¼å…¥æˆåŠŸï¼");
 			}else {
 				hasError = true;
-				driver.onSingleError(i+1, new Exception(parentId + ">>½á¹¹BOMµ¼ÈëÊ§°Ü£¡"));
+				driver.onSingleError(i+1, new Exception(parentId + ">>ç»“æ„BOMå¯¼å…¥å¤±è´¥ï¼"));
 			}		
 		}		
 		onFinish();
@@ -289,7 +289,7 @@ public class SFGKBomImporter extends AbstractImporter {
 			topLine.setPrecision(false);
 			
 			if (bvr0 != null) {
-//				ui.addMsg("¿ªÊ¼É¾³ıBOM½á¹¹£¡");
+//				ui.addMsg("å¼€å§‹åˆ é™¤BOMç»“æ„ï¼");
 //				topLine.setPrecision(true);
 				AIFComponentContext[] ctx = topLine.getChildren();
 				if (ctx != null) {
@@ -302,19 +302,19 @@ public class SFGKBomImporter extends AbstractImporter {
 				
 				topLine.save();
 				bomWin.save();
-//				ui.addMsg("É¾³ıBOM½á¹¹³É¹¦");
+//				ui.addMsg("åˆ é™¤BOMç»“æ„æˆåŠŸ");
 			}
 
 			String v = null;
 			TCComponentBOMLine subLine = null;
-//			ui.addMsg("¿ªÊ¼´î½¨BOM½á¹¹");
+//			ui.addMsg("å¼€å§‹æ­å»ºBOMç»“æ„");
 			
 			for (Integer i : children.keySet()) {
 				TCComponent comp = children.get(i);
 				subLine = topLine.addBOMLine(topLine, comp, null);
 				
-//				ÉèÖÃ°æ±¾ÊôĞÔÉÏµÄ
-				v = getValue(i, "ÓÃÁ¿")+"";
+//				è®¾ç½®ç‰ˆæœ¬å±æ€§ä¸Šçš„
+				v = getValue(i, "ç”¨é‡")+"";
 				subLine.setProperty("bl_quantity", v);									
 				subLine.save();
 			}
@@ -326,7 +326,7 @@ public class SFGKBomImporter extends AbstractImporter {
 		catch(Exception e) {
 			e.printStackTrace();
 //			ui.addMsg(parentRev + ":"+e.getMessage());
-			ret = "´´½¨½á¹¹BOMÊ±³ö´í£º" + e.getMessage();
+			ret = "åˆ›å»ºç»“æ„BOMæ—¶å‡ºé”™ï¼š" + e.getMessage();
 			BOMUtil.removeBOM(bomWin, bvr);
 		}		
 		return ret;

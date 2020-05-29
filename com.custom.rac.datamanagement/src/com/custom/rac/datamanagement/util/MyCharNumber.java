@@ -7,7 +7,7 @@ public class MyCharNumber {
 	private String str;
 	
 	public MyCharNumber(String str) {
-		//È¥³ıÊı×Ö£¬Ö»±£Áô×ÖÄ¸
+		//å»é™¤æ•°å­—ï¼Œåªä¿ç•™å­—æ¯
 		this.str = Pattern.compile("[\\d]").matcher(str).replaceAll("").toUpperCase();
 	}
 	
@@ -20,7 +20,7 @@ public class MyCharNumber {
 	}
 	
 	/**
-	 * ½«×Ö·û´®×ª»»³É26½øÖÆµÄÊı
+	 * å°†å­—ç¬¦ä¸²è½¬æ¢æˆ26è¿›åˆ¶çš„æ•°
 	 * @return
 	 */
 	public int getValue() {
@@ -69,7 +69,7 @@ public class MyCharNumber {
 	
 	
 	/** 
-     * ×Ö·û´®×ª»»ÎªAscii 
+     * å­—ç¬¦ä¸²è½¬æ¢ä¸ºAscii 
      * @param value 
      * @return 
      */ 
@@ -90,7 +90,7 @@ public class MyCharNumber {
     } 
     
     /** 
-     * Ascii×ª»»Îª×Ö·û´® 
+     * Asciiè½¬æ¢ä¸ºå­—ç¬¦ä¸² 
      * @param value 
      * @return 
      */ 

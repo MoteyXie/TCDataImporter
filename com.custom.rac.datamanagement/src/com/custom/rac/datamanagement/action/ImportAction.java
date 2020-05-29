@@ -28,7 +28,7 @@ public class ImportAction extends AbstractTableAction{
 		String selection = tableViewPart.importerSelecter.getText();
 		
 		if(selection == null || selection.length() < 1) {
-			throw new Exception("ÇëÑ¡ÔñÒ»¸öµ¼Èë³ÌÐò£¡");
+			throw new Exception("è¯·é€‰æ‹©ä¸€ä¸ªå¯¼å…¥ç¨‹åºï¼");
 		}
 		IImporter importer = importerReader.getImporter(selection);
 		
@@ -47,7 +47,7 @@ public class ImportAction extends AbstractTableAction{
 				try {
 					importer.execute();
 				} catch (Exception e) {
-					MessageBox.post(e.toString(),"´íÎó",MessageBox.ERROR);
+					MessageBox.post(e.toString(),"é”™è¯¯",MessageBox.ERROR);
 					e.printStackTrace();
 				}
 			}

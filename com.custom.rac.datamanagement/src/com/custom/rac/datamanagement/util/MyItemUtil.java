@@ -87,7 +87,7 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * Ğ»Ã÷ÓîÌí¼Ó
+	 * è°¢æ˜å®‡æ·»åŠ 
 	 * @param type
 	 */
 	public void setItemType(String type){
@@ -97,7 +97,7 @@ public class MyItemUtil {
 	
 	public TCComponentItemType getItemType() {
 		if (ITEM_TYPE == null) {
-			logger.error("»ñÈ¡ItemÀàĞÍ¶ÔÏó³ö´í£ºÀàĞÍÃûÎªnull");
+			logger.error("è·å–Itemç±»å‹å¯¹è±¡å‡ºé”™ï¼šç±»å‹åä¸ºnull");
 			return null;
 		}
 
@@ -114,7 +114,7 @@ public class MyItemUtil {
 		}
 		catch(Exception e) {
 			lastErrorMsg = e.getMessage();
-			logger.error("»ñÈ¡ItemÀàĞÍ¶ÔÏó³ö´í£º" + e.getMessage());
+			logger.error("è·å–Itemç±»å‹å¯¹è±¡å‡ºé”™ï¼š" + e.getMessage());
 		}
 
 		itemType = ret;
@@ -174,7 +174,7 @@ public class MyItemUtil {
 	public TCComponentItem find(String itemId) {
 		getItemType();
 		if (itemType == null) {
-			logger.error("»ñÈ¡ItemÀàĞÍ¶ÔÏó³ö´í£¬ÎŞ·¨²éÑ¯Item¶ÔÏó");
+			logger.error("è·å–Itemç±»å‹å¯¹è±¡å‡ºé”™ï¼Œæ— æ³•æŸ¥è¯¢Itemå¯¹è±¡");
 			return null;
 		}
 
@@ -184,7 +184,7 @@ public class MyItemUtil {
 		}
 		catch(Exception e) {
 			lastErrorMsg = e.getMessage();
-			logger.error("²éÑ¯Item¶ÔÏóÊ±³ö´í£¨" + itemId + "£©£º" + e.getMessage());
+			logger.error("æŸ¥è¯¢Itemå¯¹è±¡æ—¶å‡ºé”™ï¼ˆ" + itemId + "ï¼‰ï¼š" + e.getMessage());
 		}
 
 		return ret;
@@ -194,8 +194,8 @@ public class MyItemUtil {
 		try {
 			TCSession ss = (TCSession) AIFUtility.getDefaultSession();
 			TCComponentQueryType qType = (TCComponentQueryType)ss.getTypeComponent("ImanQuery");
-			TCComponentQuery query = (TCComponentQuery)qType.find("³£¹æ...");
-			String[] fields = new String[] { "Ãû³Æ" };
+			TCComponentQuery query = (TCComponentQuery)qType.find("å¸¸è§„...");
+			String[] fields = new String[] { "åç§°" };
 			String[] values = new String[] { itemName };
 			TCComponent[] ret = query.execute(fields, values);
 			
@@ -212,8 +212,8 @@ public class MyItemUtil {
 		try {
 			TCSession ss = (TCSession) AIFUtility.getDefaultSession();
 			TCComponentQueryType qType = (TCComponentQueryType)ss.getTypeComponent("ImanQuery");
-			TCComponentQuery query = (TCComponentQuery)qType.find("³£¹æ...");
-			String[] fields = new String[] { "ÀàĞÍ", "Ãû³Æ" };
+			TCComponentQuery query = (TCComponentQuery)qType.find("å¸¸è§„...");
+			String[] fields = new String[] { "ç±»å‹", "åç§°" };
 			String[] values = new String[] { itemType, itemName };
 			TCComponent[] ret = query.execute(fields, values);
 			
@@ -230,7 +230,7 @@ public class MyItemUtil {
 		TCComponentForm ret = null;
 
 		if (rev == null) {
-			logger.error("ÎŞ·¨»ñÈ¡ItemRevisionMaster¶ÔÏó£ºItemRevisionÎª¿Õ");
+			logger.error("æ— æ³•è·å–ItemRevisionMasterå¯¹è±¡ï¼šItemRevisionä¸ºç©º");
 			return null;
 		}
 		try {
@@ -238,7 +238,7 @@ public class MyItemUtil {
 			ret = (TCComponentForm)afcs[0].getComponent();
 		}
 		catch(Exception e) {
-			logger.error("»ñÈ¡ItemRevisionMasterÊ±³ö´í£º" + e.getMessage());
+			logger.error("è·å–ItemRevisionMasteræ—¶å‡ºé”™ï¼š" + e.getMessage());
 			return null;
 		}
 
@@ -262,7 +262,7 @@ public class MyItemUtil {
 		}
 		catch(Exception e) {
 			lastErrorMsg = e.getMessage();
-			logger.error("»ñÈ¡¼ÆÁ¿µ¥Î»Çåµ¥³ö´í£º" + e.getMessage());
+			logger.error("è·å–è®¡é‡å•ä½æ¸…å•å‡ºé”™ï¼š" + e.getMessage());
 		}
 
 		return ret;
@@ -277,16 +277,16 @@ public class MyItemUtil {
 		}
 		catch(Exception e) {
 			lastErrorMsg = e.getMessage();
-			logger.error("»ñÈ¡BOMWindowÀàĞÍÊ§°Ü£º" + e.getMessage());
+			logger.error("è·å–BOMWindowç±»å‹å¤±è´¥ï¼š" + e.getMessage());
 		}
 
 		return ret;
 	}
 	
 	/**
-	 * »ñÈ¡¶ÔÏó£¨»ò¶ÔÏó°æ±¾£©Ö÷±íÉÏµÄËùÓĞÊôĞÔÃû
+	 * è·å–å¯¹è±¡ï¼ˆæˆ–å¯¹è±¡ç‰ˆæœ¬ï¼‰ä¸»è¡¨ä¸Šçš„æ‰€æœ‰å±æ€§å
 	 * 
-	 * ×¢Òâ£ºÈôsubItemTypeÎª¿Õ£¬Ä¬ÈÏÊ¹ÓÃµ±Ç°¶ÔÏóµÄÀàĞÍ
+	 * æ³¨æ„ï¼šè‹¥subItemTypeä¸ºç©ºï¼Œé»˜è®¤ä½¿ç”¨å½“å‰å¯¹è±¡çš„ç±»å‹
 	 * 
 	 * @param subItemType
 	 * @return
@@ -334,9 +334,9 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * »ñÈ¡¶ÔÏó£¨»ò¶ÔÏó°æ±¾µÈ£©µÄËùÓĞÊôĞÔÃû
+	 * è·å–å¯¹è±¡ï¼ˆæˆ–å¯¹è±¡ç‰ˆæœ¬ç­‰ï¼‰çš„æ‰€æœ‰å±æ€§å
 	 * 
-	 * ×¢Òâ£ºÈôtypeNameÎª¿Õ£¬Ä¬ÈÏÊ¹ÓÃµ±Ç°¶ÔÏó£¨Item£©µÄÀàĞÍ
+	 * æ³¨æ„ï¼šè‹¥typeNameä¸ºç©ºï¼Œé»˜è®¤ä½¿ç”¨å½“å‰å¯¹è±¡ï¼ˆItemï¼‰çš„ç±»å‹
 	 * 
 	 * @param typeName
 	 * @return
@@ -370,7 +370,7 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * ×¢Òâ£ºÈôsubItemTypeÎª¿Õ£¬Ä¬ÈÏÊ¹ÓÃµ±Ç°¶ÔÏóµÄÀàĞÍ
+	 * æ³¨æ„ï¼šè‹¥subItemTypeä¸ºç©ºï¼Œé»˜è®¤ä½¿ç”¨å½“å‰å¯¹è±¡çš„ç±»å‹
 	 * 
 	 * @param subItemType
 	 * @return
@@ -421,9 +421,9 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * »ñÈ¡¶ÔÏó£¨»ò¶ÔÏó°æ±¾£©Ö÷±íÉÏµÄËùÓĞÊôĞÔÃèÊö¶ÔÏó
+	 * è·å–å¯¹è±¡ï¼ˆæˆ–å¯¹è±¡ç‰ˆæœ¬ï¼‰ä¸»è¡¨ä¸Šçš„æ‰€æœ‰å±æ€§æè¿°å¯¹è±¡
 	 * 
-	 * ×¢Òâ£ºÈôsubItemTypeÎª¿Õ£¬Ä¬ÈÏÊ¹ÓÃµ±Ç°¶ÔÏóµÄÀàĞÍ
+	 * æ³¨æ„ï¼šè‹¥subItemTypeä¸ºç©ºï¼Œé»˜è®¤ä½¿ç”¨å½“å‰å¯¹è±¡çš„ç±»å‹
 	 * 
 	 * @param subItemType
 	 * @return
@@ -465,9 +465,9 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * »ñÈ¡¶ÔÏó£¨»ò¶ÔÏó°æ±¾£©ÉÏµÄËùÓĞÊôĞÔÃèÊö¶ÔÏó
+	 * è·å–å¯¹è±¡ï¼ˆæˆ–å¯¹è±¡ç‰ˆæœ¬ï¼‰ä¸Šçš„æ‰€æœ‰å±æ€§æè¿°å¯¹è±¡
 	 * 
-	 * ×¢Òâ£ºÈôsubItemTypeÎª¿Õ£¬Ä¬ÈÏÊ¹ÓÃµ±Ç°¶ÔÏóµÄÀàĞÍ
+	 * æ³¨æ„ï¼šè‹¥subItemTypeä¸ºç©ºï¼Œé»˜è®¤ä½¿ç”¨å½“å‰å¯¹è±¡çš„ç±»å‹
 	 * 
 	 * @param revType
 	 * @return
@@ -509,9 +509,9 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * »ñÈ¡¶ÔÏó£¨»ò¶ÔÏó°æ±¾£©ÉÏµÄËùÓĞÊôĞÔÃèÊö¶ÔÏó
+	 * è·å–å¯¹è±¡ï¼ˆæˆ–å¯¹è±¡ç‰ˆæœ¬ï¼‰ä¸Šçš„æ‰€æœ‰å±æ€§æè¿°å¯¹è±¡
 	 * 
-	 * ×¢Òâ£ºÈôitemTypeÎª¿Õ£¬Ä¬ÈÏÊ¹ÓÃµ±Ç°¶ÔÏóµÄÀàĞÍ
+	 * æ³¨æ„ï¼šè‹¥itemTypeä¸ºç©ºï¼Œé»˜è®¤ä½¿ç”¨å½“å‰å¯¹è±¡çš„ç±»å‹
 	 * 
 	 * @param itemType
 	 * @return
@@ -676,15 +676,15 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * É¾³ıÒ»¸öITEM
+	 * åˆ é™¤ä¸€ä¸ªITEM
 	 * 
-	 * ×¢Òâ£º
-	 * 1.Èç¹ûITEM±»ÆäËû¶ÔÏóËùÊ¹ÓÃ£¬½«ÎŞ·¨É¾³ı
-	 * 2.Èç¹ûÓĞ¸½¼ş£¬Ôò³ÌĞòÒ²»áÉ¾³ı¸Ã¸½¼şµÄËùÓĞrelName¹ØÏµ£¬ÔÙ³¢ÊÔÉ¾³ı´Ë¸½¼ş£¡£¡£¨Ğ¡ĞÄ£©
-	 * 3.ÈôITEMÉ¾³ıÊ§°Ü£¬¿ÉÄÜ»áÔì³É´ËITEMµÄ²¿·Ö×Ó¶ÔÏóÒÑ¾­±»É¾³ı£¬ÎŞ·¨»Ö¸´£¡£¡
+	 * æ³¨æ„ï¼š
+	 * 1.å¦‚æœITEMè¢«å…¶ä»–å¯¹è±¡æ‰€ä½¿ç”¨ï¼Œå°†æ— æ³•åˆ é™¤
+	 * 2.å¦‚æœæœ‰é™„ä»¶ï¼Œåˆ™ç¨‹åºä¹Ÿä¼šåˆ é™¤è¯¥é™„ä»¶çš„æ‰€æœ‰relNameå…³ç³»ï¼Œå†å°è¯•åˆ é™¤æ­¤é™„ä»¶ï¼ï¼ï¼ˆå°å¿ƒï¼‰
+	 * 3.è‹¥ITEMåˆ é™¤å¤±è´¥ï¼Œå¯èƒ½ä¼šé€ æˆæ­¤ITEMçš„éƒ¨åˆ†å­å¯¹è±¡å·²ç»è¢«åˆ é™¤ï¼Œæ— æ³•æ¢å¤ï¼ï¼
 	 * 
-	 * @param item Áã×é¼ş¶Ô½Ç
-	 * @return ³É¹¦Ôò·µ»Ønull£¬·ñÔò·µ»Ø³ö´íĞÅÏ¢
+	 * @param item é›¶ç»„ä»¶å¯¹è§’
+	 * @return æˆåŠŸåˆ™è¿”å›nullï¼Œå¦åˆ™è¿”å›å‡ºé”™ä¿¡æ¯
 	 * 
 	 */
 	public String deleteItem(TCComponentItem item, boolean deleteDataset) {
@@ -695,15 +695,15 @@ public class MyItemUtil {
 			
 			TCComponent[] used = item.whereUsed(TCComponentItem.WHERE_USED_ALL);
 			if (used != null && used.length > 0) {
-				return "ITEMÒÑ±»Ê¹ÓÃ£¬ÎŞ·¨É¾³ı";
+				return "ITEMå·²è¢«ä½¿ç”¨ï¼Œæ— æ³•åˆ é™¤";
 			}
 			
-			//1.´¦ÀíÊı¾İ¼¯
+			//1.å¤„ç†æ•°æ®é›†
 			if (deleteDataset) {
 				deleteDataset(item, false);
 			}
 			
-			//2.´¦Àí¶ÔÏó°æ±¾
+			//2.å¤„ç†å¯¹è±¡ç‰ˆæœ¬
 			TCComponentItemRevision[] revs = getAllRevision(item);
 			if (revs != null) {
 				for (TCComponentItemRevision rev : revs) {
@@ -714,13 +714,13 @@ public class MyItemUtil {
 				}
 			}
 			
-			//3.´¦Àíitem×ÔÉí
+			//3.å¤„ç†itemè‡ªèº«
 			removeAllReference(item, false);
 			
 			item.delete();
 		}
 		catch(Exception e) {
-			ret = "É¾³ıITEMÊ±Òì³££º" + e.getMessage();
+			ret = "åˆ é™¤ITEMæ—¶å¼‚å¸¸ï¼š" + e.getMessage();
 			e.printStackTrace();
 		}
 		
@@ -751,7 +751,7 @@ public class MyItemUtil {
 			}
 		}
 		catch(Exception e) {
-			ret = "ÒÆ³ı¹ØÏµÊ§°Ü£º" + e.getMessage();
+			ret = "ç§»é™¤å…³ç³»å¤±è´¥ï¼š" + e.getMessage();
 			if (showError) e.printStackTrace();
 		}
 		
@@ -791,7 +791,7 @@ public class MyItemUtil {
 
 		}
 		catch(Exception e) {
-			ret = "É¾³ıÊı¾İ¼¯Ê§°Ü£º" + e.getMessage();
+			ret = "åˆ é™¤æ•°æ®é›†å¤±è´¥ï¼š" + e.getMessage();
 			if (showError) e.printStackTrace();
 		}
 		
@@ -799,14 +799,14 @@ public class MyItemUtil {
 	}
 	
 	/**
-	 * É¾³ıÒ»¸öItemRevision
-	 * ×¢Òâ£º
-	 * 1.Èç¹û¸ÃItemRevision±»BOMËùÒıÓÃ£¬ÔòÉ¾³ıÊ§°Ü£¡
-	 * 2.Èç¹ûdeleteDatasetÎªtrue£¬Ôò³ÌĞò³¢ÊÔÉ¾³ıÆäÏÂµÄÊı¾İ¼¯
+	 * åˆ é™¤ä¸€ä¸ªItemRevision
+	 * æ³¨æ„ï¼š
+	 * 1.å¦‚æœè¯¥ItemRevisionè¢«BOMæ‰€å¼•ç”¨ï¼Œåˆ™åˆ é™¤å¤±è´¥ï¼
+	 * 2.å¦‚æœdeleteDatasetä¸ºtrueï¼Œåˆ™ç¨‹åºå°è¯•åˆ é™¤å…¶ä¸‹çš„æ•°æ®é›†
 	 * 
 	 * @param rev
 	 * @param deleteDataset
-	 * @return É¾³ı³É¹¦Ôò·µ»Ønull£¬·ñÔò·µ»Ø³ö´íĞÅÏ¢
+	 * @return åˆ é™¤æˆåŠŸåˆ™è¿”å›nullï¼Œå¦åˆ™è¿”å›å‡ºé”™ä¿¡æ¯
 	 */
 	public String deleteItemRevision(TCComponentItemRevision rev, boolean deleteDataset) {
 		String ret = null;
@@ -816,21 +816,21 @@ public class MyItemUtil {
 		try {
 			TCComponent[] used = rev.whereUsed(TCComponentItem.WHERE_USED_ALL);
 			if (used != null && used.length > 0) {
-				return "ItemRevisonÒÑ±»Ê¹ÓÃ£¬ÎŞ·¨É¾³ı";
+				return "ItemRevisonå·²è¢«ä½¿ç”¨ï¼Œæ— æ³•åˆ é™¤";
 			}
 			
-			//´¦ÀíÊı¾İ¼¯
+			//å¤„ç†æ•°æ®é›†
 			if (deleteDataset) {
 				deleteDataset(rev, false);
 			}
 			
-			//´¦Àírev×ÔÉí
+			//å¤„ç†revè‡ªèº«
 			removeAllReference(rev, false);
 			
 			rev.delete();
 		}
 		catch(Exception e) {
-			ret = "É¾³ıItemRevsionÊ§°Ü£º" + e.getMessage();
+			ret = "åˆ é™¤ItemRevsionå¤±è´¥ï¼š" + e.getMessage();
 			e.printStackTrace();
 		}
 		return ret;

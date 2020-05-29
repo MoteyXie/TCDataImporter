@@ -31,7 +31,7 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 	
 	@Override
 	public void onSingleStart(int index) {
-		System.out.println("Çý¶¯½çÃæÉÏµÄÊý¾Ý(¿ªÊ¼)£º" + index);
+		System.out.println("é©±åŠ¨ç•Œé¢ä¸Šçš„æ•°æ®(å¼€å§‹)ï¼š" + index);
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -42,13 +42,13 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 
 	@Override
 	public void onSingleFinish(int index) {
-		System.out.println("Çý¶¯½çÃæÉÏµÄÊý¾Ý(Íê³É)£º" + index);
+		System.out.println("é©±åŠ¨ç•Œé¢ä¸Šçš„æ•°æ®(å®Œæˆ)ï¼š" + index);
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				tableViewPart.setProgressValue(index+startRowNum);
 				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
-				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "µ¼ÈëÍê³É");
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "å¯¼å…¥å®Œæˆ");
 			}
 		});
 		
@@ -126,7 +126,7 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 						}
 					}
 					if(columnNum > 0) {
-						//cellÖÐ»ñÈ¡µÄÁÐºÅÊÇ´Ó1¿ªÊ¼µÄ£¬ËùÒÔÒªÏÈ-1£¬È»ºó¼ÓÉÏÇ°Á½ÁÐ±í¸ñ¹Ì¶¨ÏÔÊ¾
+						//cellä¸­èŽ·å–çš„åˆ—å·æ˜¯ä»Ž1å¼€å§‹çš„ï¼Œæ‰€ä»¥è¦å…ˆ-1ï¼Œç„¶åŽåŠ ä¸Šå‰ä¸¤åˆ—è¡¨æ ¼å›ºå®šæ˜¾ç¤º
 						tableItem.setText(columnNum - 1 + 2, propValue);
 					}
 				} catch (Exception e) {

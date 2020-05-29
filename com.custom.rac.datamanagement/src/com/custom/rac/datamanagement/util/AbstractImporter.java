@@ -24,16 +24,16 @@ public abstract class AbstractImporter implements IImporter {
 	protected MyItemUtil itemUtil = new MyItemUtil("Item");
 	
 	/*
-	 * ÊôĞÔÖµÁĞ±í
-	 * List => ËùÓĞÊôĞÔĞĞ
-	 * Map => key:±í¸ñÖĞµÄÊôĞÔÃû£¬ value:±í¸ñÖĞµÄÊôĞÔÖµ
+	 * å±æ€§å€¼åˆ—è¡¨
+	 * List => æ‰€æœ‰å±æ€§è¡Œ
+	 * Map => key:è¡¨æ ¼ä¸­çš„å±æ€§åï¼Œ value:è¡¨æ ¼ä¸­çš„å±æ€§å€¼
 	 */
 	protected List<Map<String, String>> values = new ArrayList<>();
 	
 	/**
-	 * ÊôĞÔµÄÕæÊµÖµÓ³Éä±í
-	 * Map1 => key:TC¶ÔÏóµÄÀàĞÍÃû£¬value:Map2
-	 * Map2 => key:±í¸ñÖĞµÄÊôĞÔÃû£¬value:ÊôĞÔÔÚTCÖĞµÄÕæÊµÖµ
+	 * å±æ€§çš„çœŸå®å€¼æ˜ å°„è¡¨
+	 * Map1 => key:TCå¯¹è±¡çš„ç±»å‹åï¼Œvalue:Map2
+	 * Map2 => key:è¡¨æ ¼ä¸­çš„å±æ€§åï¼Œvalue:å±æ€§åœ¨TCä¸­çš„çœŸå®å€¼
 	 */
 	protected Map<String, Map<String, String>> propertyRealNameMap = new HashMap<>();
 	
@@ -96,12 +96,12 @@ public abstract class AbstractImporter implements IImporter {
 	 * 
 	 * @param index
 	 * @param propertyName
-	 * @return ÊÇ·ñ¼ÌĞø£¬Ä¬ÈÏÎª¼ÌĞø
+	 * @return æ˜¯å¦ç»§ç»­ï¼Œé»˜è®¤ä¸ºç»§ç»­
 	 */
 	public abstract void onPropertyRealNameNotFound(int index, String propertyName) throws Exception;
 	
 	/**
-	 * -»ñÈ¡Ö¸¶¨ĞĞµÄÊôĞÔ
+	 * -è·å–æŒ‡å®šè¡Œçš„å±æ€§
 	 * @param index
 	 * @return
 	 */
@@ -110,7 +110,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -»ñÈ¡Ö¸¶¨ĞĞµÄÖ¸¶¨ÏÔÊ¾ÊôĞÔÃû¶ÔÓ¦µÄÕæÊµÊôĞÔÃû
+	 * -è·å–æŒ‡å®šè¡Œçš„æŒ‡å®šæ˜¾ç¤ºå±æ€§åå¯¹åº”çš„çœŸå®å±æ€§å
 	 * @param index
 	 * @param propertyDisplayName
 	 * @return
@@ -128,8 +128,8 @@ public abstract class AbstractImporter implements IImporter {
 			Field field =cls.getDeclaredField("m_displayName");
 			field.setAccessible(true);
 			for (TCPropertyDescriptor pd : pds) {
-				//getDisplayNameµÄ·½·¨ÊÜ½çÃæÓ°Ïì£¬Èç¹û½çÃæÉèÖÃÁËÏÔÊ¾ÕæÊµÖµ£¬ÕâÀï»ñÈ¡µ½µÄÒ²ÊÇÕæÊµÖµ
-				//Òò´Ë¸Ä³É·´ÉäÇ¿ĞĞ»ñÈ¡ÕæÊµÖµ
+				//getDisplayNameçš„æ–¹æ³•å—ç•Œé¢å½±å“ï¼Œå¦‚æœç•Œé¢è®¾ç½®äº†æ˜¾ç¤ºçœŸå®å€¼ï¼Œè¿™é‡Œè·å–åˆ°çš„ä¹Ÿæ˜¯çœŸå®å€¼
+				//å› æ­¤æ”¹æˆåå°„å¼ºè¡Œè·å–çœŸå®å€¼
 				map.put((String)field.get(pd), pd.getName());
 			}
 			propertyRealNameMap.put(typeName, map);
@@ -138,7 +138,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -¸ù¾İÕæÊµÖµ»ñÈ¡ÏÔÊ¾Öµ
+	 * -æ ¹æ®çœŸå®å€¼è·å–æ˜¾ç¤ºå€¼
 	 * @param index
 	 * @param realName
 	 * @return
@@ -155,7 +155,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -¸ù¾İÏÔÊ¾Ãû»ñÈ¡Ö¸¶¨ĞĞµÄÊôĞÔ
+	 * -æ ¹æ®æ˜¾ç¤ºåè·å–æŒ‡å®šè¡Œçš„å±æ€§
 	 * @param index
 	 * @param propertyDisplayName
 	 * @return
@@ -165,7 +165,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -Íù¶ÔÏóÖĞÉèÖÃÊôĞÔ
+	 * -å¾€å¯¹è±¡ä¸­è®¾ç½®å±æ€§
 	 * @param tcComponent
 	 * @param index
 	 * @param propertyDisplayName
@@ -176,7 +176,7 @@ public abstract class AbstractImporter implements IImporter {
 		String propertyRealName = getPropertyRealName(index, propertyDisplayName);
 		if(propertyRealName == null) {
 			 onPropertyRealNameNotFound(index, propertyDisplayName);
-			throw new Exception("ÊôĞÔ¡¾" + propertyDisplayName + " Î´ÕÒµ½£¡");
+			throw new Exception("å±æ€§ã€" + propertyDisplayName + " æœªæ‰¾åˆ°ï¼");
 		}
 		
 		Object value = getValue(index, propertyDisplayName);
@@ -217,7 +217,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -´´½¨ĞÂÊµÀı
+	 * -åˆ›å»ºæ–°å®ä¾‹
 	 * @param index
 	 * @return
 	 * @throws Exception
@@ -256,7 +256,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -»ñÈ¡½çÃæÉÏÌîĞ´µÄitem_id
+	 * -è·å–ç•Œé¢ä¸Šå¡«å†™çš„item_id
 	 * @param index
 	 * @return
 	 * @throws Exception
@@ -280,7 +280,7 @@ public abstract class AbstractImporter implements IImporter {
 	}
 	
 	/**
-	 * -¸ù¾İÊôĞÔµÄÕæÊµÃû³Æ»ñÈ¡ÊôĞÔÖµ
+	 * -æ ¹æ®å±æ€§çš„çœŸå®åç§°è·å–å±æ€§å€¼
 	 * @param index
 	 * @param realName
 	 * @return
@@ -340,7 +340,7 @@ public abstract class AbstractImporter implements IImporter {
 				onSingleFinish(i, newInstance);
 				driver.onSingleFinish(i);
 			} catch (Exception e) {
-				//TODO Òì³£´¦Àí
+				//TODO å¼‚å¸¸å¤„ç†
 				e.printStackTrace();
 				onSingleError(i, e);
 				driver.onSingleError(i, e);

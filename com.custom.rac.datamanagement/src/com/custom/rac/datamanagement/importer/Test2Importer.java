@@ -12,12 +12,12 @@ public class Test2Importer extends AbstractImporter {
 
 	@Override
 	public String getName() {
-		return "²âÊÔµ¼Èë2";
+		return "æµ‹è¯•å¯¼å…¥2";
 	}
 
 	@Override
 	public void onSetPropertyFinish(int index, String propertyDisplayName) {
-		System.out.println("µÚ " + index + " ĞĞµÄ¡¾"+propertyDisplayName+" ¡¿µ¼ÈëÍê³É");
+		System.out.println("ç¬¬ " + index + " è¡Œçš„ã€"+propertyDisplayName+" ã€‘å¯¼å…¥å®Œæˆ");
 	}
 
 	@Override
@@ -48,8 +48,8 @@ public class Test2Importer extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) throws Exception {
-		System.out.println("µÚ " + index + "ĞĞ¿ªÊ¼ÁË");
-		throw new Exception("ÎÒÓĞÒì³£");
+		System.out.println("ç¬¬ " + index + "è¡Œå¼€å§‹äº†");
+		throw new Exception("æˆ‘æœ‰å¼‚å¸¸");
 	}
 	
 	public String getPropertyRealName(int index, String propertyDisplayName) throws Exception {
@@ -82,7 +82,7 @@ public class Test2Importer extends AbstractImporter {
 
 	@Override
 	public boolean ignoreProperty(int index, String propertyDisplayName) {
-		if("ĞòºÅ".equals(propertyDisplayName)) {
+		if("åºå·".equals(propertyDisplayName)) {
 			return true;
 		}
 		return false;

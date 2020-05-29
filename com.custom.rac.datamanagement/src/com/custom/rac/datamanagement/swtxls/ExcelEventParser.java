@@ -39,7 +39,7 @@ public class ExcelEventParser {
 		this.handler = handler;
 	}
 
-	// ·ÅÖÃ¶ÁÈ¡Êı¾İ
+	// æ”¾ç½®è¯»å–æ•°æ®
 //    protected List<List<String>> table = new ArrayList<>();
 	protected MyTable myTable = new MyTable();
 
@@ -86,7 +86,7 @@ public class ExcelEventParser {
         return myTable;
     }
 
-	// È·¶¨XMLReader½âÎöÆ÷£¬Ê¹ÓÃSAXÄ£Ê½½âÎöxmlÎÄ¼ş
+	// ç¡®å®šXMLReaderè§£æå™¨ï¼Œä½¿ç”¨SAXæ¨¡å¼è§£æxmlæ–‡ä»¶
     private void processSheet(StylesTable styles, ReadOnlySharedStringsTable strings, InputStream sheetInputStream, String sheetName) throws SAXException, ParserConfigurationException, IOException {
         XMLReader sheetParser = SAXHelper.newXMLReader();
 
@@ -100,11 +100,11 @@ public class ExcelEventParser {
         try {
             sheetParser.parse(new InputSource(sheetInputStream));
         } catch (RuntimeException e) {
-            System.out.println("---> Óöµ½¿ÕĞĞ¶ÁÈ¡ÎÄ¼ş½áÊø£¡");
+            System.out.println("---> é‡åˆ°ç©ºè¡Œè¯»å–æ–‡ä»¶ç»“æŸï¼");
         }
     }
 
-	// ÊµÏÖSheetContentsHandler
+	// å®ç°SheetContentsHandler
     public class SimpleSheetContentsHandler implements SheetContentsHandler{
     	
     	protected String sheetName;
@@ -137,18 +137,18 @@ public class ExcelEventParser {
         }
 
         /**
-         * ËùÓĞµ¥Ôª¸ñÊı¾İ×ª»»ÎªstringÀàĞÍ£¬ĞèÒª×Ô¼º×öÊı¾İÀàĞÍ´¦Àí
-         * @param cellReference µ¥Ôª¸ñË÷Òı
-         * @param formattedValue µ¥Ôª¸ñÄÚÈİ£¨È«²¿±»POI¸ñÊ½»¯Îª×Ö·û´®£©
+         * æ‰€æœ‰å•å…ƒæ ¼æ•°æ®è½¬æ¢ä¸ºstringç±»å‹ï¼Œéœ€è¦è‡ªå·±åšæ•°æ®ç±»å‹å¤„ç†
+         * @param cellReference å•å…ƒæ ¼ç´¢å¼•
+         * @param formattedValue å•å…ƒæ ¼å†…å®¹ï¼ˆå…¨éƒ¨è¢«POIæ ¼å¼åŒ–ä¸ºå­—ç¬¦ä¸²ï¼‰
          */
         @Override
         public void cell(String cellReference, String formattedValue) {
 //        	System.out.println(cellReference + ", " + formattedValue);''
             MyCharNumber myCharNumber = new MyCharNumber(cellReference);
 //          System.out.println(myCharNumber.getValue() + ", " + columnNum);
-            //Êı¾İÔÚ±í¸ñÖĞµÄÊµ¼ÊÁĞºÅ
+            //æ•°æ®åœ¨è¡¨æ ¼ä¸­çš„å®é™…åˆ—å·
             int cn = myCharNumber.getValue();
-            //Èç¹ûºÍ³ÌĞòÖĞË³Ğò¼ÆËãµÄÁĞºÅ²»·û£¬ÔòĞèÒªÊÖ¶¯²¹Æë
+            //å¦‚æœå’Œç¨‹åºä¸­é¡ºåºè®¡ç®—çš„åˆ—å·ä¸ç¬¦ï¼Œåˆ™éœ€è¦æ‰‹åŠ¨è¡¥é½
             if(cn > columnNum){
             	int len = cn - columnNum;
             	for(int i = 0; i < len; i++) {

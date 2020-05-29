@@ -32,16 +32,16 @@ public class SFGKPartImporter extends AbstractImporter {
 	protected int folderChildIndex = 0;
 	
 	static {
-		typeMap.put("³ÉÆ·", "SF8_PPart");
-		typeMap.put("°ë³ÉÆ·", "SF8_SPart");
-		typeMap.put("Ã«Å÷", "SF8_Wpart");
-		typeMap.put("Ô­²ÄÁÏ", "SF8_RPart");
-		typeMap.put("µç»ú", "SF8_FPart");	
+		typeMap.put("æˆå“", "SF8_PPart");
+		typeMap.put("åŠæˆå“", "SF8_SPart");
+		typeMap.put("æ¯›å¯", "SF8_Wpart");
+		typeMap.put("åŸææ–™", "SF8_RPart");
+		typeMap.put("ç”µæœº", "SF8_FPart");	
 	}
 	
 	@Override
 	public String getName() {
-		return "ÉÏ·ç¸ß¿ÆÎïÁÏµ¼Èë³ÌĞò";
+		return "ä¸Šé£é«˜ç§‘ç‰©æ–™å¯¼å…¥ç¨‹åº";
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public TCComponentItemType getItemType(int index) throws Exception{
-		String type = (String) getValue(index, "ÎïÁÏÀàĞÍ");
+		String type = (String) getValue(index, "ç‰©æ–™ç±»å‹");
 		String reltype = typeMap.get(type);	
 		try {		
 			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
@@ -60,7 +60,7 @@ public class SFGKPartImporter extends AbstractImporter {
 			e.printStackTrace();
 		}	
 		if(itemType==null) {
-			throw new Exception("ÎïÁÏÀàĞÍ²»´æÔÚ");
+			throw new Exception("ç‰©æ–™ç±»å‹ä¸å­˜åœ¨");
 		}	
 		return itemType;
 	}
@@ -68,11 +68,11 @@ public class SFGKPartImporter extends AbstractImporter {
 	@Override
 	public void setValue(TCComponent tcComponent, int index, String propertyDisplayName) throws Exception {
 		String value = getValue(index, propertyDisplayName)+ "";
-		if (propertyDisplayName.equals("ÎïÁÏ×´Ì¬")) {
+		if (propertyDisplayName.equals("ç‰©æ–™çŠ¶æ€")) {
 			MyStatusUtil.setStatus(tcComponent, value);
-		}else if(propertyDisplayName.equals("ÎïÁÏ·ÖÀàID")){
+		}else if(propertyDisplayName.equals("ç‰©æ–™åˆ†ç±»ID")){
 			cls_manger.saveItemInNode(tcComponent, value);	
-		}else if(propertyDisplayName.equals("¶ÈÁ¿µ¥Î»")) {
+		}else if(propertyDisplayName.equals("åº¦é‡å•ä½")) {
 			rev = (TCComponentItemRevision) tcComponent;
 			rev.getItem().setProperty("uom_tag", value);
 		}else {
@@ -87,42 +87,42 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) {
-		System.out.println("µÚ " + index + " ĞĞ¿ªÊ¼µ¼Èë£¡");
+		System.out.println("ç¬¬ " + index + " è¡Œå¼€å§‹å¯¼å…¥ï¼");
 	}
 
 	@Override
 	public void onSingleFinish(int index, TCComponent tcc) throws Exception{
 		putInFolder(tcc);
-		System.out.println("µÚ " + index + " ĞĞµ¼ÈëÍê±Ï£¡");
+		System.out.println("ç¬¬ " + index + " è¡Œå¯¼å…¥å®Œæ¯•ï¼");
 	}
 	
 
 	@Override
 	public void onSingleError(int index, Exception e) {
-		System.out.println("µÚ " + index +"³ö´íÁË£º" + e.toString());
+		System.out.println("ç¬¬ " + index +"å‡ºé”™äº†ï¼š" + e.toString());
 	}
 
 	@Override
 	public void onStart() throws Exception{
-		System.out.println("µ¼Èë¿ªÊ¼");
+		System.out.println("å¯¼å…¥å¼€å§‹");
 		if(checkProperties()) {
-			System.out.println("±ØÒªÊôĞÔ¼ì²éÍ¨¹ı");			
+			System.out.println("å¿…è¦å±æ€§æ£€æŸ¥é€šè¿‡");			
 		}else {
-			throw new Exception("±ØÒªÊôĞÔ¼ì²é²»Í¨¹ı");
+			throw new Exception("å¿…è¦å±æ€§æ£€æŸ¥ä¸é€šè¿‡");
 		}
 	}
 
 	@Override
 	public void onFinish() {
-		System.out.println("µ¼Èë½áÊø£¬Çë²é¿´µ¼ÈëÈÕÖ¾");
+		System.out.println("å¯¼å…¥ç»“æŸï¼Œè¯·æŸ¥çœ‹å¯¼å…¥æ—¥å¿—");
 	}
 	
 	static ArrayList<String> ignoreList = new ArrayList<String>();
 	static{
-		ignoreList.add("ĞòºÅ");
-		ignoreList.add("ÎïÁÏºÅ");
-		ignoreList.add("Ãû³Æ");
-		ignoreList.add("ÎïÁÏÀàĞÍ");
+		ignoreList.add("åºå·");
+		ignoreList.add("ç‰©æ–™å·");
+		ignoreList.add("åç§°");
+		ignoreList.add("ç‰©æ–™ç±»å‹");
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public void onPropertyRealNameNotFound(int index, String propertyName) {
-		System.out.println("µÚ£º" + index + "ĞĞµÄ£¨" + propertyName + "£©ÊôĞÔ²»´æÔÚ£¡");
+		System.out.println("ç¬¬ï¼š" + index + "è¡Œçš„ï¼ˆ" + propertyName + "ï¼‰å±æ€§ä¸å­˜åœ¨ï¼");
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class SFGKPartImporter extends AbstractImporter {
 	}
 	
 
-	/**¼ì²éÎïÁÏºÅ¼°¶ÈÁ¿µ¥Î»
+	/**æ£€æŸ¥ç‰©æ–™å·åŠåº¦é‡å•ä½
 	 * @return
 	 * @throws Exception
 	 */
@@ -178,7 +178,7 @@ public class SFGKPartImporter extends AbstractImporter {
 	
 	
 	
-	/**½«ĞÂ½¨¶ÔÏó·Å½øÎÄ¼ş¼Ğ
+	/**å°†æ–°å»ºå¯¹è±¡æ”¾è¿›æ–‡ä»¶å¤¹
 	 * @param tcitem
 	 * @return
 	 */
@@ -203,7 +203,7 @@ public class SFGKPartImporter extends AbstractImporter {
 		return "";
 	}
 	
-	/**´´½¨ÎÄ¼ş¼Ğ
+	/**åˆ›å»ºæ–‡ä»¶å¤¹
 	 * @throws Exception
 	 */
 	private void initFolder() throws Exception {
@@ -212,8 +212,8 @@ public class SFGKPartImporter extends AbstractImporter {
 		TCComponentFolderType ft = (TCComponentFolderType) session.getTypeComponent("Folder");
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String time=format.format(new Date());
-		String folderName = "ÎïÁÏÀúÊ·Êı¾İ-"+time;
-		folder = ft.create(folderName, "ÓÃÓÚ´æ·Åµ¼ÈëµÄÀúÊ·Êı¾İ", "Folder");
+		String folderName = "ç‰©æ–™å†å²æ•°æ®-"+time;
+		folder = ft.create(folderName, "ç”¨äºå­˜æ”¾å¯¼å…¥çš„å†å²æ•°æ®", "Folder");
 		folderChildIndex = 0;
 		session.getUser().getHomeFolder().add("contents", folder);
 		

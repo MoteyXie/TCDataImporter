@@ -18,7 +18,7 @@ import com.teamcenter.rac.kernel.TCSession;
 import com.teamcenter.rac.util.MessageBox;
 
 /**
- * Í¼Ö½µ¼Èë¹¤¾ß
+ * å›¾çº¸å¯¼å…¥å·¥å…·
  * @author Administrator
  *
  */
@@ -30,7 +30,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	
 	@Override
 	public String getName() {
-		return "Í¼Ö½µ¼Èë³ÌĞò";
+		return "å›¾çº¸å¯¼å…¥ç¨‹åº";
 	}
 
 	@Override
@@ -40,33 +40,33 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onSetPropertyError(int index, String propertyDisplayName, Exception e) throws Exception {
-		System.out.println("µÚ" +index+ "ĞĞÒì³££º" + e.getMessage());
+		System.out.println("ç¬¬" +index+ "è¡Œå¼‚å¸¸ï¼š" + e.getMessage());
 	}
 
 	@Override
 	public TCComponentItemType getItemType(int index) throws TCException {
-		String type = getValue(index, "Í¼Ö½ÀàĞÍ") + "";
+		String type = getValue(index, "å›¾çº¸ç±»å‹") + "";
 		TCComponentItemType itemType = null;
 		switch (type) {
-		case "¹¤Ãñ½¨²úÆ·Í¼":
+		case "å·¥æ°‘å»ºäº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_ConstrDesign");
 			break;
-		case "¹¤Òµ²úÆ·Í¼":
+		case "å·¥ä¸šäº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_IndustDesign");
 			break;
-		case "¹ìµÀ²úÆ·Í¼":
+		case "è½¨é“äº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_TrackDesign");
 			break;
-		case "ºËµç²úÆ·Í¼":
+		case "æ ¸ç”µäº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_NucPowDesign");
 			break;
-		case "»·±£²úÆ·Í¼":
+		case "ç¯ä¿äº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_EnvDesign");
 			break;
-		case "µç¿ØÍ¼":
+		case "ç”µæ§å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_EleDesign");
 			break;
-		case "Áã¼şÍ¼":
+		case "é›¶ä»¶å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_PartDesign");
 			break;			
 		default:
@@ -94,7 +94,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleError(int index, Exception e) throws Exception {
-		System.out.println("µÚ" +index+ "ĞĞÒì³££º" + e.getMessage());
+		System.out.println("ç¬¬" +index+ "è¡Œå¼‚å¸¸ï¼š" + e.getMessage());
 
 	}
 
@@ -103,21 +103,21 @@ public class SFGKDesignImporter extends AbstractImporter {
 		TCComponentFolderType folderType = (TCComponentFolderType) session.getTypeComponent("Folder");
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String name = "Í¼Ö½ÀúÊ·Êı¾İµ¼Èë" + format.format(date);
+		String name = "å›¾çº¸å†å²æ•°æ®å¯¼å…¥" + format.format(date);
 		folder = folderType.create(name, "", "Folder");
 		session.getUser().getHomeFolder().add("contents", folder);
 	}
 
 	@Override
 	public void onFinish() throws Exception {
-		MessageBox.post("µ¼ÈëÍê³É","ÌáÊ¾", MessageBox.INFORMATION);
+		MessageBox.post("å¯¼å…¥å®Œæˆ","æç¤º", MessageBox.INFORMATION);
 
 	}
 
 	@Override
 	public boolean ignoreProperty(int index, String propertyDisplayName) throws Exception {
-		if (propertyDisplayName.equals("Í¼Ö½ÀàĞÍ") ||propertyDisplayName.equals("×Ü×°Í¼´úºÅ")
-			|| propertyDisplayName.equals("°æ±¾") || propertyDisplayName.equals("Í¼Ö½Ãû³Æ")){
+		if (propertyDisplayName.equals("å›¾çº¸ç±»å‹") ||propertyDisplayName.equals("æ€»è£…å›¾ä»£å·")
+			|| propertyDisplayName.equals("ç‰ˆæœ¬") || propertyDisplayName.equals("å›¾çº¸åç§°")){
 			return true;
 		}
 		return false;
@@ -126,18 +126,18 @@ public class SFGKDesignImporter extends AbstractImporter {
 	@Override
 	public void setValue(TCComponent tcc, int index, String propertyDisplayName) throws Exception {
 		String value = getValue(index, propertyDisplayName)+ "";
-		if (propertyDisplayName.equals("Í¼ÎÄµµ·ÖÀàID")) {
+		if (propertyDisplayName.equals("å›¾æ–‡æ¡£åˆ†ç±»ID")) {
 			cls_manger.saveItemInNode(tcc, value);			
-		} else if (propertyDisplayName.equals("µç×Óµµ´æ·ÅµØÖ·")) {
+		} else if (propertyDisplayName.equals("ç”µå­æ¡£å­˜æ”¾åœ°å€")) {
 			if (value != null && value.length() > 0) {
 				File file = new File(value);
 				if (file != null && file.exists() &&file.isFile()) {
 					MyDatasetUtil.createDateset(tcc, file.getName(), file, "IMAN_specification");
 				} else {
-					throw new Exception("ÕÒ²»µ½Êı¾İ¼¯ÎÄ¼ş" + value);
+					throw new Exception("æ‰¾ä¸åˆ°æ•°æ®é›†æ–‡ä»¶" + value);
 				}
 			} else {
-				throw new Exception("µç×Óµµ´æ·ÅµØÖ·²»ÄÜÎª¿Õ");
+				throw new Exception("ç”µå­æ¡£å­˜æ”¾åœ°å€ä¸èƒ½ä¸ºç©º");
 			}			
 		} else {
 			super.setValue(tcc, index, propertyDisplayName);
@@ -156,7 +156,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onPropertyRealNameNotFound(int index, String propertyName) throws Exception {
-		System.out.println("µÚ£º" + index + "ĞĞµÄ£¨" + propertyName + "£©ÊôĞÔ²»´æÔÚ£¡");
+		System.out.println("ç¬¬ï¼š" + index + "è¡Œçš„ï¼ˆ" + propertyName + "ï¼‰å±æ€§ä¸å­˜åœ¨ï¼");
 
 	}
 

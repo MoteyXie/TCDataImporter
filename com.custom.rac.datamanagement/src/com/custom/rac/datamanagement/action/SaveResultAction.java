@@ -15,19 +15,19 @@ public class SaveResultAction extends AbstractTableAction {
 
 	@Override
 	public void run(Widget widget) throws Exception {
-		// ÏÈÅĞ¶Ï³ÌĞòÊÇ·ñÔÚ½øĞĞÖĞ
+		// å…ˆåˆ¤æ–­ç¨‹åºæ˜¯å¦åœ¨è¿›è¡Œä¸­
 		tableViewPart.setExecuting(false);
 		boolean isExecuting = tableViewPart.isExecuting();
 		if (isExecuting) {
-			throw new Exception("³ÌĞòÖ´ĞĞÖĞ£¬ÎŞ·¨±£´æÊı¾İ£¡");
+			throw new Exception("ç¨‹åºæ‰§è¡Œä¸­ï¼Œæ— æ³•ä¿å­˜æ•°æ®ï¼");
 		}
-		// ÎÄ¼ş´ò¿ªÂ·¾¶
+		// æ–‡ä»¶æ‰“å¼€è·¯å¾„
 		String lastSelectedFilePath = OpenFileAction.lastSelectFile;
 		if (lastSelectedFilePath == null) {
-			throw new Exception("Ã»ÓĞÊı¾İ±£´æ£¡");
+			throw new Exception("æ²¡æœ‰æ•°æ®ä¿å­˜ï¼");
 		}
 		WriteDataToExcel.WriteData(tableViewPart, lastSelectedFilePath, lastSelectedFilePath);
-		MessageBox.post("±£´æ³É¹¦£¬±£´æÂ·¾¶£º" + lastSelectedFilePath, "ÌáÊ¾", MessageBox.INFORMATION);
+		MessageBox.post("ä¿å­˜æˆåŠŸï¼Œä¿å­˜è·¯å¾„ï¼š" + lastSelectedFilePath, "æç¤º", MessageBox.INFORMATION);
 
 	}
 

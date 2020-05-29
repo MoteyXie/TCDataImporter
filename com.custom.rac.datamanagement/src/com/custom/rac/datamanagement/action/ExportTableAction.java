@@ -17,29 +17,29 @@ public class ExportTableAction extends AbstractTableAction {
 
 	@Override
 	public void run(Widget widget) throws Exception {
-		// ÏÈÅĞ¶Ï³ÌĞòÊÇ·ñÔÚ½øĞĞÖĞ
+		// å…ˆåˆ¤æ–­ç¨‹åºæ˜¯å¦åœ¨è¿›è¡Œä¸­
 		tableViewPart.setExecuting(false);
 		boolean isExecuting = tableViewPart.isExecuting();
 		if (isExecuting) {
-			throw new Exception("³ÌĞòÖ´ĞĞÖĞ£¬ÎŞ·¨µ¼³öÊı¾İ£¡");
+			throw new Exception("ç¨‹åºæ‰§è¡Œä¸­ï¼Œæ— æ³•å¯¼å‡ºæ•°æ®ï¼");
 		}
-		// ÎÄ¼ş´ò¿ªÂ·¾¶
+		// æ–‡ä»¶æ‰“å¼€è·¯å¾„
 		String lastSelectedFilePath = OpenFileAction.lastSelectFile;
-		// ÉèÖÃÁí´æ¶Ô»°¿ò
+		// è®¾ç½®å¦å­˜å¯¹è¯æ¡†
 		FileDialog fd = new FileDialog(tableViewPart.getContainer().getShell(), SWT.SAVE);
 		fd.setFilterPath(System.getProperty("JAVA.HOME"));
 		fd.setFilterExtensions(new String[] { "*.xlsx" });
 		fd.setFilterNames(new String[] { "Excel Files(*.xlsx)" });
-		// ÉèÖÃÁí´æÎÄ¼şÃû
+		// è®¾ç½®å¦å­˜æ–‡ä»¶å
 		if (lastSelectedFilePath == null) {
-			throw new Exception("Ã»ÓĞÊı¾İµ¼³ö£¡");
+			throw new Exception("æ²¡æœ‰æ•°æ®å¯¼å‡ºï¼");
 		}
 		String fileName = lastSelectedFilePath.substring(lastSelectedFilePath.lastIndexOf("\\") + 1);
 		fd.setFileName(fileName);
 		String filePath = fd.open();
 		if (filePath != null) {
 			WriteDataToExcel.WriteData(tableViewPart, lastSelectedFilePath, filePath);
-			MessageBox.post("µ¼³ö³É¹¦£¬µ¼³öÂ·¾¶£º" + filePath, "ÌáÊ¾", MessageBox.INFORMATION);
+			MessageBox.post("å¯¼å‡ºæˆåŠŸï¼Œå¯¼å‡ºè·¯å¾„ï¼š" + filePath, "æç¤º", MessageBox.INFORMATION);
 		}
 	}
 

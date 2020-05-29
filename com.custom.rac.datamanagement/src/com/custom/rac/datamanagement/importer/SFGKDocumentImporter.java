@@ -31,7 +31,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	
 	@Override
 	public String getName() {
-		return "ÎÄµµµ¼Èë³ÌĞò";
+		return "æ–‡æ¡£å¯¼å…¥ç¨‹åº";
 	}
 	public String getType(String node_id) {
 		String type = "";
@@ -81,9 +81,9 @@ public class SFGKDocumentImporter extends AbstractImporter {
 
 	@Override
 	public TCComponentItemType getItemType(int index) throws Exception {
-		String ics_id = getValue(index, "Í¼ÎÄµµ·ÖÀàID") + "";
+		String ics_id = getValue(index, "å›¾æ–‡æ¡£åˆ†ç±»ID") + "";
 		if (ics_id == null || ics_id.length() < 4) {
-			throw new Exception("·ÖÀàID²»ÄÜÎª¿Õ£¡");
+			throw new Exception("åˆ†ç±»IDä¸èƒ½ä¸ºç©ºï¼");
 		}
 		TCComponentItemType type = (TCComponentItemType) session.getTypeComponent(getType(ics_id));
 		return type;
@@ -108,7 +108,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleError(int index, Exception e) {
-		System.out.println("µÚ" +index+ "ĞĞÒì³££º" + e.getMessage());
+		System.out.println("ç¬¬" +index+ "è¡Œå¼‚å¸¸ï¼š" + e.getMessage());
 	}
 
 	@Override
@@ -116,20 +116,20 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		TCComponentFolderType folderType = (TCComponentFolderType) session.getTypeComponent("Folder");
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String name = "ÎÄµµÀúÊ·Êı¾İµ¼Èë" + format.format(date);
+		String name = "æ–‡æ¡£å†å²æ•°æ®å¯¼å…¥" + format.format(date);
 		folder = folderType.create(name, "", "Folder");
 		session.getUser().getHomeFolder().add("contents", folder);
 	}
 
 	@Override
 	public void onFinish() {
-		MessageBox.post("µ¼ÈëÍê³É","ÌáÊ¾", MessageBox.INFORMATION);
+		MessageBox.post("å¯¼å…¥å®Œæˆ","æç¤º", MessageBox.INFORMATION);
 	}
 
 	@Override
 	public boolean ignoreProperty(int index, String propertyDisplayName) {
-		if (propertyDisplayName.equals("ÎÄµµ±àºÅ") || propertyDisplayName.equals("°æ±¾") 
-			||propertyDisplayName.equals("ÎÄµµÃû³Æ")){
+		if (propertyDisplayName.equals("æ–‡æ¡£ç¼–å·") || propertyDisplayName.equals("ç‰ˆæœ¬") 
+			||propertyDisplayName.equals("æ–‡æ¡£åç§°")){
 			return true;
 		}
 		return false;
@@ -138,9 +138,9 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	@Override
 	public void setValue(TCComponent tcc, int index, String propertyDisplayName) throws Exception {
 		String value = getValue(index, propertyDisplayName)+ "";
-		if (propertyDisplayName.equals("ÎÄµµ×´Ì¬")) {
+		if (propertyDisplayName.equals("æ–‡æ¡£çŠ¶æ€")) {
 			MyStatusUtil.setStatus(tcc, value);
-		} else if (propertyDisplayName.equals("ËùÓĞÕß")) {
+		} else if (propertyDisplayName.equals("æ‰€æœ‰è€…")) {
 			String user_name = getValue(index, propertyDisplayName)+ "";
 			if (user_name != null && !user_name.isEmpty()) {
 				TCComponentUserType userType = (TCComponentUserType) session.getTypeComponent("User");
@@ -149,18 +149,18 @@ public class SFGKDocumentImporter extends AbstractImporter {
 					tcc.changeOwner(user, user.getLoginGroup());
 				}
 			}
-		} else if (propertyDisplayName.equals("Í¼ÎÄµµ·ÖÀàID")) {
+		} else if (propertyDisplayName.equals("å›¾æ–‡æ¡£åˆ†ç±»ID")) {
 			cls_manger.saveItemInNode(tcc, value);			
-		} else if (propertyDisplayName.equals("µç×Óµµ´æ·ÅµØÖ·")) {
+		} else if (propertyDisplayName.equals("ç”µå­æ¡£å­˜æ”¾åœ°å€")) {
 			if (value != null && value.length() > 0) {				
 				File file = new File(value);
 				if (file != null && file.exists() &&file.isFile()) {
 					MyDatasetUtil.createDateset(tcc, file.getName(), file, "IMAN_specification");
 				} else {
-					throw new Exception("ÕÒ²»µ½Êı¾İ¼¯ÎÄ¼ş" + value);
+					throw new Exception("æ‰¾ä¸åˆ°æ•°æ®é›†æ–‡ä»¶" + value);
 				}
 			} else {
-				throw new Exception("µç×Óµµ´æ·ÅµØÖ·²»ÄÜÎª¿Õ");
+				throw new Exception("ç”µå­æ¡£å­˜æ”¾åœ°å€ä¸èƒ½ä¸ºç©º");
 			}			
 		} else if(!propertyDisplayName.equals("ID")){
 			super.setValue(tcc, index, propertyDisplayName);
@@ -168,9 +168,9 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	}
 	
 	public String newItemId(int index) throws Exception {
-		String value = getValue(index, "Í¼ÎÄµµ·ÖÀàID")+ "";
+		String value = getValue(index, "å›¾æ–‡æ¡£åˆ†ç±»ID")+ "";
 		if (value == null || value.length() == 0) {
-			throw new Exception("Í¼ÎÄµµ·ÖÀàID²»ÄÜÎª¿Õ£¡");
+			throw new Exception("å›¾æ–‡æ¡£åˆ†ç±»IDä¸èƒ½ä¸ºç©ºï¼");
 		}
 		SimpleDateFormat format = new SimpleDateFormat("yyMM");
 		String date = format.format(new Date());
@@ -189,7 +189,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		
 	@Override
 	public void onPropertyRealNameNotFound(int index, String propertyName) {		
-		System.out.println("µÚ£º" + index + "ĞĞµÄ£¨" + propertyName + "£©ÊôĞÔ²»´æÔÚ£¡");
+		System.out.println("ç¬¬ï¼š" + index + "è¡Œçš„ï¼ˆ" + propertyName + "ï¼‰å±æ€§ä¸å­˜åœ¨ï¼");
 	}
 
 	@Override
@@ -199,7 +199,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 
 	@Override
 	public void onSetPropertyError(int index, String propertyDisplayName, Exception e) {
-		System.out.println("µÚ" +index+ "ĞĞÒì³££º" + e.getMessage());
+		System.out.println("ç¬¬" +index+ "è¡Œå¼‚å¸¸ï¼š" + e.getMessage());
 	}
 
 	@Override
