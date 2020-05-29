@@ -13,12 +13,12 @@ public class MyDatasetUtil {
 
 	/**
 	 * @Title: createDateset
-	 * @Description: TODO(´´½¨Êı¾İ¼¯£¬²¢µ¯³öÊÇ·ñ´ò¿ªÊı¾İµÄ¶Ô»°¿ò)
+	 * @Description: TODO(åˆ›å»ºæ•°æ®é›†ï¼Œå¹¶å¼¹å‡ºæ˜¯å¦æ‰“å¼€æ•°æ®çš„å¯¹è¯æ¡†)
 	 * @param @param revision
 	 * @param @param file
 	 * @param @throws TCException
-	 * @param @throws IOException ²ÎÊı
-	 * @return void ·µ»ØÀàĞÍ
+	 * @param @throws IOException å‚æ•°
+	 * @return void è¿”å›ç±»å‹
 	 * @throws
 	 */
 
@@ -61,11 +61,11 @@ public class MyDatasetUtil {
 
 	/**
 	 * @Title: getrefType
-	 * @Description: TODO(»ñÈ¡TCÎÄ¼şÀàĞÍ¶ÔÓ¦µÄ¹ØÏµÀàĞÍ)
+	 * @Description: TODO(è·å–TCæ–‡ä»¶ç±»å‹å¯¹åº”çš„å…³ç³»ç±»å‹)
 	 * @param @param fileType
 	 * @param @return
-	 * @param @throws TCException ²ÎÊı
-	 * @return String ·µ»ØÀàĞÍ
+	 * @param @throws TCException å‚æ•°
+	 * @return String è¿”å›ç±»å‹
 	 * @throws
 	 */
 
@@ -101,25 +101,25 @@ public class MyDatasetUtil {
 		
 
 		if (refType == null) {
-			throw new Exception("ÕÒ²»µ½ÒıÓÃÀàĞÍ");
+			throw new Exception("æ‰¾ä¸åˆ°å¼•ç”¨ç±»å‹");
 		}
 		return refType;
 	}
 
 	/**
 	 * @Title: getFileType
-	 * @Description: TODO(»ñÈ¡ÎÄ¼şÔÚTC¶ÔÓ¦µÄÎÄ¼şÀàĞÍ)
+	 * @Description: TODO(è·å–æ–‡ä»¶åœ¨TCå¯¹åº”çš„æ–‡ä»¶ç±»å‹)
 	 * @param @param file
 	 * @param @return
-	 * @param @throws TCException ²ÎÊı
-	 * @return String ·µ»ØÀàĞÍ
+	 * @param @throws TCException å‚æ•°
+	 * @return String è¿”å›ç±»å‹
 	 * @throws
 	 */
 
 	public static String getFileType(File file) throws Exception {
 		String datesetType = null;
 		if (file == null) {
-			throw new TCException("ÕÒ²»µ½ÒıÓÃÀàĞÍ");
+			throw new TCException("æ‰¾ä¸åˆ°å¼•ç”¨ç±»å‹");
 		}
 		String fileName = file.getName();
 		if (fileName.endsWith("xls")) {
@@ -157,7 +157,7 @@ public class MyDatasetUtil {
 		}
 
 		if (datesetType == null) {
-			throw new Exception("ÎÄ¼şÀàĞÍÎ´¶¨Òå");
+			throw new Exception("æ–‡ä»¶ç±»å‹æœªå®šä¹‰");
 		}
 		return datesetType;
 	}

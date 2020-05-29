@@ -82,8 +82,8 @@ public class SWTSheet extends TabItem implements ISWTObject {
 		tableColumn1.setText("-");
 
 		TableColumn[] columns = new TableColumn[columnNum];
-		// ±íÍ·
-		// µÚÒ»ÁĞÓÃÀ´×ö´¹Ö±±àºÅ, µÚ¶şÁĞÓÃÀ´×ö×´Ì¬±êÊ¶£¬Òò´Ëexcel±íµÄ0ÁĞ¶ÔÓ¦ÕâÀïµÄ2ÁĞ
+		// è¡¨å¤´
+		// ç¬¬ä¸€åˆ—ç”¨æ¥åšå‚ç›´ç¼–å·, ç¬¬äºŒåˆ—ç”¨æ¥åšçŠ¶æ€æ ‡è¯†ï¼Œå› æ­¤excelè¡¨çš„0åˆ—å¯¹åº”è¿™é‡Œçš„2åˆ—
 		for (int j = 2; j < columnNum + 2; j++) {
 
 			TableColumn tableColumn = new TableColumn(table, SWT.BORDER_SOLID | SWT.CENTER);
@@ -99,7 +99,7 @@ public class SWTSheet extends TabItem implements ISWTObject {
 		tableColumn.setText("R");
 
 		int[] columnMaxWidth = new int[columnNum];
-		// ÄÚÈİ
+		// å†…å®¹
 		for (int k = 0; k < rowNum; k++) {
 
 			MyRow row = sheet.getRow(k);
@@ -109,7 +109,7 @@ public class SWTSheet extends TabItem implements ISWTObject {
 
 			int cellNum = row.cells.size();
 			String[] values = new String[cellNum + 2];
-			values[0] = (k + 1) + ""; // µ±ÁĞĞòºÅ
+			values[0] = (k + 1) + ""; // å½“åˆ—åºå·
 			for (int m = 0; m < cellNum; m++) {
 				MyCell cell = row.getCell(m);
 				values[m + 2] = cell.value;
@@ -127,7 +127,7 @@ public class SWTSheet extends TabItem implements ISWTObject {
 //			ti.setImage(1, getStateImage(RunState.waitting));
 		}
 
-		// ÉèÖÃÁĞ¿í
+		// è®¾ç½®åˆ—å®½
 		for (int j = 0; j < columns.length; j++) {
 			int width = columnMaxWidth[j] * 20;
 			columns[j].setWidth(width > 300 ? 300 : width);
@@ -136,12 +136,12 @@ public class SWTSheet extends TabItem implements ISWTObject {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				// ÓÒ¼ü²Ëµ¥
+				// å³é”®èœå•
 				if (e.button == 3) {
 					Menu menu = new Menu(table);
 					table.setMenu(menu);
 					MenuItem item = new MenuItem(menu, SWT.PUSH);
-					item.setText("¸´ÖÆ");
+					item.setText("å¤åˆ¶");
 					item.addListener(SWT.Selection, new Listener() {
 						@Override
 						public void handleEvent(org.eclipse.swt.widgets.Event paramEvent) {
@@ -163,9 +163,9 @@ public class SWTSheet extends TabItem implements ISWTObject {
 							final int selectedCol = i;
 							String text = selection.getText(selectedCol);
 							Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-							// ·â×°ÎÄ±¾ÄÚÈİ
+							// å°è£…æ–‡æœ¬å†…å®¹
 							Transferable trans = new StringSelection(text);
-							// °ÑÎÄ±¾ÄÚÈİÉèÖÃµ½ÏµÍ³¼ôÌù°å
+							// æŠŠæ–‡æœ¬å†…å®¹è®¾ç½®åˆ°ç³»ç»Ÿå‰ªè´´æ¿
 							clipboard.setContents(trans, null);
 						}
 					});
@@ -183,7 +183,7 @@ public class SWTSheet extends TabItem implements ISWTObject {
 
 	public void setInfomation(int rowNum, String infomation) {
 
-		// ×î´óÁĞÊı¼Ó1£¬ÔÙ¼ÓÉÏ±í¸ñ¹Ì¶¨µÄÇ°Á½ÁĞÏÔÊ¾ÁĞ
+		// æœ€å¤§åˆ—æ•°åŠ 1ï¼Œå†åŠ ä¸Šè¡¨æ ¼å›ºå®šçš„å‰ä¸¤åˆ—æ˜¾ç¤ºåˆ—
 		int columnNum = sheet.getColumnNum() + 2;
 		if (infomation == null) {
 			infomation = "";

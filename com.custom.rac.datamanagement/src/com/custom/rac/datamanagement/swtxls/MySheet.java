@@ -32,8 +32,8 @@ public class MySheet {
 	}
 	
 	/**
-	 * -»ñÈ¡½á¹¹»¯µÄÊı¾İ
-	 * @param titleRowNum ±êÌâËùÔÚĞĞ£¬±êÌâÒÔÏÂµÄ¾ÍÊÇÊôĞÔÊı¾İ
+	 * -è·å–ç»“æ„åŒ–çš„æ•°æ®
+	 * @param titleRowNum æ ‡é¢˜æ‰€åœ¨è¡Œï¼Œæ ‡é¢˜ä»¥ä¸‹çš„å°±æ˜¯å±æ€§æ•°æ®
 	 * @return
 	 * @throws Exception
 	 */

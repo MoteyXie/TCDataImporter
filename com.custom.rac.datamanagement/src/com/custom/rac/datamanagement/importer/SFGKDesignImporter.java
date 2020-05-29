@@ -18,7 +18,7 @@ import com.teamcenter.rac.kernel.TCSession;
 import com.teamcenter.rac.util.MessageBox;
 
 /**
- * Í¼Ö½µ¼Èë¹¤¾ß
+ * å›¾çº¸å¯¼å…¥å·¥å…·
  * @author Administrator
  *
  */
@@ -31,7 +31,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	
 	@Override
 	public String getName() {
-		return "Í¼Ö½µ¼Èë³ÌĞò";
+		return "å›¾çº¸å¯¼å…¥ç¨‹åº";
 	}
 
 	@Override
@@ -41,37 +41,37 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onSetPropertyError(int index, String propertyDisplayName, Exception e) throws Exception {
-		System.out.println("µÚ" +index+ "ĞĞÒì³££º" + e.getMessage());
+		System.out.println("ç¬¬" +index+ "è¡Œå¼‚å¸¸ï¼š" + e.getMessage());
 	}
 
 	@Override
 	public TCComponentItemType getItemType(int index) throws TCException {
-		String type = getValue(index, "Í¼Ö½ÀàĞÍ") + "";
+		String type = getValue(index, "å›¾çº¸ç±»å‹") + "";
 		TCComponentItemType itemType = null;
 		switch (type) {
-		case "¹¤Ãñ½¨²úÆ·Í¼":
+		case "å·¥æ°‘å»ºäº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_ConstrDesign");
 			break;
-		case "¹¤Òµ²úÆ·Í¼":
+		case "å·¥ä¸šäº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_IndustDesign");
 			break;
-		case "¹ìµÀ²úÆ·Í¼":
+		case "è½¨é“äº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_TrackDesign");
 			break;
-		case "ºËµç²úÆ·Í¼":
+		case "æ ¸ç”µäº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_NucPowDesign");
 			break;
-		case "»·±£²úÆ·Í¼":
+		case "ç¯ä¿äº§å“å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_EnvDesign");
 			break;
-		case "µç¿ØÍ¼":
+		case "ç”µæ§å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_EleDesign");
 			break;
-		case "Áã¼şÍ¼":
+		case "é›¶ä»¶å›¾":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_PartDesign");
 			break;			
 		default:
-			throw new TCException("Í¼Ö½ÀàĞÍ²»ÄÜÎª¿Õ£¡");
+			throw new TCException("å›¾çº¸ç±»å‹ä¸èƒ½ä¸ºç©ºï¼");
 		}
 		return itemType;
 	}
@@ -83,8 +83,8 @@ public class SFGKDesignImporter extends AbstractImporter {
 	
     public  boolean isEnglish(String str) {
         byte[] bytes = str.getBytes();
-        int i = bytes.length;// iÎª×Ö½Ú³¤¶È
-        int j = str.length();// jÎª×Ö·û³¤¶È
+        int i = bytes.length;// iä¸ºå­—èŠ‚é•¿åº¦
+        int j = str.length();// jä¸ºå­—ç¬¦é•¿åº¦
         boolean result = i == j ? true : false;
         return result;
     }
@@ -94,22 +94,22 @@ public class SFGKDesignImporter extends AbstractImporter {
 		StringBuilder sb = new StringBuilder();
 		String value = getValueFromRealName(index, "item_id");
 		if (value == null || value.isEmpty()) {
-			sb.append("Í¼Ö½´úºÅ²»ÄÜÎª¿Õ/");			
+			sb.append("å›¾çº¸ä»£å·ä¸èƒ½ä¸ºç©º/");			
 		} else if (!isEnglish(value)) {
-			sb.append("Í¼Ö½´úºÅ²»ÄÜ³öÏÖÖĞÎÄ×Ö·û/");
+			sb.append("å›¾çº¸ä»£å·ä¸èƒ½å‡ºç°ä¸­æ–‡å­—ç¬¦/");
 		}
-		Object obj = getValue(index, "µç×Óµµ´æ·ÅµØÖ·");
+		Object obj = getValue(index, "ç”µå­æ¡£å­˜æ”¾åœ°å€");
 		if (obj == null || obj.toString().trim().isEmpty()) {
-			sb.append("µç×Óµµ´æ·ÅµØÖ·²»ÄÜÎª¿Õ/");
+			sb.append("ç”µå­æ¡£å­˜æ”¾åœ°å€ä¸èƒ½ä¸ºç©º/");
 		} else {
 			value = obj.toString().trim();
 			file = new File(value);
 			if (file == null || !file.exists() || !file.isFile()) {
-				sb.append("µç×Óµµ´æ·ÅµØÖ·Â·¾¶ÕÒ²»µ½ÎÄ¼ş/");				
+				sb.append("ç”µå­æ¡£å­˜æ”¾åœ°å€è·¯å¾„æ‰¾ä¸åˆ°æ–‡ä»¶/");				
 			}
 //			else {
 //				if (!value.toString().endsWith("dwg") && !value.toString().endsWith("DWG")) {
-//					sb.append("Í¼Ö½µ¼Èë¹¤¾ß²»Ö§³Ö·ÇdwgÀàĞÍÎÄ¼şµÄµ¼Èë£¬Çë¼ì²éµ¼ÈëÀàĞÍÊÇ·ñÓĞÎó£¡/");
+//					sb.append("å›¾çº¸å¯¼å…¥å·¥å…·ä¸æ”¯æŒédwgç±»å‹æ–‡ä»¶çš„å¯¼å…¥ï¼Œè¯·æ£€æŸ¥å¯¼å…¥ç±»å‹æ˜¯å¦æœ‰è¯¯ï¼/");
 //				}
 //			}
 		}
@@ -132,7 +132,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleError(int index, Exception e) throws Exception {
-		System.out.println("µÚ" +index+ "ĞĞÒì³££º" + e.getMessage());
+		System.out.println("ç¬¬" +index+ "è¡Œå¼‚å¸¸ï¼š" + e.getMessage());
 
 	}
 
@@ -141,22 +141,22 @@ public class SFGKDesignImporter extends AbstractImporter {
 		TCComponentFolderType folderType = (TCComponentFolderType) session.getTypeComponent("Folder");
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String name = "Í¼Ö½ÀúÊ·Êı¾İµ¼Èë" + format.format(date);
+		String name = "å›¾çº¸å†å²æ•°æ®å¯¼å…¥" + format.format(date);
 		folder = folderType.create(name, "", "Folder");
 		session.getUser().getHomeFolder().add("contents", folder);
 	}
 
 	@Override
 	public void onFinish() throws Exception {
-		MessageBox.post("µ¼ÈëÍê³É","ÌáÊ¾", MessageBox.INFORMATION);
+		MessageBox.post("å¯¼å…¥å®Œæˆ","æç¤º", MessageBox.INFORMATION);
 
 	}
 
 	@Override
 	public boolean ignoreProperty(int index, String propertyDisplayName) throws Exception {
-		if (propertyDisplayName.equals("Í¼Ö½ÀàĞÍ") || propertyDisplayName.equals("Í¼Ö½´úºÅ")
-			|| propertyDisplayName.equals("°æ±¾") || propertyDisplayName.equals("Í¼Ö½Ãû³Æ")
-			|| propertyDisplayName.equals("Í¼ÎÄµµ·ÖÀàID")){
+		if (propertyDisplayName.equals("å›¾çº¸ç±»å‹") || propertyDisplayName.equals("å›¾çº¸ä»£å·")
+			|| propertyDisplayName.equals("ç‰ˆæœ¬") || propertyDisplayName.equals("å›¾çº¸åç§°")
+			|| propertyDisplayName.equals("å›¾æ–‡æ¡£åˆ†ç±»ID")){
 			return true;
 		}
 		return false;
@@ -164,7 +164,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	
 	@Override
 	public void setValue(TCComponent tcc, int index, String propertyDisplayName) throws Exception {
-		if (propertyDisplayName.equals("µç×Óµµ´æ·ÅµØÖ·")) {
+		if (propertyDisplayName.equals("ç”µå­æ¡£å­˜æ”¾åœ°å€")) {
 			MyDatasetUtil.createDateset(tcc, file.getName(), file, "TC_Attaches");						
 		} else {
 			super.setValue(tcc, index, propertyDisplayName);
@@ -183,7 +183,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onPropertyRealNameNotFound(int index, String propertyName) throws Exception {
-		System.out.println("µÚ£º" + index + "ĞĞµÄ£¨" + propertyName + "£©ÊôĞÔ²»´æÔÚ£¡");
+		System.out.println("ç¬¬ï¼š" + index + "è¡Œçš„ï¼ˆ" + propertyName + "ï¼‰å±æ€§ä¸å­˜åœ¨ï¼");
 
 	}
 

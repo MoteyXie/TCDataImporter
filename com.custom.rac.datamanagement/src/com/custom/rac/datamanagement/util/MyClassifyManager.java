@@ -51,8 +51,9 @@ public class MyClassifyManager {
 			icsService = g4mUserAppContext.getClassificationService();
 		}
 		ICSHierarchyNodeDescriptor icsNodeDescriptor = icsService.describeNode(ics_id, 0);
+	
 		if(icsNodeDescriptor == null){
-			System.out.println("»ñÈ¡·ÖÀà½ÚµãÊ§°Ü!");
+			System.out.println("èŽ·å–åˆ†ç±»èŠ‚ç‚¹å¤±è´¥!");
 			return null;
 		}
 		G4MTreeNode root = new G4MTreeNode(tree, icsNodeDescriptor);
@@ -61,8 +62,8 @@ public class MyClassifyManager {
 	
 	/**
 	 * 
-	 * @param item ÐèÒª¼ÓÈë·ÖÀàµÄItem
-	 * @param icsId ·ÖÀàid
+	 * @param item éœ€è¦åŠ å…¥åˆ†ç±»çš„Item
+	 * @param icsId åˆ†ç±»id
 	 * @throws TCException
 	 */
 	public void saveItemInNode(TCComponent tcc, String ics_id) throws TCException{
@@ -71,10 +72,10 @@ public class MyClassifyManager {
 			tcc.setProperty("sf8_type", node.getNodeLabel());
 		}
 		
-		// »ñÈ¡·ÖÀàµÄÓ¦ÓÃ
+		// èŽ·å–åˆ†ç±»çš„åº”ç”¨
 		ICSApplicationObject icsApp = g4mUserAppContext.getICSApplicationObject();
-		// ÅÐ¶Ï¶ÔÏóÊÇ·ñÒÑ¾­·ÖÀà,Èç¹ûÒÑ¾­·ÖÀà,»ñÈ¡¸Ã·ÖÀàÊÓÍ¼,·ñÔò´´½¨Ò»¸öÐÂµÄÊÓÍ¼¡£
-		// ´´½¨·ÖÀàid
+		// åˆ¤æ–­å¯¹è±¡æ˜¯å¦å·²ç»åˆ†ç±»,å¦‚æžœå·²ç»åˆ†ç±»,èŽ·å–è¯¥åˆ†ç±»è§†å›¾,å¦åˆ™åˆ›å»ºä¸€ä¸ªæ–°çš„è§†å›¾ã€‚
+		// åˆ›å»ºåˆ†ç±»id
 		TCComponentICO[] icos = tcc.getClassificationObjects();
 		if (icos != null && icos.length > 0) {
 			for (TCComponentICO ico : icos) {

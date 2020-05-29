@@ -29,37 +29,37 @@ public class TestImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) {
-		System.out.println("µÚ " + index + " ĞĞ¿ªÊ¼µ¼Èë£¡");
+		System.out.println("ç¬¬ " + index + " è¡Œå¼€å§‹å¯¼å…¥ï¼");
 	}
 
 	@Override
 	public void onSingleFinish(int index, TCComponent tcc) throws Exception{
-		System.out.println("µÚ " + index + " ĞĞµ¼ÈëÍê±Ï£¡");
+		System.out.println("ç¬¬ " + index + " è¡Œå¯¼å…¥å®Œæ¯•ï¼");
 	}
 
 	@Override
 	public void onStart() {
-		System.out.println("¿ªÊ¼µ¼Èë");
+		System.out.println("å¼€å§‹å¯¼å…¥");
 	}
 
 	@Override
 	public void onFinish() {
-		System.out.println("Íê³Éµ¼Èë");
+		System.out.println("å®Œæˆå¯¼å…¥");
 	}
 
 	@Override
 	public String getName() {
-		return "²âÊÔµÄµ¼Èë¹¤¾ß";
+		return "æµ‹è¯•çš„å¯¼å…¥å·¥å…·";
 	}
 
 	@Override
 	public void onSingleError(int index, Exception e) {
-		System.out.println("µÚ " + index +"³ö´íÁË£º" + e.toString());
+		System.out.println("ç¬¬ " + index +"å‡ºé”™äº†ï¼š" + e.toString());
 	}
 	
 	static ArrayList<String> ignoreList = new ArrayList<String>();
 	static{
-		ignoreList.add("ĞòºÅ");
+		ignoreList.add("åºå·");
 	}
 
 	@Override

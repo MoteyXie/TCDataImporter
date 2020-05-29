@@ -18,10 +18,10 @@ public class MyStatusUtil {
 	public static HashMap<String, String> map = null;	
 	static {
 		map = new HashMap<>();		
-	    map.put("发布", "TCM Released");
-	    map.put("失效", "SF8_Invalid");
-	    map.put("限用", "SF8_Restrict");
-	    map.put("量产", "SF8_Valid");		
+	    map.put("鍙戝竷", "TCM Released");
+	    map.put("澶辨晥", "SF8_Invalid");
+	    map.put("闄愮敤", "SF8_Restrict");
+	    map.put("閲忎骇", "SF8_Valid");		
 	}
 	
 	

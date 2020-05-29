@@ -24,9 +24,9 @@ public class WriteDataToExcel {
 		InputStream input = null;
 		OutputStream out = null;
 		SWTSheet swtSheet = tableViewPart.getSWTWorkbook().getSelectedSheet();
-		Table table = swtSheet.getTable();// »ñÈ¡±í¸ñ¶ÔÏó
-		int tcol = table.getColumnCount();// »ñÈ¡±í¸ñÁĞÊı
-		int trow = table.getItemCount();// »ñÈ¡±í¸ñĞĞÊı
+		Table table = swtSheet.getTable();// è·å–è¡¨æ ¼å¯¹è±¡
+		int tcol = table.getColumnCount();// è·å–è¡¨æ ¼åˆ—æ•°
+		int trow = table.getItemCount();// è·å–è¡¨æ ¼è¡Œæ•°
 
 		MySheet mySheet = swtSheet.getSheet();
 		String name = mySheet.name;
@@ -34,22 +34,22 @@ public class WriteDataToExcel {
 		input = new FileInputStream(lastSelectedFilePath);
 		XSSFWorkbook wb = new XSSFWorkbook(input);
 		XSSFSheet sheet = wb.getSheet(name);
-		int rowNum = sheet.getLastRowNum() + 1;// »ñÈ¡excel±í×ÜĞĞÊı
+		int rowNum = sheet.getLastRowNum() + 1;// è·å–excelè¡¨æ€»è¡Œæ•°
 		XSSFRow row = sheet.getRow(0);
 		XSSFCell cell = row.createCell(scol);
 		XSSFCellStyle cellStyle = wb.createCellStyle();
-		cellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN); // ÏÂ±ß¿ò
-		cellStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);// ×ó±ß¿ò
-		cellStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);// ÉÏ±ß¿ò
-		cellStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);// ÓÒ±ß¿ò
+		cellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN); // ä¸‹è¾¹æ¡†
+		cellStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);// å·¦è¾¹æ¡†
+		cellStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);// ä¸Šè¾¹æ¡†
+		cellStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);// å³è¾¹æ¡†
 		cellStyle.setWrapText(true);
-		sheet.setColumnWidth(scol, 256 * 50 + 184);// ÉèÖÃÁĞ¿í
+		sheet.setColumnWidth(scol, 256 * 50 + 184);// è®¾ç½®åˆ—å®½
 		cell.setCellStyle(cellStyle);
 		for (int i = 1; i < trow; i++) {
-			TableItem tableItem = table.getItem(i);// »ñÈ¡µÚiĞĞÊı¾İ
+			TableItem tableItem = table.getItem(i);// è·å–ç¬¬iè¡Œæ•°æ®
 			row = sheet.createRow(i);
 			for (int j = 2; j < tcol; j++) {
-				String value = tableItem.getText(j);// »ñÈ¡µÚjÁĞÊı¾İ
+				String value = tableItem.getText(j);// è·å–ç¬¬jåˆ—æ•°æ®
 				cell = row.createCell(j - 2);
 				cell.setCellValue(value);
 				cell.setCellStyle(cellStyle);

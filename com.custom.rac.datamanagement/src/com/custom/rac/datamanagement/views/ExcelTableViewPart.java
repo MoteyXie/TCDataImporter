@@ -45,20 +45,20 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 	private boolean executing;
 	
 	private ToolBarItemBean[] centerToolBarItems = new ToolBarItemBean[] {
-			new ToolBarItemBean("º”‘ÿ", "More_Normal.png", "OpenFileAction"),
-			new ToolBarItemBean("÷ÿ‘ÿ", "Replay_Normal.png", "ReloadAction"),
-			new ToolBarItemBean("ø™ º", "Next_B_Pressed.png", "ImportAction"),
-			new ToolBarItemBean("‘›Õ£", "Pause_Normal.png", ""),
-			new ToolBarItemBean("Õ£÷π", "Less_Normal.png", ""),
-//			new ToolBarItemBean("≤‚ ‘", "test.png", "TestAction"),
+			new ToolBarItemBean("Âä†ËΩΩ", "More_Normal.png", "OpenFileAction"),
+			new ToolBarItemBean("ÈáçËΩΩ", "Replay_Normal.png", "ReloadAction"),
+			new ToolBarItemBean("ÂºÄÂßã", "Next_B_Pressed.png", "ImportAction"),
+			new ToolBarItemBean("ÊöÇÂÅú", "Pause_Normal.png", ""),
+			new ToolBarItemBean("ÂÅúÊ≠¢", "Less_Normal.png", ""),
+//			new ToolBarItemBean("ÊµãËØï", "test.png", "TestAction"),
 	};
 	
 	private ToolBarItemBean[] rightToolBarItems = new ToolBarItemBean[] {
 			
-			new ToolBarItemBean("µº≥ˆ", "Down_Normal.png", "ExportTableAction"),
-//			new ToolBarItemBean("±£¥Ê", "Load_Normal.png", "SaveResultAction"),
-			new ToolBarItemBean("πÿ”⁄", "Info_Normal.png", ""),
-			new ToolBarItemBean("…Ë÷√", "Setting_Normal.png", ""),
+			new ToolBarItemBean("ÂØºÂá∫", "Down_Normal.png", "ExportTableAction"),
+//			new ToolBarItemBean("‰øùÂ≠ò", "Load_Normal.png", "SaveResultAction"),
+			new ToolBarItemBean("ÂÖ≥‰∫é", "Info_Normal.png", ""),
+			new ToolBarItemBean("ËÆæÁΩÆ", "Setting_Normal.png", ""),
 	};
 	private SWTWorkbook swtWorkbook;
 	private ProgressBar progressBar;
@@ -184,7 +184,7 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 		importerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		importerPanel.setLayoutData(BorderLayout.NORTH);
 		
-		new Label(importerPanel, SWT.NONE).setText("«Î—°‘Òµº»Î≥Ã–Ú£∫");
+		new Label(importerPanel, SWT.NONE).setText("ËØ∑ÈÄâÊã©ÂØºÂÖ•Á®ãÂ∫èÔºö");
 		importerSelecter = new Combo(importerPanel, SWT.DROP_DOWN | SWT.READ_ONLY);
 		
 		importerReader = new ImporterReader();
