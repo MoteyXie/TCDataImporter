@@ -8,6 +8,7 @@
 package com.sfgk.sie.webservice;
 
 public interface SFGKService extends java.rmi.Remote {
+    public java.lang.String invoke(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException;
     public java.lang.String getID(java.lang.String arg0, int arg1) throws java.rmi.RemoteException;
     public java.lang.String classify(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException;
     public java.lang.String getDesignIDRuleXML() throws java.rmi.RemoteException;
