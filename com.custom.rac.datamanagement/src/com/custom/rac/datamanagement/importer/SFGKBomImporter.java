@@ -298,23 +298,21 @@ public class SFGKBomImporter extends AbstractImporter {
 						TCComponentBOMLine line = (TCComponentBOMLine)c.getComponent();
 						line.cut();
 					}
-				}
-				
+				}			
 				topLine.save();
 				bomWin.save();
-//				ui.addMsg("删除BOM结构成功");
 			}
-
+			String subinventory = null;
 			String v = null;
 			TCComponentBOMLine subLine = null;
-//			ui.addMsg("开始搭建BOM结构");
 			
 			for (Integer i : children.keySet()) {
 				TCComponent comp = children.get(i);
-				subLine = topLine.addBOMLine(topLine, comp, null);
-				
+				subLine = topLine.addBOMLine(topLine, comp, null);				
 //				设置版本属性上的
 				v = getValue(i, "用量")+"";
+				subinventory = (String) getValue(i, "子库存");
+				subLine.setProperty("bl_occ_sf8_subinventory", subinventory);
 				subLine.setProperty("bl_quantity", v);									
 				subLine.save();
 			}
@@ -325,13 +323,9 @@ public class SFGKBomImporter extends AbstractImporter {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-//			ui.addMsg(parentRev + ":"+e.getMessage());
 			ret = "创建结构BOM时出错：" + e.getMessage();
 			BOMUtil.removeBOM(bomWin, bvr);
 		}		
 		return ret;
 	}
-
-
-
 }
