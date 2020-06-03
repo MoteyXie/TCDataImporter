@@ -29,7 +29,6 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	private static HashMap<String, String> typeMap = new HashMap<String, String>();
 	private TCSession session = (TCSession) AIFUtility.getDefaultSession();
 	private TCComponentItemType itemType = null;
-	private TCProperty templateTCProerty = null;
 	private TCComponentFolder folder = null;
 	private TCComponentItemRevision rev = null;
 	protected int folderChildIndex = 0;
@@ -38,6 +37,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	private boolean flag ;
 	private String org = null;
 	private String template = null;
+	private String uom_tag =  null;
 	SFGKServiceProxy proxy = new SFGKServiceProxy();
 	
 	static {
@@ -102,6 +102,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		Map<String, String> map = values.get(index);
 		org = map.get("组织");
 		template = map.get("用户模板");
+		uom_tag = map.get("度量单位");
 		rev = (TCComponentItemRevision) newInstance;
 		rendering = new MPartRendering(rev,false,false);
 		tempDesc =rendering.autoBuildValue().substring(5);
@@ -109,6 +110,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		tempDesc = tempDesc.replaceAll("\r|\n", "");
 		rev.setProperty("object_desc",tempDesc);
 		rev.setProperty("sf8_create_part_template", org+"-"+template);
+		rev.getItem().setProperty("uom_tag", uom_tag);
 		flag = rendering.hasObjectDescButNotThisItem();
 		if(flag) {
 			driver.onNewItemRevDesc(index, tempDesc);		
