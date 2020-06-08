@@ -176,7 +176,7 @@ public abstract class AbstractImporter implements IImporter {
 		String propertyRealName = getPropertyRealName(index, propertyDisplayName);
 		if(propertyRealName == null) {
 			 onPropertyRealNameNotFound(index, propertyDisplayName);
-			throw new Exception("属性【" + propertyDisplayName + " 未找到！");
+			throw new Exception("属性【" + propertyDisplayName + "】 未找到！");
 		}
 		
 		Object value = getValue(index, propertyDisplayName);
@@ -205,9 +205,8 @@ public abstract class AbstractImporter implements IImporter {
 						if (str.isEmpty()) {
 							tcp.setDateValue(null);
 						} else {
-							tcp.setDateValue(new Date(str));
+							tcp.setDateValue( new Date(str));
 						}
-						
 					}
 					tcComponent.setTCProperty(tcp);
 					break;
@@ -317,13 +316,15 @@ public abstract class AbstractImporter implements IImporter {
 		
 		onStart();
 		driver.onStart();
+		Map<String, String> map = null;
+		TCComponent newInstance = null;
 		for(int i = 0; i < values.size(); i++) {
 			if(ignoreRow(i))continue;
 			onSingleStart(i);
 			driver.onSingleStart(i);
-			Map<String, String> map = values.get(i);
+			map = values.get(i);
 			try {
-				TCComponent newInstance = newTCComponent(i);
+				newInstance = newTCComponent(i);
 				for (String propertyDisplayName : map.keySet()) {
 					try {
 						if(ignoreProperty(i, propertyDisplayName))continue;
@@ -331,7 +332,6 @@ public abstract class AbstractImporter implements IImporter {
 						onSetPropertyFinish(i, propertyDisplayName);
 						driver.onSetPropertyFinish(i, propertyDisplayName);
 					}catch(Exception e) {
-//						System.out.println(e.toString());
 						onSetPropertyError(i, propertyDisplayName, e);
 						driver.onSetPropertyError(i, propertyDisplayName, e);
 						throw e;
@@ -339,12 +339,19 @@ public abstract class AbstractImporter implements IImporter {
 				}
 				onSingleFinish(i, newInstance);
 				driver.onSingleFinish(i);
+				
+				//每500个申请 一下GC
+				if(i % 500 == 499) {
+					System.gc();
+				}
+				
 			} catch (Exception e) {
 				//TODO 异常处理
 				e.printStackTrace();
 				onSingleError(i, e);
 				driver.onSingleError(i, e);
 			}
+			map = null;
 		}
 		
 		onFinish();
