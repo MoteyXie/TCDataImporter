@@ -193,7 +193,7 @@ public class SFGKPartImporter extends AbstractImporter {
 	 */
 	private String putInFolder(TCComponent tcitem) {
 		
-		if(folderChildIndex > 500 || folder == null){
+		if(folderChildIndex > 800 || folder == null){
 			folder = null;
 			try {
 				initFolder();
@@ -227,6 +227,13 @@ public class SFGKPartImporter extends AbstractImporter {
 		session.getUser().getHomeFolder().add("contents", folder);
 		
 	}
+	
+//	/**
+//	 * 临时保存数据
+//	 */
+//	public void saveExcel() {
+//		
+//	}
 
 	@Override
 	public void onSingleMessage(int index, String msg) throws Exception {

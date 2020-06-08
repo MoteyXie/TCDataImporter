@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.MyClassifyManager;
@@ -38,6 +40,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	private String org = null;
 	private String template = null;
 	private String uom_tag =  null;
+	private String tempSameId = null;
 	SFGKServiceProxy proxy = new SFGKServiceProxy();
 	
 	static {
@@ -113,13 +116,43 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		rev.getItem().setProperty("uom_tag", uom_tag);
 		flag = rendering.hasObjectDescButNotThisItem();
 		if(flag) {
-			driver.onNewItemRevDesc(index, tempDesc);		
 			rev.getItem().delete();
-			throw new Exception("系统存在相同描述的物料:创建失败");
+			driver.onNewItemRevDesc(index, tempDesc);	
+			driver.onNewItemId(index, "");
+			tempSameId = findSameItem(tempDesc);
+			throw new Exception("系统存在相同描述的物料:创建失败"+tempSameId);
 		}else {
 			driver.onNewItemRevDesc(index, tempDesc);
 			folder.add("contents", rev.getItem());
 		}		
+	}
+	
+	/**查找相同描述的物料号
+	 * @param tempDesc
+	 * @return
+	 * @throws Exception 
+	 */
+	public String findSameItem(String tempDesc) throws Exception {
+		String tempid = "";
+		List<String> tempSameItemList = new ArrayList<String>();
+			TCComponent[] result = session.search("物料查询", new String[] {"描述"}, new String[] {tempDesc});
+			if(result.length>0) {
+				for (int i = 0; i < result.length; i++) {
+					tempSameItemList.add(result[i].getProperty("item_id"));
+				}
+				if(tempSameItemList.size()>0) {
+			        HashSet<String> h = new HashSet<String>(tempSameItemList);
+			        tempSameItemList.clear();
+			        tempSameItemList.addAll(h);	
+			        for (int i = 0; i < tempSameItemList.size(); i++) {
+						tempid = tempid+tempSameItemList.get(i)+",";
+					}
+			        if(tempid.contains(",")) {
+			        	tempid = tempid.substring(0, tempid.length()-1);
+			        }
+				}
+			}			
+		return tempid;		
 	}
 
 	@Override
@@ -311,7 +344,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 				itemRev, 
 				itemType.getTypeName(), 
 				getItemObjectName(index), null, null, null, null);
-		newItem.setLogicalProperty("sf8_if_history_data", true);
+//		newItem.setLogicalProperty("sf8_if_history_data", true);
 		return getPropertyContainer(index) == PropertyContainer.item ? newItem : newItem.getLatestItemRevision();
 	}
 	
@@ -348,7 +381,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	 * @throws Exception
 	 */
 	public void addClassification(TCComponent tcc,String ics_id) throws Exception {
-//		cm.saveItemInNode(tcc, ics_id);
+
 		TCComponentICO[] icos = tcc.getClassificationObjects();
 		if (icos == null || icos.length == 0) {
 			SFGKServiceProxy proxy = new SFGKServiceProxy();

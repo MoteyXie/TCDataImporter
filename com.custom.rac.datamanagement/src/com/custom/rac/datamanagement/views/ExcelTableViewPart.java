@@ -56,7 +56,7 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 	private ToolBarItemBean[] rightToolBarItems = new ToolBarItemBean[] {
 			
 			new ToolBarItemBean("导出", "Down_Normal.png", "ExportTableAction"),
-//			new ToolBarItemBean("保存", "Load_Normal.png", "SaveResultAction"),
+			new ToolBarItemBean("保存", "Load_Normal.png", "SaveResultAction"),
 			new ToolBarItemBean("关于", "Info_Normal.png", ""),
 			new ToolBarItemBean("设置", "Setting_Normal.png", ""),
 	};
@@ -98,13 +98,12 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
+		
 //		Composite container = new Composite(parent, SWT.NONE);
 		this.container = parent;
-
 		createActions();
 		initializeToolBar();
-		initializeMenu();
-		
+		initializeMenu();		
 		parent.setLayout(new BorderLayout());
 //		createTable(parent);
 		createHeader(parent);
