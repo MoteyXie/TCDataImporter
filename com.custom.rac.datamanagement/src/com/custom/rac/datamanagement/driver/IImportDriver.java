@@ -25,4 +25,6 @@ public interface IImportDriver {
 	void onNewItemRevId(int index, String itemRevId);
 	
 	void setImporter(IImporter importer);
+	
+	void onNewItemRevDesc(int index,String itemDesc);
 }

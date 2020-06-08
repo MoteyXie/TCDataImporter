@@ -345,10 +345,8 @@ public abstract class AbstractImporter implements IImporter {
 				onSingleError(i, e);
 				driver.onSingleError(i, e);
 			}
-		}
-		
-		onFinish();
-		
+		}		
+		onFinish();		
 	}
 
 }

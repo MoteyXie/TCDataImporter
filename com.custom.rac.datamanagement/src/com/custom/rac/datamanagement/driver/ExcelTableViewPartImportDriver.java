@@ -155,4 +155,9 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 		
 	}
 
+	@Override
+	public void onNewItemRevDesc(int index, String itemDesc) {  
+		setValueWithRealName(index, "object_desc", itemDesc);		
+	}
+
 }

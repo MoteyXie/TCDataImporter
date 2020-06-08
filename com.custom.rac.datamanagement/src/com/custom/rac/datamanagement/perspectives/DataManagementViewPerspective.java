@@ -27,14 +27,11 @@ import com.teamcenter.rac.ui.views.ViewerViewPart;
 
 public class DataManagementViewPerspective implements IPerspectiveFactory{
 
-	public static String VIEWER_VIEW_PART_ID = "com.teamcenter.rac.ui.views.ViewerView";
-	
+	public static String VIEWER_VIEW_PART_ID = "com.teamcenter.rac.ui.views.ViewerView";	
 	public static final int MODEL_GENERAL = 1;
 	public static final int MODEL_GROUP_STAT = 2; 
-	public static final int MODEL_PERSON_STAT = 3; 
-	
-	public static int current_model = MODEL_GROUP_STAT;
-	
+	public static final int MODEL_PERSON_STAT = 3; 	
+	public static int current_model = MODEL_GROUP_STAT;	
 	public static IPageLayout m_layout;
 	public static IFolderLayout tableLayout;
 	public static IFolderLayout componetViewLayout;
