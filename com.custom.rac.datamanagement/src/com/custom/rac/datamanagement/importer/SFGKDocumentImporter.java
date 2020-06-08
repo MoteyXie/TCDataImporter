@@ -28,6 +28,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	MyClassifyManager cls_manger = new MyClassifyManager(session);
 	TCComponentFolder folder = null;
 	SFGKServiceProxy proxy = new SFGKServiceProxy();
+	private File file;
 	
 	@Override
 	public String getName() {
@@ -86,6 +87,9 @@ public class SFGKDocumentImporter extends AbstractImporter {
 			throw new Exception("分类ID不能为空！");
 		}
 		TCComponentItemType type = (TCComponentItemType) session.getTypeComponent(getType(ics_id));
+		if (type == null) {
+			throw new Exception("分类ID错误，请检查！");
+		}
 		return type;
 	}
 
@@ -96,13 +100,39 @@ public class SFGKDocumentImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) throws Exception{
-		
+		StringBuilder sb = new StringBuilder();
+		Object value = getValue(index, "图文档分类ID");
+		if (value == null || value.toString().isEmpty()) {
+			sb.append("图文档分类ID不能为空/");
+		}
+		value = getValue(index, "电子档存放地址");
+		if (value == null || value.toString().isEmpty()) {
+			sb.append("电子档存放地址不能为空/");
+		} else {
+			file = new File(value.toString());
+			if (file == null || !file.exists() || !file.isFile()) {
+				sb.append("电子档存放地址路径找不到文件/");
+			} 
+//			else {
+//				if (value.toString().endsWith("dwg") || value.toString().endsWith("DWG")) {
+//					sb.append("文档导入工具不支持dwg类型文件的导入，请检查导入类型是否有误！/");
+//				}
+//			}
+		}
+		String msg = sb.toString();
+		if (msg != null && !msg.isEmpty()) {
+			throw new Exception(msg);
+		}
 	}
 
 	@Override
 	public void onSingleFinish(int index, TCComponent tcc) throws Exception {
 		if (folder != null) {
-			folder.add("contents", tcc);
+			try {
+				folder.add("contents", tcc);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}	
 
@@ -135,6 +165,14 @@ public class SFGKDocumentImporter extends AbstractImporter {
 		return false;
 	}
 	
+    public static boolean isEnglish(String str) {
+        byte[] bytes = str.getBytes();
+        int i = bytes.length;// i为字节长度
+        int j = str.length();// j为字符长度
+        boolean result = i == j ? true : false;
+        return result;
+    }
+	
 	@Override
 	public void setValue(TCComponent tcc, int index, String propertyDisplayName) throws Exception {
 		String value = getValue(index, propertyDisplayName)+ "";
@@ -150,12 +188,13 @@ public class SFGKDocumentImporter extends AbstractImporter {
 				}
 			}
 		} else if (propertyDisplayName.equals("图文档分类ID")) {
-			cls_manger.saveItemInNode(tcc, value);			
+			cls_manger.saveItemInNode(tcc, value);		
+			
 		} else if (propertyDisplayName.equals("电子档存放地址")) {
 			if (value != null && value.length() > 0) {				
 				File file = new File(value);
 				if (file != null && file.exists() &&file.isFile()) {
-					MyDatasetUtil.createDateset(tcc, file.getName(), file, "IMAN_specification");
+					MyDatasetUtil.createDateset(tcc, file.getName(), file, "TC_Attaches");
 				} else {
 					throw new Exception("找不到数据集文件" + value);
 				}
@@ -168,10 +207,11 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	}
 	
 	public String newItemId(int index) throws Exception {
-		String value = getValue(index, "图文档分类ID")+ "";
+		String value = getValue(index, "图文档分类ID") + "";
 		if (value == null || value.length() == 0) {
 			throw new Exception("图文档分类ID不能为空！");
 		}
+		
 		SimpleDateFormat format = new SimpleDateFormat("yyMM");
 		String date = format.format(new Date());
 		return getID(value +date, 4);

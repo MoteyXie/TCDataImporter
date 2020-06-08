@@ -27,6 +27,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	TCSession session = (TCSession) AIFUtility.getDefaultSession();
 	MyClassifyManager cls_manger = new MyClassifyManager(session);
 	TCComponentFolder folder = null;
+	private File file;
 	
 	@Override
 	public String getName() {
@@ -70,7 +71,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_PartDesign");
 			break;			
 		default:
-			break;
+			throw new TCException("图纸类型不能为空！");
 		}
 		return itemType;
 	}
@@ -79,16 +80,53 @@ public class SFGKDesignImporter extends AbstractImporter {
 	public PropertyContainer getPropertyContainer(int index) throws Exception {
 		return PropertyContainer.itemRevision;
 	}
+	
+    public  boolean isEnglish(String str) {
+        byte[] bytes = str.getBytes();
+        int i = bytes.length;// i为字节长度
+        int j = str.length();// j为字符长度
+        boolean result = i == j ? true : false;
+        return result;
+    }
 
 	@Override
 	public void onSingleStart(int index) throws Exception {
-
+		StringBuilder sb = new StringBuilder();
+		String value = getValueFromRealName(index, "item_id");
+		if (value == null || value.isEmpty()) {
+			sb.append("图纸代号不能为空/");			
+		} else if (!isEnglish(value)) {
+			sb.append("图纸代号不能出现中文字符/");
+		}
+		Object obj = getValue(index, "电子档存放地址");
+		if (obj == null || obj.toString().trim().isEmpty()) {
+			sb.append("电子档存放地址不能为空/");
+		} else {
+			value = obj.toString().trim();
+			file = new File(value);
+			if (file == null || !file.exists() || !file.isFile()) {
+				sb.append("电子档存放地址路径找不到文件/");				
+			}
+//			else {
+//				if (!value.toString().endsWith("dwg") && !value.toString().endsWith("DWG")) {
+//					sb.append("图纸导入工具不支持非dwg类型文件的导入，请检查导入类型是否有误！/");
+//				}
+//			}
+		}
+		String msg = sb.toString();
+		if (msg != null && !msg.isEmpty()) {
+			throw new Exception(msg);
+		}
 	}
 
 	@Override
 	public void onSingleFinish(int index, TCComponent tcc) throws Exception {
 		if (folder != null) {
-			folder.add("contents", tcc);
+			try {
+				folder.add("contents", tcc);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
@@ -116,8 +154,9 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public boolean ignoreProperty(int index, String propertyDisplayName) throws Exception {
-		if (propertyDisplayName.equals("图纸类型") ||propertyDisplayName.equals("总装图代号")
-			|| propertyDisplayName.equals("版本") || propertyDisplayName.equals("图纸名称")){
+		if (propertyDisplayName.equals("图纸类型") || propertyDisplayName.equals("图纸代号")
+			|| propertyDisplayName.equals("版本") || propertyDisplayName.equals("图纸名称")
+			|| propertyDisplayName.equals("图文档分类ID")){
 			return true;
 		}
 		return false;
@@ -125,20 +164,8 @@ public class SFGKDesignImporter extends AbstractImporter {
 	
 	@Override
 	public void setValue(TCComponent tcc, int index, String propertyDisplayName) throws Exception {
-		String value = getValue(index, propertyDisplayName)+ "";
-		if (propertyDisplayName.equals("图文档分类ID")) {
-			cls_manger.saveItemInNode(tcc, value);			
-		} else if (propertyDisplayName.equals("电子档存放地址")) {
-			if (value != null && value.length() > 0) {
-				File file = new File(value);
-				if (file != null && file.exists() &&file.isFile()) {
-					MyDatasetUtil.createDateset(tcc, file.getName(), file, "IMAN_specification");
-				} else {
-					throw new Exception("找不到数据集文件" + value);
-				}
-			} else {
-				throw new Exception("电子档存放地址不能为空");
-			}			
+		if (propertyDisplayName.equals("电子档存放地址")) {
+			MyDatasetUtil.createDateset(tcc, file.getName(), file, "TC_Attaches");						
 		} else {
 			super.setValue(tcc, index, propertyDisplayName);
 		}
@@ -151,7 +178,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public boolean deleteOldItemWhenItemIdExist(int index) throws Exception {
-		return true;
+		return false;
 	}
 
 	@Override

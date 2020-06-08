@@ -319,10 +319,10 @@ public abstract class AbstractImporter implements IImporter {
 		driver.onStart();
 		for(int i = 0; i < values.size(); i++) {
 			if(ignoreRow(i))continue;
-			onSingleStart(i);
-			driver.onSingleStart(i);
-			Map<String, String> map = values.get(i);
 			try {
+				onSingleStart(i);
+				driver.onSingleStart(i);
+				Map<String, String> map = values.get(i);
 				TCComponent newInstance = newTCComponent(i);
 				for (String propertyDisplayName : map.keySet()) {
 					try {
@@ -345,8 +345,10 @@ public abstract class AbstractImporter implements IImporter {
 				onSingleError(i, e);
 				driver.onSingleError(i, e);
 			}
-		}		
-		onFinish();		
+		}
+		
+		onFinish();
+		
 	}
 
 }
