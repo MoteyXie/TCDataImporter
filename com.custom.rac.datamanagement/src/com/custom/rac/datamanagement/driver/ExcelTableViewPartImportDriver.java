@@ -51,7 +51,7 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 //			}
 //		});
 		onSingleStartRunnable.index = index;
-		Display.getDefault().syncExec(onSingleStartRunnable);
+		Display.getDefault().asyncExec(onSingleStartRunnable);
 	}
 	
 	private MyRunnable onSingleFinishRunnable = new MyRunnable() {
@@ -68,17 +68,17 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 	@Override
 	public void onSingleFinish(int index) {
 		System.out.println("驱动界面上的数据(完成)：" + index);
-//		Display.getDefault().asyncExec(new Runnable() {
-//			@Override
-//			public void run() {
-//				tableViewPart.setProgressValue(index+startRowNum);
-//				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
-//				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "导入完成");
-//				tableViewPart.getSWTWorkbook().getSelectedSheet().getTable().setSelection(index+startRowNum);
-//			}
-//		});
-		onSingleFinishRunnable.index = index;
-		Display.getDefault().syncExec(onSingleFinishRunnable);
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				tableViewPart.setProgressValue(index+startRowNum);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "导入完成");
+				tableViewPart.getSWTWorkbook().getSelectedSheet().getTable().setSelection(index+startRowNum);
+			}
+		});
+//		onSingleFinishRunnable.index = index;
+//		Display.getDefault().asyncExec(onSingleFinishRunnable);
 		
 	}
 
@@ -94,17 +94,17 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 	
 	@Override
 	public void onSingleError(int index, Exception e) {
-//		Display.getDefault().asyncExec(new Runnable() {
-//			@Override
-//			public void run() {
-//				tableViewPart.setProgressValue(index+startRowNum);
-//				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.error);
-//				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, e.getMessage());
-//			}
-//		});
-		onSingleErrorRunnable.index = index;
-		onSingleErrorRunnable.message = e.getMessage();
-		Display.getDefault().syncExec(onSingleErrorRunnable);
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				tableViewPart.setProgressValue(index+startRowNum);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.error);
+				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, e.getMessage());
+			}
+		});
+//		onSingleErrorRunnable.index = index;
+//		onSingleErrorRunnable.message = e.getMessage();
+//		Display.getDefault().asyncExec(onSingleErrorRunnable);
 	}
 
 	@Override
