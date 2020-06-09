@@ -320,10 +320,10 @@ public abstract class AbstractImporter implements IImporter {
 		TCComponent newInstance = null;
 		for(int i = 0; i < values.size(); i++) {
 			if(ignoreRow(i))continue;
-			onSingleStart(i);
-			driver.onSingleStart(i);
-			map = values.get(i);
 			try {
+				onSingleStart(i);
+				driver.onSingleStart(i);
+				map = values.get(i);
 				newInstance = newTCComponent(i);
 				onSingleStart(i);
 				driver.onSingleStart(i);
