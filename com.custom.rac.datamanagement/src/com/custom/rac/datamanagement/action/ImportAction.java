@@ -28,8 +28,9 @@ public class ImportAction extends AbstractTableAction{
 		String selection = tableViewPart.importerSelecter.getText();
 		
 		if(selection == null || selection.length() < 1) {
-			throw new Exception("请选择一个导入程序！");
+			throw new Exception("必须选择一个导入程序");
 		}
+		
 		IImporter importer = importerReader.getImporter(selection);
 		
 		MySheet mySheet = tableViewPart.getSWTWorkbook().getSelectedSheetData();

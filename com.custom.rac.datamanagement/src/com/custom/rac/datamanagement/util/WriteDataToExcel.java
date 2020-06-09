@@ -55,7 +55,7 @@ public class WriteDataToExcel {
 			}
 			Object state = tableItem.getData("state");
 			cell = row.createCell(tcol - 2);
-			cell.setCellValue(state.toString());
+			cell.setCellValue(state == null ? "" : state.toString());
 			cell.setCellStyle(cellStyle);
 		}
 		for (int k = trow; k < rowNum; k++) {

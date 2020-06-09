@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
@@ -26,6 +27,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.custom.rac.datamanagement.util.RunState;
 
@@ -177,7 +179,8 @@ public class SWTSheet extends TabItem implements ISWTObject {
 
 	public void setState(int rowNum, RunState state) {
 		TableItem tableItem = table.getItem(rowNum);
-		tableItem.setImage(1, getStateImage(state));
+//		tableItem.setImage(1, getStateImage(state));
+		tableItem.setBackground(getStateBackground(state));
 		tableItem.setData("state", state);
 	}
 
@@ -189,6 +192,24 @@ public class SWTSheet extends TabItem implements ISWTObject {
 			infomation = "";
 		}
 		table.getItem(rowNum).setText(columnNum, infomation);
+	}
+	
+	public Color getStateBackground(RunState state) {
+		
+		int colorNum = -1;
+		if (state == RunState.waitting) {
+			colorNum = SWT.COLOR_YELLOW;
+		} else if (state == RunState.running) {
+			colorNum = SWT.COLOR_DARK_GREEN;
+		} else if (state == RunState.finish) {
+			colorNum = SWT.COLOR_GREEN;
+		} else if (state == RunState.error) {
+			colorNum = SWT.COLOR_RED;
+		} else {
+			colorNum = SWT.COLOR_BLUE;
+		}
+
+		return SWTResourceManager.getColor(colorNum);
 	}
 
 	public Image getStateImage(RunState state) {
