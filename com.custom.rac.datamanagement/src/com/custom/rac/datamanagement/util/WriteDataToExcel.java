@@ -55,7 +55,7 @@ public class WriteDataToExcel {
 			}
 			Object state = tableItem.getData("state");
 			cell = row.createCell(tcol - 2);
-			cell.setCellValue(state == null ? "" : state.toString());
+			cell.setCellValue(state.toString());
 			cell.setCellStyle(cellStyle);
 		}
 		for (int k = trow; k < rowNum; k++) {
@@ -103,7 +103,7 @@ public class WriteDataToExcel {
                     }
                 }
             }
-            sheet.setColumnWidth(colNum, (columnWidth+4) * 256);    
+            sheet.setColumnWidth(colNum, (columnWidth+4) * 128);    
         }
 	}
 }
