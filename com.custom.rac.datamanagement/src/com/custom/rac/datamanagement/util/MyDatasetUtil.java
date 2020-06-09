@@ -97,7 +97,7 @@ public class MyDatasetUtil {
 			refType = "SF8_MP4";
 		} else if (fileType.contains("SF8_RAR")) {
 			refType = "SF8_RAR";
-		} else if (fileType.contains("SLDDRW")) {
+		} else if (fileType.contains("SWDrw")) {
 			refType = "DrwFile";
 		}
 		
