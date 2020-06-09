@@ -97,6 +97,8 @@ public class MyDatasetUtil {
 			refType = "SF8_MP4";
 		} else if (fileType.contains("SF8_RAR")) {
 			refType = "SF8_RAR";
+		} else if (fileType.contains("SWDrw")) {
+			refType = "DrwFile";
 		}
 		
 
@@ -154,6 +156,8 @@ public class MyDatasetUtil {
 			datesetType = "SF8_CSV";
 		} else if (fileName.endsWith("ap15")) {
 			datesetType = "SF8_AP15";
+		} else if (fileName.endsWith("SLDDRW")) {
+			datesetType = "SWDrw";
 		}
 
 		if (datesetType == null) {
