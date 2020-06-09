@@ -15,7 +15,7 @@ public class SampleHandler extends AbstractHandler {
 		MessageDialog.openInformation(
 				window.getShell(),
 				"Datamanger",
-				"Hello, Eclipse world");
+				"Hello, Eclipse world11");
 		return null;
 	}
 }
