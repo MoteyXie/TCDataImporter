@@ -103,7 +103,7 @@ public class WriteDataToExcel {
                     }
                 }
             }
-            sheet.setColumnWidth(colNum, (columnWidth+4) * 256);    
+            sheet.setColumnWidth(colNum, (columnWidth+4) * 128);    
         }
 	}
 }
