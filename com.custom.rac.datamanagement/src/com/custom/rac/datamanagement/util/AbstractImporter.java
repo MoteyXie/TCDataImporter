@@ -325,6 +325,9 @@ public abstract class AbstractImporter implements IImporter {
 			map = values.get(i);
 			try {
 				newInstance = newTCComponent(i);
+				onSingleStart(i);
+				driver.onSingleStart(i);
+				map = values.get(i);
 				for (String propertyDisplayName : map.keySet()) {
 					try {
 						if(ignoreProperty(i, propertyDisplayName))continue;

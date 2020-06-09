@@ -10,6 +10,7 @@ import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.MyClassifyManager;
 import com.custom.rac.datamanagement.util.MyStatusUtil;
 import com.custom.rac.datamanagement.util.PropertyContainer;
+import com.custom.rac.itemcode.util.GetIcsCodeByItemCode;
 import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponent;
 import com.teamcenter.rac.kernel.TCComponentFolder;
@@ -71,7 +72,15 @@ public class SFGKPartImporter extends AbstractImporter {
 		if (propertyDisplayName.equals("物料状态")) {
 			MyStatusUtil.setStatus(tcComponent, value);
 		}else if(propertyDisplayName.equals("物料分类ID")){
-			cls_manger.saveItemInNode(tcComponent, value);	
+			String type = tcComponent.getType();
+			String id = tcComponent.getProperty("item_id");
+			if(type.equals("SF8_RPartRevision")) {
+				value = GetIcsCodeByItemCode.getIcsCode(id);
+				cls_manger.saveItemInNode(tcComponent, value);
+			}else {
+				cls_manger.saveItemInNode(tcComponent, value);	
+			}
+			
 		}else if(propertyDisplayName.equals("度量单位")) {
 			rev = (TCComponentItemRevision) tcComponent;
 			rev.getItem().setProperty("uom_tag", value);
@@ -184,7 +193,7 @@ public class SFGKPartImporter extends AbstractImporter {
 	 */
 	private String putInFolder(TCComponent tcitem) {
 		
-		if(folderChildIndex > 500 || folder == null){
+		if(folderChildIndex > 800 || folder == null){
 			folder = null;
 			try {
 				initFolder();
@@ -218,6 +227,13 @@ public class SFGKPartImporter extends AbstractImporter {
 		session.getUser().getHomeFolder().add("contents", folder);
 		
 	}
+	
+//	/**
+//	 * 临时保存数据
+//	 */
+//	public void saveExcel() {
+//		
+//	}
 
 	@Override
 	public void onSingleMessage(int index, String msg) throws Exception {

@@ -47,5 +47,7 @@ Bundle-ClassPath: lib/commons-logging.jar,
  lib/ojdbc6.jar,
  lib/org.apache.commons.logging_1.2.0.v20180409-1502.jar,
  lib/saaj.jar
-Import-Package: com.teamcenter.services.rac.workflow,
+Import-Package: com.sfgk.sie.customs.part.rendering,
+ com.sfgk.sie.webservice,
+ com.teamcenter.services.rac.workflow,
  com.teamcenter.services.rac.workflow._2007_06

@@ -4,6 +4,7 @@
 		<importer id="com.custom.rac.datamanagement.importer.SFGKDocumentImporter"/>
 		<importer id="com.custom.rac.datamanagement.importer.SFGKDesignImporter"/>
 		<importer id="com.custom.rac.datamanagement.importer.SFGKBomImporter"/>
+		<importer id="com.custom.rac.datamanagement.importer.SFGKNewPartsImporter"/>
 		<importer id="com.custom.rac.datamanagement.importer.TestImporter"/>
 		<importer id="com.custom.rac.datamanagement.importer.Test2Importer"/>
 	</importers>

@@ -29,41 +29,82 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 		return tableViewPart;
 	}
 	
+	public abstract class MyRunnable implements Runnable{
+		public int index;
+		public String message;
+	}
+	
+	private MyRunnable onSingleStartRunnable = new MyRunnable() {
+		@Override
+		public void run() {
+			tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.running);
+		}
+	};
+	
 	@Override
 	public void onSingleStart(int index) {
 		System.out.println("驱动界面上的数据(开始)：" + index);
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.running);
-			}
-		});
+//		Display.getDefault().asyncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.running);
+//			}
+//		});
+		onSingleStartRunnable.index = index;
+		Display.getDefault().syncExec(onSingleStartRunnable);
 	}
+	
+	private MyRunnable onSingleFinishRunnable = new MyRunnable() {
+		@Override
+		public void run() {
+			tableViewPart.setProgressValue(index+startRowNum);
+			tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
+			tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "导入完成");
+			tableViewPart.getSWTWorkbook().getSelectedSheet().getTable().setSelection(index+startRowNum);
+		}
+		
+	};
 
 	@Override
 	public void onSingleFinish(int index) {
 		System.out.println("驱动界面上的数据(完成)：" + index);
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				tableViewPart.setProgressValue(index+startRowNum);
-				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
-				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "导入完成");
-			}
-		});
+//		Display.getDefault().asyncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				tableViewPart.setProgressValue(index+startRowNum);
+//				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.finish);
+//				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, "导入完成");
+//				tableViewPart.getSWTWorkbook().getSelectedSheet().getTable().setSelection(index+startRowNum);
+//			}
+//		});
+		onSingleFinishRunnable.index = index;
+		Display.getDefault().syncExec(onSingleFinishRunnable);
 		
 	}
 
+	private MyRunnable onSingleErrorRunnable = new MyRunnable() {
+		@Override
+		public void run() {
+			tableViewPart.setProgressValue(index+startRowNum);
+			tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.error);
+			tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, message);
+		}
+		
+	};
+	
 	@Override
 	public void onSingleError(int index, Exception e) {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				tableViewPart.setProgressValue(index+startRowNum);
-				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.error);
-				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, e.getMessage());
-			}
-		});
+//		Display.getDefault().asyncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				tableViewPart.setProgressValue(index+startRowNum);
+//				tableViewPart.getSWTWorkbook().getSelectedSheet().setState(index+startRowNum, RunState.error);
+//				tableViewPart.getSWTWorkbook().getSelectedSheet().setInfomation(index+startRowNum, e.getMessage());
+//			}
+//		});
+		onSingleErrorRunnable.index = index;
+		onSingleErrorRunnable.message = e.getMessage();
+		Display.getDefault().syncExec(onSingleErrorRunnable);
 	}
 
 	@Override
@@ -153,6 +194,11 @@ public class ExcelTableViewPartImportDriver implements IImportDriver{
 			}
 		});
 		
+	}
+
+	@Override
+	public void onNewItemRevDesc(int index, String itemDesc) {  
+		setValueWithRealName(index, "object_desc", itemDesc);		
 	}
 
 }
