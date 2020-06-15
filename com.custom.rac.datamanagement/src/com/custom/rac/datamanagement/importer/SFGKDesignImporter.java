@@ -31,7 +31,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	
 	@Override
 	public String getName() {
-		return "图纸导入程序";
+		return "上风高科图纸导入程序";
 	}
 
 	@Override

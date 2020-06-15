@@ -55,7 +55,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	@Override
 	public String getName() {
 		
-		return "新物料批量创建程序";
+		return "上风高科新物料批量创建程序";
 		
 	}
 	
