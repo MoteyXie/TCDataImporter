@@ -32,7 +32,7 @@ public class SFGKDocumentImporter extends AbstractImporter {
 	
 	@Override
 	public String getName() {
-		return "文档导入程序";
+		return "上风高科文档导入程序";
 	}
 	public String getType(String node_id) {
 		String type = "";
