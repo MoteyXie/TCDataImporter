@@ -35,9 +35,11 @@ public class SFGKPartImporter extends AbstractImporter {
 	static {
 		typeMap.put("成品", "SF8_PPart");
 		typeMap.put("半成品", "SF8_SPart");
-		typeMap.put("毛坯", "SF8_Wpart");
+		typeMap.put("毛坯", "SF8_WPart");
 		typeMap.put("原材料", "SF8_RPart");
 		typeMap.put("电机", "SF8_FPart");	
+		typeMap.put("外协件", "SF8_OPart");
+		typeMap.put("推式组件", "SF8_BPart");
 	}
 	
 	@Override
