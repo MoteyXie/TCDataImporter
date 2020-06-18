@@ -14,7 +14,6 @@ encoding//src/com/custom/rac/datamanagement/config/XMLImporters.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/config/XMLObject.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/driver/ExcelTableViewPartImportDriver.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/driver/IImportDriver.java=UTF-8
-encoding//src/com/custom/rac/datamanagement/handlers/SampleHandler.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/importer/SFGKBomImporter.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/importer/SFGKDesignImporter.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/importer/SFGKDocumentImporter.java=UTF-8
