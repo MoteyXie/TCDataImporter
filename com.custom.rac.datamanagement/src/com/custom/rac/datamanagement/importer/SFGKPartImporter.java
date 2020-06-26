@@ -35,9 +35,11 @@ public class SFGKPartImporter extends AbstractImporter {
 	static {
 		typeMap.put("成品", "SF8_PPart");
 		typeMap.put("半成品", "SF8_SPart");
-		typeMap.put("毛坯", "SF8_Wpart");
+		typeMap.put("毛坯", "SF8_WPart");
 		typeMap.put("原材料", "SF8_RPart");
 		typeMap.put("电机", "SF8_FPart");	
+		typeMap.put("外协件", "SF8_OPart");
+		typeMap.put("推式组件", "SF8_BPart");
 	}
 	
 	@Override
@@ -77,7 +79,22 @@ public class SFGKPartImporter extends AbstractImporter {
 			if(type.equals("SF8_RPartRevision")) {
 				value = GetIcsCodeByItemCode.getIcsCode(id);
 				cls_manger.saveItemInNode(tcComponent, value);
-			}else {
+			}else if(type.equals("SF8_OPartRevision")){
+				System.out.println("外协不进分类");
+			}else if(type.equals("SF8_SPartRevision")) {
+				String template = (String) getValue(index, "用户模板类型");
+				if(id.startsWith("1220089")) {
+					cls_manger.saveItemInNode(tcComponent, "12204");					
+				}else {
+					if(template.contains("子装配件")) {
+						cls_manger.saveItemInNode(tcComponent, "12201");
+					}else if(template.contains("虚拟件")) {
+						cls_manger.saveItemInNode(tcComponent, "12202");
+					}else{
+						cls_manger.saveItemInNode(tcComponent, "12203");
+					}
+				}
+			}else{
 				cls_manger.saveItemInNode(tcComponent, value);	
 			}
 			
@@ -117,7 +134,7 @@ public class SFGKPartImporter extends AbstractImporter {
 		if(checkProperties()) {
 			System.out.println("必要属性检查通过");			
 		}else {
-			throw new Exception("必要属性检查不通过");
+			throw new Exception("必要属性检查不通过,物料号或者度量单位");
 		}
 	}
 

@@ -44,33 +44,55 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	SFGKServiceProxy proxy = new SFGKServiceProxy();
 	
 	static {
-		typeMap.put("成品", "SF8_PPart");
-		typeMap.put("半成品", "SF8_SPart");
-		typeMap.put("毛坯", "SF8_Wpart");
-		typeMap.put("原材料", "SF8_RPart");
-		typeMap.put("电机", "SF8_FPart");	
-		typeMap.put("推式组件", "SF8_BPart");	
+//		typeMap.put("成品", "SF8_PPart");
+//		typeMap.put("半成品", "SF8_SPart");
+//		typeMap.put("毛坯", "SF8_Wpart");
+//		typeMap.put("原材料", "SF8_RPart");
+//		typeMap.put("电机", "SF8_FPart");	
+//		typeMap.put("推式组件", "SF8_BPart");	
+		typeMap.put("123", "SF8_PPart");
+		typeMap.put("122", "SF8_SPart");
+		typeMap.put("124", "SF8_WPart");
+		typeMap.put("121", "SF8_RPart");
+		typeMap.put("125", "SF8_FPart");	
+		typeMap.put("126", "SF8_BPart");
 	}
 	
 	@Override
 	public String getName() {
 		
-		return "新物料批量创建程序";
+		return "上风高科新物料批量创建程序";
 		
 	}
 	
 	@Override
 	public TCComponentItemType getItemType(int index) throws Exception{
-		String type = (String) getValue(index, "物料类型");
-		String reltype = typeMap.get(type);	
-		try {		
-			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
-		} catch (TCException e) {
-			e.printStackTrace();
-		}	
-		if(itemType==null) {					
-			throw new Exception("物料类型不存在");
-		}	
+		String icsCode = (String) getValue(index, "物料分类ID");
+		String reltype = null;
+		if(icsCode.isEmpty()) {
+			throw new Exception("物料分类ID不能为空");
+		}else {
+			String key = icsCode.substring(0,3);
+			reltype = typeMap.get(key);
+			try {		
+				itemType = (TCComponentItemType) session.getTypeComponent(reltype);
+			} catch (TCException e) {
+				e.printStackTrace();
+			}	
+			if(itemType==null) {					
+				throw new Exception("物料类型不存在");
+			}
+		}		
+//		String type = (String) getValue(index, "物料类型");
+//		String reltype = typeMap.get(type);	
+//		try {		
+//			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
+//		} catch (TCException e) {
+//			e.printStackTrace();
+//		}	
+//		if(itemType==null) {					
+//			throw new Exception("物料类型不存在");
+//		}	
 		return itemType;
 	}	
 
@@ -173,7 +195,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 			folder = folderType.create(name, "", "Folder");
 			session.getUser().getHomeFolder().add("contents", folder);
 		}else {
-			throw new Exception("必要属性检查不通过");
+			throw new Exception("必要属性检查不通过，请检查7个（代码）属性和度量单位");
 		}	
 	}
 
@@ -187,7 +209,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		ignoreList.add("序号");
 		ignoreList.add("物料号");
 		ignoreList.add("名称");
-		ignoreList.add("物料类型");
+//		ignoreList.add("物料类型");
 		ignoreList.add("型号(代码)");
 		ignoreList.add("机号(代码)");
 		ignoreList.add("传动方式(代码)");
@@ -281,6 +303,10 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 					}catch(Exception e) {
 						onSetPropertyError(i, propertyDisplayName, e);
 						driver.onSetPropertyError(i, propertyDisplayName, e);
+						if(newInstance instanceof TCComponentItemRevision) {
+							((TCComponentItemRevision) newInstance).getItem().delete();
+						}
+						
 						throw e;
 					}
 				}

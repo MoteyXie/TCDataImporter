@@ -2,10 +2,8 @@ package com.custom.rac.datamanagement.util;
 
 import java.io.File;
 
-import com.teamcenter.rac.kernel.NamedReferenceContext;
 import com.teamcenter.rac.kernel.TCComponent;
 import com.teamcenter.rac.kernel.TCComponentDataset;
-import com.teamcenter.rac.kernel.TCComponentDatasetDefinition;
 import com.teamcenter.rac.kernel.TCComponentDatasetType;
 import com.teamcenter.rac.kernel.TCException;
 
@@ -27,7 +25,7 @@ public class MyDatasetUtil {
 		String fileType = getFileType(file);
 		String ref = getrefType(fileType);
 		TCComponentDatasetType type = (TCComponentDatasetType) tcc.getSession().getTypeService().getTypeComponent("Dataset");
-		TCComponentDataset dataset = type.create(tcc.getProperty("object_name"), "", fileType);
+		TCComponentDataset dataset = type.create(name, "", fileType);
 		String[] refs = new String[] { ref };
 		String[] files = new String[] { file.getAbsolutePath() };
 		dataset.setFiles(files, refs);
@@ -36,20 +34,24 @@ public class MyDatasetUtil {
 			boolean flag = true;
 			for (TCComponent com : coms) {
 				if (com instanceof TCComponentDataset) {
-					TCComponentDataset ds = (TCComponentDataset) com;
-					TCComponentDatasetDefinition df = (TCComponentDatasetDefinition) ds.getDatasetDefinitionComponent();
-					NamedReferenceContext nameRefContexts[] = df.getNamedReferenceContexts();
-					if (nameRefContexts.length > 0) {
-						NamedReferenceContext nf = nameRefContexts[0];
-						String namedRef = nf.getNamedReference();
-						String[] fileNames = ds.getFileNames(namedRef);
-						if (fileNames.length > 0) {
-							if (fileNames[0].equals(name)) {
-								flag = false;
-								break;
-							}
-						}
+					if (name.equals(com.getProperty("object_name"))) {
+						flag = false;
+						break;
 					}
+//					TCComponentDataset ds = (TCComponentDataset) com;					
+//					TCComponentDatasetDefinition df = (TCComponentDatasetDefinition) ds.getDatasetDefinitionComponent();
+//					NamedReferenceContext nameRefContexts[] = df.getNamedReferenceContexts();
+//					if (nameRefContexts.length > 0) {
+//						NamedReferenceContext nf = nameRefContexts[0];
+//						String namedRef = nf.getNamedReference();
+//						String[] fileNames = ds.getFileNames(namedRef);
+//						if (fileNames.length > 0) {
+//							if (fileNames[0].equals(name)) {
+//								flag = false;
+//								break;
+//							}
+//						}
+//					}
 				}
 			}
 			if (flag) {
@@ -97,6 +99,8 @@ public class MyDatasetUtil {
 			refType = "SF8_MP4";
 		} else if (fileType.contains("SF8_RAR")) {
 			refType = "SF8_RAR";
+		} else if (fileType.contains("SWDrw")) {
+			refType = "DrwFile";
 		}
 		
 
@@ -154,6 +158,8 @@ public class MyDatasetUtil {
 			datesetType = "SF8_CSV";
 		} else if (fileName.endsWith("ap15")) {
 			datesetType = "SF8_AP15";
+		} else if (fileName.endsWith("SLDDRW")) {
+			datesetType = "SWDrw";
 		}
 
 		if (datesetType == null) {

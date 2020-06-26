@@ -1,51 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            id="com.custom.rac.datamanagement.commands.category"
-            name="Sample Category">
-      </category>
-      <command
-            categoryId="com.custom.rac.datamanagement.commands.category"
-            name="Sample Command"
-            id="com.custom.rac.datamanagement.commands.sampleCommand">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="com.custom.rac.datamanagement.handlers.SampleHandler"
-            commandId="com.custom.rac.datamanagement.commands.sampleCommand">
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="com.custom.rac.datamanagement.commands.sampleCommand"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+6">
-      </key>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="com.custom.rac.datamanagement.menus.sampleMenu"
-               label="Sample Menu"
-               mnemonic="M">
-            <command
-                  commandId="com.custom.rac.datamanagement.commands.sampleCommand"
-                  id="com.custom.rac.datamanagement.menus.sampleCommand"
-                  mnemonic="S">
-            </command>
-         </menu>
-      </menuContribution>
-   </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
