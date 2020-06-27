@@ -3,6 +3,7 @@ package com.custom.rac.datamanagement.swtxls;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 
 public class SWTWorkbook extends TabFolder implements ISWTObject{
 
@@ -37,6 +38,15 @@ public class SWTWorkbook extends TabFolder implements ISWTObject{
 		return (SWTSheet) getSelection()[0];
 	}
 	
+	public SWTSheet[] getSheets() {
+		int itemCount = getItemCount();
+		SWTSheet[] sheets = new SWTSheet[itemCount];
+		TabItem[] items = getItems();
+		for(int i = 0; i < items.length; i++) {
+			sheets[i] = (SWTSheet) items[i];
+		}
+		return sheets;
+	}
 	
 	public void checkSubclass() {
 		
