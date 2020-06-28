@@ -21,6 +21,14 @@ public class MySheet {
 		return rows.get(index);
 	}
 	
+	public List<MyRow> getRows(){
+		return rows;
+	}
+	
+	public int getRowNum() {
+		return rows.size();
+	}
+	
 	public int getColumnNum() {
 		int num = 0;
 		for (MyRow myRow : rows) {
