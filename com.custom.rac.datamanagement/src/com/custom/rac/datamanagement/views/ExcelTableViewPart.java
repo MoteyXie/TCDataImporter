@@ -54,13 +54,13 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 	};
 	
 	private ToolBarItemBean[] rightToolBarItems = new ToolBarItemBean[] {
-			
 			new ToolBarItemBean("导出", "Down_Normal.png", "ExportTableAction"),
 			new ToolBarItemBean("大数据量导出", "Down_Normal.png", "ExportLargeTableAction"),
 			new ToolBarItemBean("保存", "Load_Normal.png", "SaveResultAction"),
 			new ToolBarItemBean("关于", "Info_Normal.png", ""),
 			new ToolBarItemBean("设置", "Setting_Normal.png", ""),
 	};
+	
 	private SWTWorkbook swtWorkbook;
 	private ProgressBar progressBar;
 	
