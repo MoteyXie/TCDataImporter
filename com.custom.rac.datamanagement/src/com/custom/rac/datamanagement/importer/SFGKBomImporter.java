@@ -7,6 +7,7 @@ import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.BOMUtil;
 import com.custom.rac.datamanagement.util.MyBOMUtil;
 import com.custom.rac.datamanagement.util.MyItemUtil;
+import com.custom.rac.datamanagement.util.MyStatusUtil;
 import com.custom.rac.datamanagement.util.PropertyContainer;
 import com.teamcenter.rac.aif.kernel.AIFComponentContext;
 import com.teamcenter.rac.aifrcp.AIFUtility;
@@ -132,6 +133,8 @@ public class SFGKBomImporter extends AbstractImporter {
 		String parentId = null;
 		String parentId2 = null;
 		String lineId = null;
+		String bomOrg = null;
+		String status =null;
 		onStart();
 		driver.onStart();
 		myItemUtil = new MyItemUtil("Item");
@@ -151,6 +154,8 @@ public class SFGKBomImporter extends AbstractImporter {
 			int lineCount = 0;
 			parentId = getValue(i, "父项ID")+ "";
 			lineId = getValue(i, "子项ID")+"";
+			bomOrg = getValue(i, "BOM组织")+"";
+			status = getValue(i, "发布状态")+"";
 			if (lineId.length()>0) {
 				lineCount++;
 			}
@@ -238,13 +243,26 @@ public class SFGKBomImporter extends AbstractImporter {
 				ret = createStructureBOM(parentObj, children, null);
 			}
 			
+			TCComponent bomview = null;
+			try {
+				bomview = parentObj.getRelatedComponent("structure_revisions");
+			} catch (TCException e) {
+				e.printStackTrace();
+			}			
+			if(bomview!=null){
+				ret = MyStatusUtil.setStatus(bomview, "量产");												
+			}
+			
 			//导入保存
 			if (ret == null) {
 				driver.onSingleMessage(i-1, ">>结构BOM导入成功！");
+				parentObj.setProperty("sf8_is_bom_send_erp", "true");
+				parentObj.setProperty("sf8_bom_org", bomOrg);
 			}else {
 				hasError = true;
-				driver.onSingleError(i+1, new Exception(parentId + ">>结构BOM导入失败！"));
-			}		
+				driver.onSingleError(i-1, new Exception(parentId + ">>结构BOM导入失败！"+ret));
+			}
+			driver.onSingleFinish(i);
 		}		
 		onFinish();
 	}
