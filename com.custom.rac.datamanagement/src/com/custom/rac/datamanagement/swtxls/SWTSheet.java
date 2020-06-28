@@ -181,7 +181,8 @@ public class SWTSheet extends TabItem implements ISWTObject {
 		TableItem tableItem = table.getItem(rowNum);
 //		tableItem.setImage(1, getStateImage(state));
 		tableItem.setBackground(getStateBackground(state));
-		tableItem.setData("state", state);
+		tableItem.setData("state", state);	
+//		table.setSelection(rowNum);
 	}
 
 	public void setInfomation(int rowNum, String infomation) {

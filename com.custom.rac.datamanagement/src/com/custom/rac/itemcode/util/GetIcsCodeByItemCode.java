@@ -11,7 +11,11 @@ public class GetIcsCodeByItemCode {
 			icsCode = prefix.substring(0, 3)+prefix.substring(4, 8);
 			break;
 		case "121005":
-			icsCode = prefix.substring(0, 3)+prefix.substring(4, 8);
+			if(prefix.startsWith("1210059")) {
+				icsCode = "1210513";
+			}else {
+				icsCode = prefix.substring(0, 3)+prefix.substring(4, 8);
+			}
 			break;
 		case "121008":
 			icsCode = prefix.substring(0, 3)+prefix.substring(4, 8);
@@ -24,6 +28,15 @@ public class GetIcsCodeByItemCode {
 			break;
 		case "121022":
 			icsCode = prefix.substring(0, 3)+prefix.substring(4, 7);
+			break;
+		case "121999":
+			icsCode = "12130";
+			break;
+		case "121050":
+			icsCode = "12130";
+			break;
+		case "121099":
+			icsCode = "12130";
 			break;
 		default:
 			icsCode =itemcode.substring(0, 3)+itemcode.substring(4, 6);

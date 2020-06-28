@@ -71,11 +71,11 @@ public class SFGKPartImporter extends AbstractImporter {
 	@Override
 	public void setValue(TCComponent tcComponent, int index, String propertyDisplayName) throws Exception {
 		String value = getValue(index, propertyDisplayName)+ "";
+		String id = tcComponent.getProperty("item_id");
 		if (propertyDisplayName.equals("物料状态")) {
 			MyStatusUtil.setStatus(tcComponent, value);
 		}else if(propertyDisplayName.equals("物料分类ID")){
-			String type = tcComponent.getType();
-			String id = tcComponent.getProperty("item_id");
+			String type = tcComponent.getType();			
 			if(type.equals("SF8_RPartRevision")) {
 				value = GetIcsCodeByItemCode.getIcsCode(id);
 				cls_manger.saveItemInNode(tcComponent, value);
@@ -94,6 +94,11 @@ public class SFGKPartImporter extends AbstractImporter {
 						cls_manger.saveItemInNode(tcComponent, "12203");
 					}
 				}
+			}else if(type.equals("SF8_PPartRevision")){
+				 cls_manger.saveItemInNode(tcComponent, getPPartIcsCode(id));
+			}else if(type.equals("SF8_FPartRevision")){
+				String icsCode = id.substring(0, 5);	
+				cls_manger.saveItemInNode(tcComponent, icsCode);
 			}else{
 				cls_manger.saveItemInNode(tcComponent, value);	
 			}
@@ -243,19 +248,40 @@ public class SFGKPartImporter extends AbstractImporter {
 		folderChildIndex = 0;
 		session.getUser().getHomeFolder().add("contents", folder);
 		
-	}
-	
-//	/**
-//	 * 临时保存数据
-//	 */
-//	public void saveExcel() {
-//		
-//	}
+	}	
 
 	@Override
 	public void onSingleMessage(int index, String msg) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public String getPPartIcsCode(String id) {
+		String icsCode = null;
+		String tempString = id.substring(3, 6);
+		int tempInt = Integer.parseInt(tempString);
+		if(tempInt>0&&tempInt<301) {
+//			核电风机
+			icsCode = "12305";
+		}else if(tempInt>300&&tempInt<421){
+//			"地铁隧道风机"
+			icsCode = "12304";
+		}else if(tempInt>420&&tempInt<601) {
+//			"工业离心风机"
+			icsCode = "12303";
+		}else if((tempInt>600&&tempInt<750)||(tempInt>800&&tempInt<977)) {
+//			"工民建风机"
+			if((tempInt>869&&tempInt<880)||(tempInt>847&&tempInt<858)) {
+				icsCode = "12302";
+			}else {
+				icsCode = "12301";
+			}
+		}else if(tempInt>749&&tempInt<800) {
+			icsCode = "12307";
+		}else if(tempInt==999) {
+			icsCode = "12307";
+		}							
+		return icsCode;		
+	}
+	
 }
