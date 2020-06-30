@@ -30,7 +30,7 @@ public class SFGKBomImporter extends AbstractImporter {
 	public final String BOM_VIEW_TYPE = "view";
 	private TCComponentViewType viewType = null;
 	private TCComponentBOMViewRevisionType viewRevType = null;
-	private Boolean ForceUpdateFlag = true;
+	private Boolean ForceUpdateFlag = false;
 	
 	@Override
 	public String getName() {
@@ -262,7 +262,7 @@ public class SFGKBomImporter extends AbstractImporter {
 				hasError = true;
 				driver.onSingleError(i-1, new Exception(parentId + ">>结构BOM导入失败！"+ret));
 			}
-			driver.onSingleFinish(i);
+			driver.onSingleFinish(i-1);
 		}		
 		onFinish();
 	}
