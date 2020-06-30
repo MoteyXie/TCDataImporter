@@ -36,7 +36,8 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	protected int folderChildIndex = 0;
 	private MPartRendering rendering;
 	private String tempDesc = null;
-	private boolean flag ;
+	private boolean flag1 ;
+	private boolean flag2 ;
 	private String org = null;
 	private String template = null;
 	private String uom_tag =  null;
@@ -134,10 +135,12 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		tempDesc.trim();
 		tempDesc = tempDesc.replaceAll("\r|\n", "");
 		rev.setProperty("object_desc",tempDesc);
+		rev.getProperty("sf8_detail_desc");
 		rev.setProperty("sf8_create_part_template", org+"-"+template);
 		rev.getItem().setProperty("uom_tag", uom_tag);
-		flag = rendering.hasObjectDescButNotThisItem();
-		if(flag) {
+		flag1 = rendering.hasObjectDescButNotThisItem();
+		flag2 = rendering.hasdetaildescButNotThisItem();
+		if(flag1&&flag2) {
 			rev.getItem().delete();
 			driver.onNewItemRevDesc(index, tempDesc);	
 			driver.onNewItemId(index, "");
@@ -157,7 +160,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	public String findSameItem(String tempDesc) throws Exception {
 		String tempid = "";
 		List<String> tempSameItemList = new ArrayList<String>();
-			TCComponent[] result = session.search("物料查询", new String[] {"描述"}, new String[] {tempDesc});
+			TCComponent[] result = session.search("SF8_SearchDescFromPart", new String[] {"描述"}, new String[] {tempDesc});
 			if(result.length>0) {
 				for (int i = 0; i < result.length; i++) {
 					tempSameItemList.add(result[i].getProperty("item_id"));
