@@ -20,15 +20,7 @@ public class MyDatasetUtil {
 	 * @throws
 	 */
 
-	public static void createDateset(TCComponent tcc, String name, File file, String ref_name)
-		throws Exception{
-		String fileType = getFileType(file);
-		String ref = getrefType(fileType);
-		TCComponentDatasetType type = (TCComponentDatasetType) tcc.getSession().getTypeService().getTypeComponent("Dataset");
-		TCComponentDataset dataset = type.create(name, "", fileType);
-		String[] refs = new String[] { ref };
-		String[] files = new String[] { file.getAbsolutePath() };
-		dataset.setFiles(files, refs);
+	public static void createDateset(TCComponent tcc, String name, File file, String ref_name) throws Exception{
 		if (ref_name!= null) {
 			TCComponent[] coms = tcc.getRelatedComponents(ref_name);
 			boolean flag = true;
@@ -55,6 +47,13 @@ public class MyDatasetUtil {
 				}
 			}
 			if (flag) {
+				String fileType = getFileType(file);
+				String ref = getrefType(fileType);
+				TCComponentDatasetType type = (TCComponentDatasetType) tcc.getSession().getTypeService().getTypeComponent("Dataset");
+				TCComponentDataset dataset = type.create(name, "", fileType);
+				String[] refs = new String[] { ref };
+				String[] files = new String[] { file.getAbsolutePath() };
+				dataset.setFiles(files, refs);
 				tcc.add(ref_name, dataset);
 			}
 		}
@@ -101,6 +100,14 @@ public class MyDatasetUtil {
 			refType = "SF8_RAR";
 		} else if (fileType.contains("SWDrw")) {
 			refType = "DrwFile";
+		} else if (fileType.contains("Image")) {
+			refType = "Image";
+		} else if (fileType.contains("SF8_WPS")) {
+			refType = "SF8_WPS";
+		} else if (fileType.contains("SF8_MWP")) {
+			refType = "SF8_MWP";
+		} else if (fileType.contains("SF8_EXB")) {
+			refType = "SF8_EXB";
 		}
 		
 
@@ -160,8 +167,16 @@ public class MyDatasetUtil {
 			datesetType = "SF8_AP15";
 		} else if (fileName.endsWith("SLDDRW")) {
 			datesetType = "SWDrw";
-		}
-
+		} else if (fileName.endsWith("png")) {
+			datesetType = "Image";
+		} else if (fileName.endsWith("wps")) {
+			datesetType = "SF8_WPS";
+		} else if (fileName.endsWith("mwp")) {
+			datesetType = "SF8_MWP";
+		} else if (fileName.endsWith("exb")) {
+			datesetType = "SF8_EXB";
+		} 
+		
 		if (datesetType == null) {
 			throw new Exception("文件类型未定义");
 		}
