@@ -30,7 +30,7 @@ public class SFGKBomImporter extends AbstractImporter {
 	public final String BOM_VIEW_TYPE = "view";
 	private TCComponentViewType viewType = null;
 	private TCComponentBOMViewRevisionType viewRevType = null;
-	private Boolean ForceUpdateFlag = false;
+	private Boolean ForceUpdateFlag = true;
 	
 	@Override
 	public String getName() {
@@ -243,15 +243,18 @@ public class SFGKBomImporter extends AbstractImporter {
 				ret = createStructureBOM(parentObj, children, null);
 			}
 			
-			TCComponent bomview = null;
-			try {
-				bomview = parentObj.getRelatedComponent("structure_revisions");
-			} catch (TCException e) {
-				e.printStackTrace();
-			}			
-			if(bomview!=null){
-				ret = MyStatusUtil.setStatus(bomview, "量产");												
+			if(status!=null&&!status.isEmpty()) {
+				TCComponent bomview = null;
+				try {
+					bomview = parentObj.getRelatedComponent("structure_revisions");
+				} catch (TCException e) {
+					e.printStackTrace();
+				}			
+				if(bomview!=null){
+					ret = MyStatusUtil.setStatus(bomview, status);												
+				}
 			}
+
 			
 			//导入保存
 			if (ret == null) {
