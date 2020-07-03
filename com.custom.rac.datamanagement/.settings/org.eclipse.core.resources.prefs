@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/com/custom/rac/datamanagement/action/ExportLargeTableAction.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/action/ExportTableAction.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/action/ImportAction.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/action/OpenFileAction.java=UTF-8

@@ -9,9 +9,9 @@ import com.custom.rac.datamanagement.util.WriteDataToExcel;
 import com.custom.rac.datamanagement.views.ExcelTableViewPart;
 import com.teamcenter.rac.util.MessageBox;
 
-public class ExportTableAction extends AbstractTableAction {
+public class ExportLargeTableAction extends AbstractTableAction {
 
-	public ExportTableAction(ExcelTableViewPart tableViewPart) {
+	public ExportLargeTableAction(ExcelTableViewPart tableViewPart) {
 		super(tableViewPart);
 	}
 
@@ -38,7 +38,7 @@ public class ExportTableAction extends AbstractTableAction {
 		fd.setFileName(fileName);
 		String filePath = fd.open();
 		if (filePath != null) {
-			WriteDataToExcel.writeData(tableViewPart, lastSelectedFilePath, filePath);
+			WriteDataToExcel.writeLargeData(tableViewPart, lastSelectedFilePath, filePath);
 			MessageBox.post("导出成功，导出路径：" + filePath, "提示", MessageBox.INFORMATION);
 		}
 	}

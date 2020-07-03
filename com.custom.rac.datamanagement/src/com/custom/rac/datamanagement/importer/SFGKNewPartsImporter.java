@@ -36,7 +36,8 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	protected int folderChildIndex = 0;
 	private MPartRendering rendering;
 	private String tempDesc = null;
-	private boolean flag ;
+	private boolean flag1 ;
+	private boolean flag2 ;
 	private String org = null;
 	private String template = null;
 	private String uom_tag =  null;
@@ -44,12 +45,18 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	SFGKServiceProxy proxy = new SFGKServiceProxy();
 	
 	static {
-		typeMap.put("成品", "SF8_PPart");
-		typeMap.put("半成品", "SF8_SPart");
-		typeMap.put("毛坯", "SF8_Wpart");
-		typeMap.put("原材料", "SF8_RPart");
-		typeMap.put("电机", "SF8_FPart");	
-		typeMap.put("推式组件", "SF8_BPart");	
+//		typeMap.put("成品", "SF8_PPart");
+//		typeMap.put("半成品", "SF8_SPart");
+//		typeMap.put("毛坯", "SF8_Wpart");
+//		typeMap.put("原材料", "SF8_RPart");
+//		typeMap.put("电机", "SF8_FPart");	
+//		typeMap.put("推式组件", "SF8_BPart");	
+		typeMap.put("123", "SF8_PPart");
+		typeMap.put("122", "SF8_SPart");
+		typeMap.put("124", "SF8_WPart");
+		typeMap.put("121", "SF8_RPart");
+		typeMap.put("125", "SF8_FPart");	
+		typeMap.put("126", "SF8_BPart");
 	}
 	
 	@Override
@@ -61,16 +68,32 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	
 	@Override
 	public TCComponentItemType getItemType(int index) throws Exception{
-		String type = (String) getValue(index, "物料类型");
-		String reltype = typeMap.get(type);	
-		try {		
-			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
-		} catch (TCException e) {
-			e.printStackTrace();
-		}	
-		if(itemType==null) {					
-			throw new Exception("物料类型不存在");
-		}	
+		String icsCode = (String) getValue(index, "物料分类ID");
+		String reltype = null;
+		if(icsCode.isEmpty()) {
+			throw new Exception("物料分类ID不能为空");
+		}else {
+			String key = icsCode.substring(0,3);
+			reltype = typeMap.get(key);
+			try {		
+				itemType = (TCComponentItemType) session.getTypeComponent(reltype);
+			} catch (TCException e) {
+				e.printStackTrace();
+			}	
+			if(itemType==null) {					
+				throw new Exception("物料类型不存在");
+			}
+		}		
+//		String type = (String) getValue(index, "物料类型");
+//		String reltype = typeMap.get(type);	
+//		try {		
+//			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
+//		} catch (TCException e) {
+//			e.printStackTrace();
+//		}	
+//		if(itemType==null) {					
+//			throw new Exception("物料类型不存在");
+//		}	
 		return itemType;
 	}	
 
@@ -112,10 +135,12 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		tempDesc.trim();
 		tempDesc = tempDesc.replaceAll("\r|\n", "");
 		rev.setProperty("object_desc",tempDesc);
+		rev.getProperty("sf8_detail_desc");
 		rev.setProperty("sf8_create_part_template", org+"-"+template);
 		rev.getItem().setProperty("uom_tag", uom_tag);
-		flag = rendering.hasObjectDescButNotThisItem();
-		if(flag) {
+		flag1 = rendering.hasObjectDescButNotThisItem();
+		flag2 = rendering.hasdetaildescButNotThisItem();
+		if(flag1&&flag2) {
 			rev.getItem().delete();
 			driver.onNewItemRevDesc(index, tempDesc);	
 			driver.onNewItemId(index, "");
@@ -135,7 +160,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 	public String findSameItem(String tempDesc) throws Exception {
 		String tempid = "";
 		List<String> tempSameItemList = new ArrayList<String>();
-			TCComponent[] result = session.search("物料查询", new String[] {"描述"}, new String[] {tempDesc});
+			TCComponent[] result = session.search("SF8_SearchDescFromPart", new String[] {"描述"}, new String[] {tempDesc});
 			if(result.length>0) {
 				for (int i = 0; i < result.length; i++) {
 					tempSameItemList.add(result[i].getProperty("item_id"));
@@ -173,7 +198,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 			folder = folderType.create(name, "", "Folder");
 			session.getUser().getHomeFolder().add("contents", folder);
 		}else {
-			throw new Exception("必要属性检查不通过");
+			throw new Exception("必要属性检查不通过，请检查7个（代码）属性和度量单位");
 		}	
 	}
 
@@ -187,7 +212,7 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		ignoreList.add("序号");
 		ignoreList.add("物料号");
 		ignoreList.add("名称");
-		ignoreList.add("物料类型");
+//		ignoreList.add("物料类型");
 		ignoreList.add("型号(代码)");
 		ignoreList.add("机号(代码)");
 		ignoreList.add("传动方式(代码)");
@@ -281,6 +306,10 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 					}catch(Exception e) {
 						onSetPropertyError(i, propertyDisplayName, e);
 						driver.onSetPropertyError(i, propertyDisplayName, e);
+						if(newInstance instanceof TCComponentItemRevision) {
+							((TCComponentItemRevision) newInstance).getItem().delete();
+						}
+						
 						throw e;
 					}
 				}
