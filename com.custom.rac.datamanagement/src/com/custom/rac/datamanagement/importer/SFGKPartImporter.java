@@ -33,13 +33,12 @@ public class SFGKPartImporter extends AbstractImporter {
 	protected int folderChildIndex = 0;
 	
 	static {
-		typeMap.put("成品", "SF8_PPart");
-		typeMap.put("半成品", "SF8_SPart");
-		typeMap.put("毛坯", "SF8_WPart");
-		typeMap.put("原材料", "SF8_RPart");
-		typeMap.put("电机", "SF8_FPart");	
-		typeMap.put("外协件", "SF8_OPart");
-		typeMap.put("推式组件", "SF8_BPart");
+		typeMap.put("123", "SF8_PPart");
+		typeMap.put("122", "SF8_SPart");
+		typeMap.put("124", "SF8_WPart");
+		typeMap.put("121", "SF8_RPart");
+		typeMap.put("125", "SF8_FPart");	
+		typeMap.put("126", "SF8_BPart");
 	}
 	
 	@Override
@@ -55,15 +54,21 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public TCComponentItemType getItemType(int index) throws Exception{
-		String type = (String) getValue(index, "物料类型");
-		String reltype = typeMap.get(type);	
-		try {		
-			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
-		} catch (TCException e) {
-			e.printStackTrace();
-		}	
-		if(itemType==null) {
-			throw new Exception("物料类型不存在");
+		String icsCode = (String) getValue(index, "物料号");
+		String reltype = null;
+		if(icsCode.isEmpty()) {
+			throw new Exception("物料号不能为空");
+		}else {
+			String key = icsCode.substring(0,3);
+			reltype = typeMap.get(key);
+			try {		
+				itemType = (TCComponentItemType) session.getTypeComponent(reltype);
+			} catch (TCException e) {
+				e.printStackTrace();
+			}	
+			if(itemType==null) {					
+				throw new Exception("物料类型不存在");
+			}
 		}	
 		return itemType;
 	}
