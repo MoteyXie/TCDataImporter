@@ -265,7 +265,7 @@ public class SFGKBomImporter extends AbstractImporter {
 				hasError = true;
 				driver.onSingleError(i-1, new Exception(parentId + ">>结构BOM导入失败！"+ret));
 			}
-			driver.onSingleFinish(i-1);
+			driver.onSingleFinish(i);
 		}		
 		onFinish();
 	}
