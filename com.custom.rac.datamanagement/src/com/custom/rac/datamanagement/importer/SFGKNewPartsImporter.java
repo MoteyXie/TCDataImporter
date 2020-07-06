@@ -139,9 +139,10 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		rev.getProperty("sf8_detail_desc");
 		rev.setProperty("sf8_create_part_template", org+"-"+template);
 		rev.getItem().setProperty("uom_tag", uom_tag);
-		flag1 = rendering.hasObjectDescButNotThisItem();
-		flag2 = rendering.hasdetaildescButNotThisItem();
-		if(flag1&&flag2) {
+//		flag1 = rendering.hasObjectDescButNotThisItem();
+//		flag2 = rendering.hasDetailDescButNotThisItem();
+//		flag1 = rendering.hasObjectDescAndDetailDescButNotThisItem();
+		if(rendering.hasObjectDescAndDetailDescButNotThisItem()) {
 			rev.getItem().delete();
 			driver.onNewItemRevDesc(index, tempDesc);	
 			driver.onNewItemId(index, "");
