@@ -27,7 +27,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	TCSession session = (TCSession) AIFUtility.getDefaultSession();
 	MyClassifyManager cls_manger = new MyClassifyManager(session);
 	TCComponentFolder folder = null;
-	private File file;
+	public File file;
 	
 	@Override
 	public String getName() {
