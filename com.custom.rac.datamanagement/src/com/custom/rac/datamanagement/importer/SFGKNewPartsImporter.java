@@ -350,10 +350,11 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		serlenth = temp.split("&")[1];
 //		id = getID(prefix,Integer.parseInt(serlenth));
 		id = GetIDUtil.getCurrentID(prefix,Integer.parseInt(serlenth));
+		System.out.println("");
 		String itemId = id;
 		String itemRev = "A";
 		if(id.length()!=14) {
-			throw new Exception("获取物料ID出错，无法创建物料。");
+			throw new Exception("获取的编码不等以14位。获取物料ID出错，无法创建物料。");
 		}
 		
 		if(itemId == null || itemId.length() == 0) {

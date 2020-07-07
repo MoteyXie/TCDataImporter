@@ -155,7 +155,7 @@ public class SFGKBomImporter extends AbstractImporter {
 			parentId = getValue(i, "父项ID")+ "";
 			lineId = getValue(i, "子项ID")+"";
 			bomOrg = getValue(i, "BOM组织")+"";
-			status = getValue(i, "发布状态")+"";
+			status = (String) getValue(i, "发布状态");
 			if (lineId.length()>0) {
 				lineCount++;
 			}

@@ -78,36 +78,7 @@ public class SFGKPartImporter extends AbstractImporter {
 		String value = getValue(index, propertyDisplayName)+ "";
 		String id = tcComponent.getProperty("item_id");
 		if (propertyDisplayName.equals("物料状态")) {
-			MyStatusUtil.setStatus(tcComponent, value);
-		}else if(propertyDisplayName.equals("物料分类ID")){
-			String type = tcComponent.getType();			
-			if(type.equals("SF8_RPartRevision")) {
-				value = GetIcsCodeByItemCode.getIcsCode(id);
-				cls_manger.saveItemInNode(tcComponent, value);
-			}else if(type.equals("SF8_OPartRevision")){
-				System.out.println("外协不进分类");
-			}else if(type.equals("SF8_SPartRevision")) {
-				String template = (String) getValue(index, "用户模板类型");
-				if(id.startsWith("1220089")) {
-					cls_manger.saveItemInNode(tcComponent, "12204");					
-				}else {
-					if(template.contains("子装配件")) {
-						cls_manger.saveItemInNode(tcComponent, "12201");
-					}else if(template.contains("虚拟件")) {
-						cls_manger.saveItemInNode(tcComponent, "12202");
-					}else{
-						cls_manger.saveItemInNode(tcComponent, "12203");
-					}
-				}
-			}else if(type.equals("SF8_PPartRevision")){
-				 cls_manger.saveItemInNode(tcComponent, getPPartIcsCode(id));
-			}else if(type.equals("SF8_FPartRevision")){
-				String icsCode = id.substring(0, 5);	
-				cls_manger.saveItemInNode(tcComponent, icsCode);
-			}else{
-				cls_manger.saveItemInNode(tcComponent, value);	
-			}
-			
+			MyStatusUtil.setStatus(tcComponent, value);	
 		}else if(propertyDisplayName.equals("度量单位")) {
 			rev = (TCComponentItemRevision) tcComponent;
 			rev.getItem().setProperty("uom_tag", value);
@@ -128,6 +99,34 @@ public class SFGKPartImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleFinish(int index, TCComponent tcc) throws Exception{
+		String type = tcc.getType();
+		String id = tcc.getProperty("item_id");
+		if(type.equals("SF8_RPartRevision")) {
+			String value = GetIcsCodeByItemCode.getIcsCode(id);
+			cls_manger.saveItemInNode(tcc, value);
+		}else if(type.equals("SF8_OPartRevision")){
+			System.out.println("外协不进分类");
+		}else if(type.equals("SF8_SPartRevision")) {
+			String template = (String) getValue(index, "用户模板类型");
+			if(id.startsWith("1220089")) {
+				cls_manger.saveItemInNode(tcc, "12204");					
+			}else {
+				if(template.contains("子装配件")) {
+					cls_manger.saveItemInNode(tcc, "12201");
+				}else if(template.contains("虚拟件")) {
+					cls_manger.saveItemInNode(tcc, "12202");
+				}else{
+					cls_manger.saveItemInNode(tcc, "12203");
+				}
+			}
+		}else if(type.equals("SF8_PPartRevision")){
+			 cls_manger.saveItemInNode(tcc, getPPartIcsCode(id));
+		}else if(type.equals("SF8_FPartRevision")){
+			String icsCode = id.substring(0, 5);	
+			cls_manger.saveItemInNode(tcc, icsCode);
+		}else{
+			cls_manger.saveItemInNode(tcc, "126");	
+		}
 		putInFolder(tcc);
 		System.out.println("第 " + index + " 行导入完毕！");
 	}
