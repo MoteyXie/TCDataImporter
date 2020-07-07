@@ -14,6 +14,7 @@ import com.custom.rac.datamanagement.util.XMLResult;
 import com.custom.rac.itemcode.util.GetItemIDFactory;
 import com.sfgk.sie.customs.part.rendering.MPartRendering;
 import com.sfgk.sie.customs.util.GetIDUtil;
+import com.sfgk.sie.customs.util.GetPartItemID;
 import com.sfgk.sie.webservice.SFGKServiceProxy;
 import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponent;
@@ -348,8 +349,8 @@ public class SFGKNewPartsImporter extends AbstractImporter{
 		temp = getItemPrefixandSerialLength(map);
 		prefix = temp.split("&")[0];
 		serlenth = temp.split("&")[1];
-//		id = getID(prefix,Integer.parseInt(serlenth));
-		id = GetIDUtil.getCurrentID(prefix,Integer.parseInt(serlenth));
+//		id = GetIDUtil.getCurrentID(prefix,Integer.parseInt(serlenth));
+		id = GetPartItemID.getCurrentID(prefix,Integer.parseInt(serlenth));
 		System.out.println("");
 		String itemId = id;
 		String itemRev = "A";
