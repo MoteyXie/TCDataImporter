@@ -35,6 +35,7 @@ encoding//src/com/custom/rac/datamanagement/swtxls/SWTWorkbook.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/test/MyTableTest2.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/test/Test.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/test/TestApplicationWindows.java=UTF-8
+encoding//src/com/custom/rac/datamanagement/util/AboutDialog.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/util/AbstractImporter.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/util/AbstractTableAction.java=UTF-8
 encoding//src/com/custom/rac/datamanagement/util/BOMUtil.java=UTF-8

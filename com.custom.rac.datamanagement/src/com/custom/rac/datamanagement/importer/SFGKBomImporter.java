@@ -1,7 +1,6 @@
 package com.custom.rac.datamanagement.importer;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.BOMUtil;
@@ -25,38 +24,37 @@ import com.teamcenter.rac.kernel.TCException;
 import com.teamcenter.rac.kernel.TCSession;
 
 public class SFGKBomImporter extends AbstractImporter {
-	
+
 	MyItemUtil myItemUtil = null;
 	public final String BOM_VIEW_TYPE = "view";
 	private TCComponentViewType viewType = null;
 	private TCComponentBOMViewRevisionType viewRevType = null;
 	private Boolean ForceUpdateFlag = true;
-	
+
 	@Override
 	public String getName() {
-		
+
 		return "上风高科BOM导入程序";
-		
+
 	}
-	
+
 	@Override
 	public void onSingleMessage(int index, String msg) throws Exception {
-		System.out.println("第" +index+ "行:"+msg);		
-	}	
-	
+		System.out.println("第" + index + "行:" + msg);
+	}
 
 	@Override
 	public void onSetPropertyFinish(int index, String propertyDisplayName) throws Exception {
 
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onSetPropertyError(int index, String propertyDisplayName, Exception e) throws Exception {
-		
+
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -73,32 +71,31 @@ public class SFGKBomImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleStart(int index) throws Exception {
-		System.out.println("第" +index+ "行开始");		
+		System.out.println("第" + index + "行开始");
 	}
 
 	@Override
 	public void onSingleFinish(int index, TCComponent newInstance) throws Exception {
-		
+
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onSingleError(int index, Exception e) throws Exception {
-		System.out.println("第" +index+ "行异常：" + e.getMessage());
+		System.out.println("第" + index + "行异常：" + e.getMessage());
 	}
 
 	@Override
 	public void onStart() throws Exception {
-		System.out.println("BOM导入开始");		
-		
+		System.out.println("BOM导入开始");
+
 	}
 
-	@Override
-	public void onFinish() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void onFinish() throws Exception {
+//		MessageBox.post("导入完成", "提示", MessageBox.INFORMATION);
+//	}
 
 	@Override
 	public boolean ignoreProperty(int index, String propertyDisplayName) throws Exception {
@@ -121,11 +118,11 @@ public class SFGKBomImporter extends AbstractImporter {
 	@Override
 	public void onPropertyRealNameNotFound(int index, String propertyName) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public void execute() throws Exception {
-		
+
 		boolean hasError = false;
 		TCComponentItemRevision parentObj = null;
 		TCComponentItemRevision lineObj = null;
@@ -134,7 +131,7 @@ public class SFGKBomImporter extends AbstractImporter {
 		String parentId2 = null;
 		String lineId = null;
 		String bomOrg = null;
-		String status =null;
+		String status = null;
 		onStart();
 		driver.onStart();
 		myItemUtil = new MyItemUtil("Item");
@@ -147,25 +144,24 @@ public class SFGKBomImporter extends AbstractImporter {
 			return;
 		}
 		int i = 0;
-		while(i<=values.size()-1){
-			
-			driver.onSingleMessage(i, "导入开始...");			
+		while (i <= values.size() - 1) {
+
+			driver.onSingleMessage(i, "导入开始...");
 			int lastRow = i;
 			int lineCount = 0;
-			parentId = getValue(i, "父项ID")+ "";
-			lineId = getValue(i, "子项ID")+"";
-			bomOrg = getValue(i, "BOM组织")+"";
-			status = getValue(i, "发布状态")+"";
-			if (lineId.length()>0) {
+			parentId = getValue(i, "父项ID") + "";
+			lineId = getValue(i, "子项ID") + "";
+			bomOrg = getValue(i, "BOM组织") + "";
+			status = getValue(i, "发布状态") + "";
+			if (lineId.length() > 0) {
 				lineCount++;
 			}
-			for (int j=i+1; j<values.size(); j++) {
-				parentId2 = getValue(j,"父项ID" )+ "";
+			for (int j = i + 1; j < values.size(); j++) {
+				parentId2 = getValue(j, "父项ID") + "";
 				if (parentId.equals(parentId2)) {
 					lineCount++;
 					lastRow = j;
-				}
-				else {
+				} else {
 					break;
 				}
 			}
@@ -175,43 +171,43 @@ public class SFGKBomImporter extends AbstractImporter {
 			}
 			parentObj = queryObj(parentId);
 			if (parentObj == null) {
-				hasError = true;				
+				hasError = true;
 				driver.onSingleError(i, new Exception("父项物料不存在，无法导入当前BOM。"));
-				
+
 			}
 			boolean linesOK = true;
 			children.clear();
 
-			for (int j=i; j<=lastRow; j++) {
-				lineId = getValue(j, "子项ID")+"";
+			for (int j = i; j <= lastRow; j++) {
+				lineId = getValue(j, "子项ID") + "";
 				if (lineId.length() == 0) {
 					continue;
-				}				
+				}
 				lineObj = queryObj(lineId);
 				if (lineObj == null) {
 					linesOK = false;
 					hasError = true;
 					driver.onSingleError(j, new Exception("此子项对象不存在，整个BOM无法导入"));
 					continue;
-				}				
-				if (parentObj!=null&&lineObj!=null) {
+				}
+				if (parentObj != null && lineObj != null) {
 					driver.onSingleMessage(j, ">>子BOM行检查ok");
 					children.put(j, lineObj);
 				}
 			}
-			if(!linesOK) {
-				for (int z = i; z <=lastRow ; z++) {
+			if (!linesOK) {
+				for (int z = i; z <= lastRow; z++) {
 					driver.onSingleError(z, new Exception(">>导入失败！部分子项数据检查失败，无法导入当前BOM！"));
 				}
 			}
-			if(parentObj==null) {
-				for (int z = i; z <=lastRow ; z++) {
+			if (parentObj == null) {
+				for (int z = i; z <= lastRow; z++) {
 					driver.onSingleError(z, new Exception(">>导入失败！父项物料不存在，无法导入当前BOM。"));
 				}
 			}
 			i = lastRow;
 			i++;
-			if(parentObj==null||!linesOK) {
+			if (parentObj == null || !linesOK) {
 				continue;
 			}
 
@@ -221,55 +217,52 @@ public class SFGKBomImporter extends AbstractImporter {
 				oldBvr = BOMUtil.findBVR(parentObj, viewType);
 				if (oldBvr != null) {
 					if (ForceUpdateFlag) {
-						driver.onSingleMessage(i-1, ">>结构BOM已经存在，将被删除重建！");
+						driver.onSingleMessage(i - 1, ">>结构BOM已经存在，将被删除重建！");
 						removeFlag = -1;
-					}
-					else {
-						driver.onSingleMessage(i-1, ">>结构BOM已经存在，不再重复导入此BOM！");
+					} else {
+						driver.onSingleMessage(i - 1, ">>结构BOM已经存在，不再重复导入此BOM！");
 						continue;
 					}
 				}
-			}
-			catch(Exception ex) {
+			} catch (Exception ex) {
 				hasError = true;
-				driver.onSingleMessage(i-1, "创建BOM失败"+ex.toString());
+				driver.onSingleMessage(i - 1, "创建BOM失败" + ex.toString());
 				continue;
 			}
 
 			String ret = null;
 			if (removeFlag < 0) {
 				ret = createStructureBOM(parentObj, children, oldBvr);
-			}else {
+			} else {
 				ret = createStructureBOM(parentObj, children, null);
 			}
-			
-			if(status!=null&&!status.isEmpty()) {
+
+			if (status != null && !status.isEmpty()) {
 				TCComponent bomview = null;
 				try {
 					bomview = parentObj.getRelatedComponent("structure_revisions");
 				} catch (TCException e) {
 					e.printStackTrace();
-				}			
-				if(bomview!=null){
-					ret = MyStatusUtil.setStatus(bomview, status);												
+				}
+				if (bomview != null) {
+					ret = MyStatusUtil.setStatus(bomview, status);
 				}
 			}
 
-			
-			//导入保存
+			// 导入保存
 			if (ret == null) {
-				driver.onSingleMessage(i-1, ">>结构BOM导入成功！");
+				driver.onSingleMessage(i - 1, ">>结构BOM导入成功！");
 				parentObj.setProperty("sf8_is_bom_send_erp", "true");
 				parentObj.setProperty("sf8_bom_org", bomOrg);
-			}else {
+			} else {
 				hasError = true;
-				driver.onSingleError(i-1, new Exception(parentId + ">>结构BOM导入失败！"+ret));
+				driver.onSingleError(i - 1, new Exception(parentId + ">>结构BOM导入失败！" + ret));
 			}
-			driver.onSingleFinish(i-1);
-		}		
+			driver.onSingleFinish(i - 1);
+		}
 		onFinish();
 	}
-	
+
 	private TCComponentItemRevision queryObj(String itemId) {
 		TCComponentItemRevision ret = null;
 		try {
@@ -277,76 +270,75 @@ public class SFGKBomImporter extends AbstractImporter {
 			if (item != null) {
 				ret = item.getLatestItemRevision();
 			}
+		} catch (Exception e) {
+
 		}
-		catch(Exception e) { 
-			
-		}		
 		return ret;
 	}
-	
-	private String createStructureBOM(TCComponentItemRevision parentRev, HashMap<Integer, TCComponent> children, TCComponentBOMViewRevision bvr0) {
+
+	private String createStructureBOM(TCComponentItemRevision parentRev, HashMap<Integer, TCComponent> children,
+			TCComponentBOMViewRevision bvr0) {
 		String ret = null;
-		
+
 		TCComponentBOMWindow bomWin = null;
 		TCComponentBOMViewRevision bvr = null;
 		try {
 			String itemId = parentRev.getItem().getProperty("item_id");
 			String revId = parentRev.getProperty("current_revision_id");
-			
+
 			if (bvr0 == null) {
-				//itemId, revId, viewType, isPrecise
+				// itemId, revId, viewType, isPrecise
 				bvr = viewRevType.create(itemId, revId, viewType, true);
-			}
-			else {
+			} else {
 				bvr = bvr0;
 			}
-			
+
 			TCSession ss = (TCSession) AIFUtility.getDefaultSession();
-			TCComponentBOMWindowType type = (TCComponentBOMWindowType)ss.getTypeComponent("BOMWindow");
-			bomWin  = type.create(null);
+			TCComponentBOMWindowType type = (TCComponentBOMWindowType) ss.getTypeComponent("BOMWindow");
+			bomWin = type.create(null);
 
 			TCComponentBOMLine topLine = bomWin.setWindowTopLine(null, null, null, bvr);
 
 			topLine.setPrecision(false);
-			
+
 			if (bvr0 != null) {
 //				ui.addMsg("开始删除BOM结构！");
 //				topLine.setPrecision(true);
 				AIFComponentContext[] ctx = topLine.getChildren();
 				if (ctx != null) {
 					for (AIFComponentContext c : ctx) {
-						if (!(c.getComponent() instanceof TCComponentBOMLine)) continue;
-						TCComponentBOMLine line = (TCComponentBOMLine)c.getComponent();
+						if (!(c.getComponent() instanceof TCComponentBOMLine))
+							continue;
+						TCComponentBOMLine line = (TCComponentBOMLine) c.getComponent();
 						line.cut();
 					}
-				}			
+				}
 				topLine.save();
 				bomWin.save();
 			}
 			String subinventory = null;
 			String v = null;
 			TCComponentBOMLine subLine = null;
-			
+
 			for (Integer i : children.keySet()) {
 				TCComponent comp = children.get(i);
-				subLine = topLine.addBOMLine(topLine, comp, null);				
+				subLine = topLine.addBOMLine(topLine, comp, null);
 //				设置版本属性上的
-				v = getValue(i, "用量")+"";
+				v = getValue(i, "用量") + "";
 				subinventory = (String) getValue(i, "子库存");
 				subLine.setProperty("bl_occ_sf8_subinventory", subinventory);
-				subLine.setProperty("bl_quantity", v);									
+				subLine.setProperty("bl_quantity", v);
 				subLine.save();
 			}
 			topLine.save();
 			bomWin.save();
 			bomWin.close();
-			
-		}
-		catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			ret = "创建结构BOM时出错：" + e.getMessage();
 			BOMUtil.removeBOM(bomWin, bvr);
-		}		
+		}
 		return ret;
 	}
 }

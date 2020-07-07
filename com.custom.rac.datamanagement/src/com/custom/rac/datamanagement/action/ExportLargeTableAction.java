@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Widget;
 import com.custom.rac.datamanagement.util.AbstractTableAction;
 import com.custom.rac.datamanagement.util.WriteDataToExcel;
 import com.custom.rac.datamanagement.views.ExcelTableViewPart;
+import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.util.MessageBox;
 
 public class ExportLargeTableAction extends AbstractTableAction {
@@ -18,7 +19,7 @@ public class ExportLargeTableAction extends AbstractTableAction {
 	@Override
 	public void run(Widget widget) throws Exception {
 		// 先判断程序是否在进行中
-		tableViewPart.setExecuting(false);
+//		tableViewPart.setExecuting(false);
 		boolean isExecuting = tableViewPart.isExecuting();
 		if (isExecuting) {
 			throw new Exception("程序执行中，无法导出数据！");
@@ -39,7 +40,7 @@ public class ExportLargeTableAction extends AbstractTableAction {
 		String filePath = fd.open();
 		if (filePath != null) {
 			WriteDataToExcel.writeLargeData(tableViewPart, lastSelectedFilePath, filePath);
-			MessageBox.post("导出成功，导出路径：" + filePath, "提示", MessageBox.INFORMATION);
+			MessageBox.post(AIFUtility.getActiveDesktop(), "导出成功，导出路径：" + filePath, "提示", MessageBox.INFORMATION);
 		}
 	}
 
