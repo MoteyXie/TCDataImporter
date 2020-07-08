@@ -207,11 +207,6 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		}
 	}
 
-	@Override
-	public void onFinish() throws Exception {
-
-	}
-
 	static ArrayList<String> ignoreList = new ArrayList<String>();
 	static {
 		ignoreList.add("序号");
