@@ -84,17 +84,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 			if (itemType == null) {
 				throw new Exception("物料类型不存在");
 			}
-		}
-//		String type = (String) getValue(index, "物料类型");
-//		String reltype = typeMap.get(type);	
-//		try {		
-//			itemType = (TCComponentItemType) session.getTypeComponent(reltype);
-//		} catch (TCException e) {
-//			e.printStackTrace();
-//		}	
-//		if(itemType==null) {					
-//			throw new Exception("物料类型不存在");
-//		}	
+		}	
 		return itemType;
 	}
 
@@ -135,6 +125,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		tempDesc = rendering.autoBuildValue().substring(5);
 		tempDesc.trim();
 		tempDesc = tempDesc.replaceAll("\r|\n", "");
+		tempDesc = tempDesc.replaceAll("\\*", "x");
 		rev.setProperty("object_desc", tempDesc);
 		rev.getProperty("sf8_detail_desc");
 		rev.setProperty("sf8_create_part_template", org + "-" + template);
@@ -302,6 +293,9 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 			driver.onSingleStart(i);
 			Map<String, String> map = values.get(i);
 			icsCode = map.get("物料分类ID");
+			if(icsCode.equals("126")) {
+				throw new Exception("126分类ID错误");
+			}
 			try {
 				newInstance = newTCComponent(i);
 				addClassification(newInstance, icsCode);
