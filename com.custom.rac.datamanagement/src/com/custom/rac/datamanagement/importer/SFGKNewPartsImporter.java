@@ -14,7 +14,7 @@ import com.custom.rac.datamanagement.util.PropertyContainer;
 import com.custom.rac.datamanagement.util.XMLResult;
 import com.custom.rac.itemcode.util.GetItemIDFactory;
 import com.sfgk.sie.customs.part.rendering.MPartRendering;
-import com.sfgk.sie.customs.util.GetIDUtil;
+import com.sfgk.sie.customs.util.GetPartItemID;
 import com.sfgk.sie.webservice.SFGKServiceProxy;
 import com.teamcenter.rac.aifrcp.AIFUtility;
 import com.teamcenter.rac.kernel.TCComponent;
@@ -207,10 +207,10 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		}
 	}
 
-//	@Override
-//	public void onFinish() throws Exception {
-//		MessageBox.post("导入完成", "提示", MessageBox.INFORMATION);
-//	}
+	@Override
+	public void onFinish() throws Exception {
+
+	}
 
 	static ArrayList<String> ignoreList = new ArrayList<String>();
 	static {
@@ -297,6 +297,8 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 				break;
 			// 如果单击暂停按钮，程序会进行休眠12小时
 			if (exit.equals("暂停")) {
+//							Thread.sleep(43200000);
+				// ImportAction.currentThread.suspend();
 				ImportAction.o.wait();
 			}
 			if (ignoreRow(i))
@@ -345,6 +347,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 	 * @return
 	 * @throws Exception
 	 */
+	@Override
 	@SuppressWarnings("deprecation")
 	public TCComponent newTCComponent(int index) throws Exception {
 
@@ -360,12 +363,13 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		temp = getItemPrefixandSerialLength(map);
 		prefix = temp.split("&")[0];
 		serlenth = temp.split("&")[1];
-//		id = getID(prefix,Integer.parseInt(serlenth));
-		id = GetIDUtil.getCurrentID(prefix, Integer.parseInt(serlenth));
+//		id = GetIDUtil.getCurrentID(prefix,Integer.parseInt(serlenth));
+		id = GetPartItemID.getCurrentID(prefix, Integer.parseInt(serlenth));
+		System.out.println("");
 		String itemId = id;
 		String itemRev = "A";
 		if (id.length() != 14) {
-			throw new Exception("获取物料ID出错，无法创建物料。");
+			throw new Exception("获取的编码不等以14位。获取物料ID出错，无法创建物料。");
 		}
 
 		if (itemId == null || itemId.length() == 0) {

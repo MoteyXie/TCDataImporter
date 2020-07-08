@@ -153,7 +153,7 @@ public class SFGKBomImporter extends AbstractImporter {
 			parentId = getValue(i, "父项ID") + "";
 			lineId = getValue(i, "子项ID") + "";
 			bomOrg = getValue(i, "BOM组织") + "";
-			status = getValue(i, "发布状态") + "";
+			status = (String) getValue(i, "发布状态");
 			if (lineId.length() > 0) {
 				lineCount++;
 			}
@@ -266,7 +266,7 @@ public class SFGKBomImporter extends AbstractImporter {
 				hasError = true;
 				driver.onSingleError(i - 1, new Exception(parentId + ">>结构BOM导入失败！" + ret));
 			}
-			driver.onSingleFinish(i - 1);
+			driver.onSingleFinish(i);
 		}
 		onFinish();
 	}
