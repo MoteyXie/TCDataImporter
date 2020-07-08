@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import com.custom.rac.datamanagement.action.ImportAction;
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.PropertyContainer;
 import com.custom.rac.datamanagement.util.XMLResult;
@@ -291,6 +292,13 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		TCComponent newInstance = null;
 		String icsCode = null;
 		for (int i = 0; i < values.size(); i++) {
+			// 如果单击停止按钮，会停止改程序的运行
+			if (exit.equals("停止"))
+				break;
+			// 如果单击暂停按钮，程序会进行休眠12小时
+			if (exit.equals("暂停")) {
+				ImportAction.o.wait();
+			}
 			if (ignoreRow(i))
 				continue;
 			onSingleStart(i);
