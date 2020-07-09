@@ -17,7 +17,7 @@ public class SFGKGDDesignImporter extends SFGKDesignImporter {
 	
 	@Override
 	public String getName() {
-		return "上风高科轨道图纸导入程序";
+		return "上风高科结构图纸导入程序";
 	}
 	
 	public TCComponent newTCComponent(int index) throws Exception {
