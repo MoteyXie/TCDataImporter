@@ -47,7 +47,7 @@ public class ExcelTableViewPart extends ViewPart implements ISaveablePart2, Even
 	private ToolBarItemBean[] centerToolBarItems = new ToolBarItemBean[] {
 			new ToolBarItemBean("加载", "More_Normal.png", "OpenFileAction"),
 			new ToolBarItemBean("重载", "Replay_Normal.png", "ReloadAction"),
-			new ToolBarItemBean("开始", "Next_B_Pressed.png", "ImportAction"),
+			new ToolBarItemBean("开始", "Next_B_Pressed.png", "ImportAction2"),
 			new ToolBarItemBean("暂停", "Pause_Normal.png", "PauseAction"),
 			new ToolBarItemBean("停止", "Less_Normal.png", "StopAction"),
 //			new ToolBarItemBean("测试", "test.png", "TestAction"),
