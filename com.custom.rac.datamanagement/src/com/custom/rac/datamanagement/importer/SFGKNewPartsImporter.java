@@ -137,7 +137,8 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 			rev.getItem().delete();
 			driver.onNewItemRevDesc(index, tempDesc);
 			driver.onNewItemId(index, "");
-			tempSameId = findSameItem(tempDesc);
+			String detailDesc = rev.getProperty("sf8_detail_desc");
+			tempSameId = findSameItem(tempDesc,detailDesc);
 			throw new Exception("系统存在相同描述的物料:创建失败" + tempSameId);
 		} else {
 			driver.onNewItemRevDesc(index, tempDesc);
@@ -152,11 +153,17 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 	 * @return
 	 * @throws Exception
 	 */
-	public String findSameItem(String tempDesc) throws Exception {
+	public String findSameItem(String tempDesc,String detailDesc) throws Exception {
 		String tempid = "";
 		List<String> tempSameItemList = new ArrayList<String>();
-		TCComponent[] result = session.search("SF8_SearchDescFromPart", new String[] { "描述" },
-				new String[] { tempDesc });
+		TCComponent[] result = null;
+		if(detailDesc.equals("")) {
+			result = session.search("SF8_SearchDescFromPart", new String[] { "描述" },
+					new String[] { tempDesc});
+		}else {
+			result = session.search("SF8_SearchDescFromPart", new String[] { "描述","详细说明" },
+					new String[] { tempDesc, detailDesc});
+		}
 		if (result.length > 0) {
 			for (int i = 0; i < result.length; i++) {
 				tempSameItemList.add(result[i].getProperty("item_id"));
