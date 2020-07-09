@@ -18,7 +18,7 @@ import com.teamcenter.rac.util.MessageBox;
 public class ImportAction extends AbstractTableAction {
 	// public static Thread currentThread = null;
 	public static Object o = new Object();
-	static Thread currentThread = null;
+	private static Thread currentThread = null;
 
 	public ImportAction(ExcelTableViewPart tableViewPart) {
 		super(tableViewPart);
