@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.custom.rac.datamanagement.action.ImportAction;
 import com.custom.rac.datamanagement.util.AbstractImporter;
@@ -121,18 +122,17 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		template = map.get("用户模板");
 		uom_tag = map.get("度量单位");
 		rev = (TCComponentItemRevision) newInstance;
+		
+//		tempDesc = rendering.autoBuildValue().substring(5);
 		rendering = new MPartRendering(rev, false, false);
-		tempDesc = rendering.autoBuildValue().substring(5);
-		tempDesc.trim();
-		tempDesc = tempDesc.replaceAll("\r|\n", "");
-		tempDesc = tempDesc.replaceAll("\\*", "x");
+		
+		tempDesc = rendering.autoBuildProperties.get("描述").synx();
+		
+		tempDesc.trim();				
 		rev.setProperty("object_desc", tempDesc);
-		rev.getProperty("sf8_detail_desc");
 		rev.setProperty("sf8_create_part_template", org + "-" + template);
 		rev.getItem().setProperty("uom_tag", uom_tag);
-//		flag1 = rendering.hasObjectDescButNotThisItem();
-//		flag2 = rendering.hasDetailDescButNotThisItem();
-//		flag1 = rendering.hasObjectDescAndDetailDescButNotThisItem();
+		
 		if (rendering.hasObjectDescAndDetailDescButNotThisItem()) {
 			rev.getItem().delete();
 			driver.onNewItemRevDesc(index, tempDesc);
@@ -181,6 +181,33 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 			}
 		}
 		return tempid;
+	}
+	
+//	@Override
+//	public void setValues(List<Map<String, String>> values) {
+//		//替换所有特殊字符
+//		for (Map<String, String> map : values) {
+//			Set<String> keys = map.keySet();
+//			for (String key : keys) {
+//				map.put(key, map.get(key).replaceAll("\r|\n", "").replaceAll("*|×", "x"));
+//			}
+//		}
+//		super.setValues(values);
+//		
+//	}
+	
+	public Object getValue(int index, String propertyDisplayName) {
+		Object obj = super.getValue(index, propertyDisplayName);
+		if(obj != null && obj instanceof String) {
+			return ((String)obj).replaceAll("\r|\n", "").replaceAll("\\*|×", "x");
+		}else {
+			return obj;
+		}
+	}
+	
+	public String getValueFromRealName(int index, String realName) throws Exception {
+		String str = super.getValueFromRealName(index, realName);
+		return str == null ? null : str.replaceAll("\r|\n", "").replaceAll("\\*|×", "x");
 	}
 
 	@Override
