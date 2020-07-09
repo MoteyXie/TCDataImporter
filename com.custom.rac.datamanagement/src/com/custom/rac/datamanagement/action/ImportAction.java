@@ -18,6 +18,7 @@ import com.teamcenter.rac.util.MessageBox;
 public class ImportAction extends AbstractTableAction {
 	// public static Thread currentThread = null;
 	public static Object o = new Object();
+	private static Thread currentThread = null;
 
 	public ImportAction(ExcelTableViewPart tableViewPart) {
 		super(tableViewPart);
@@ -31,8 +32,7 @@ public class ImportAction extends AbstractTableAction {
 	public void run(Widget widget) throws Exception {
 
 		// 如果单击停止按钮，运行新线程
-		if (AbstractImporter.exit.equals("停止") || AbstractImporter.exit.equals("")) {
-			AbstractImporter.exit = "";
+		if (AbstractImporter.exit.equals("")) {
 			ImporterReader importerReader = tableViewPart.importerReader;
 
 			String selection = tableViewPart.importerSelecter.getText();
@@ -53,7 +53,7 @@ public class ImportAction extends AbstractTableAction {
 			IImportDriver driver = new ExcelTableViewPartImportDriver(tableViewPart, titleRowNum + 1);
 			importer.loadDriver(driver);
 
-			Thread currentThread = new Thread() {
+			currentThread = new Thread() {
 				public void run() {
 					synchronized (o) {
 						try {
@@ -76,6 +76,14 @@ public class ImportAction extends AbstractTableAction {
 				o.notify();
 			}
 		}
+
+		else if (AbstractImporter.exit.equals("停止")) {
+			MessageBox.post("已停止该程序的运行，请重新加载或重载", "提示", MessageBox.INFORMATION);
+		}
+	}
+
+	public static Thread getThread() {
+		return currentThread;
 	}
 
 }
