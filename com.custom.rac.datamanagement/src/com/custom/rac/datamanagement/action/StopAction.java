@@ -15,8 +15,11 @@ public class StopAction extends AbstractTableAction {
 
 	@Override
 	public void run(Widget widget) throws Exception {
+		Thread thread = ImportAction.getThread();
 		if (AbstractImporter.exit.equals("暂停")) {
 			MessageBox.post("已暂停该程序的运行，请先点击开始运行程序", "提示", MessageBox.INFORMATION);
+		} else if (thread == null) {
+			MessageBox.post("程序还没开始运行！", "提示", MessageBox.INFORMATION);
 		} else {
 			AbstractImporter.exit = "停止";
 		}
