@@ -2,7 +2,7 @@ package com.custom.rac.datamanagement.importer;
 
 import java.util.HashMap;
 
-import com.custom.rac.datamanagement.action.ImportAction;
+import com.custom.rac.datamanagement.action.ImportAction2;
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.BOMUtil;
 import com.custom.rac.datamanagement.util.MyBOMUtil;
@@ -256,11 +256,11 @@ public class SFGKBomImporter extends AbstractImporter {
 				parentObj.setProperty("sf8_is_bom_send_erp", "true");
 				parentObj.setProperty("sf8_bom_org", bomOrg);
 				// 如果单击停止按钮，会停止改程序的运行
-				if (exit.equals("停止"))
+				if (ImportAction2.getThread().getRunState().equals("停止"))
 					break;
-				// 如果单击暂停按钮，程序会进行休眠12小时
-				if (exit.equals("暂停")) {
-					ImportAction.o.wait();
+				// 如果单击暂停按钮，程序会进行休眠
+				if (ImportAction2.getThread().getRunState().equals("暂停")) {
+					ImportAction2.o.wait();
 				}
 			} else {
 				hasError = true;

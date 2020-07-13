@@ -33,7 +33,7 @@ public class ImportAction extends AbstractTableAction {
 
 		// 如果单击停止按钮，运行新线程
 		if (AbstractImporter.exit.equals("")) {
-			
+
 			ImporterReader importerReader = tableViewPart.importerReader;
 
 			String selection = tableViewPart.importerSelecter.getText();

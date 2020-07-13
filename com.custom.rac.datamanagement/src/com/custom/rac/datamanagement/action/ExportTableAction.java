@@ -18,7 +18,7 @@ public class ExportTableAction extends AbstractTableAction {
 	@Override
 	public void run(Widget widget) throws Exception {
 		// 先判断程序是否在进行中
-		tableViewPart.setExecuting(false);
+		// tableViewPart.setExecuting(false);
 		boolean isExecuting = tableViewPart.isExecuting();
 		if (isExecuting) {
 			throw new Exception("程序执行中，无法导出数据！");
