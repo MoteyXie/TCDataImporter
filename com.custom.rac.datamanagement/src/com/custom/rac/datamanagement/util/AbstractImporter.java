@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.custom.rac.datamanagement.action.ImportAction;
+import com.custom.rac.datamanagement.action.ImportAction2;
 import com.custom.rac.datamanagement.driver.IImportDriver;
 import com.teamcenter.rac.kernel.ListOfValuesInfo;
 import com.teamcenter.rac.kernel.TCComponent;
@@ -81,6 +82,7 @@ public abstract class AbstractImporter implements IImporter {
 	public abstract void onStart() throws Exception;
 
 	public void onFinish() throws Exception {
+		ImportAction2.setThread(null);
 		ImportAction.getViewPart().setExecuting(false);
 		MessageBox.post("导入完成", "提示", MessageBox.INFORMATION);
 	}
@@ -328,17 +330,13 @@ public abstract class AbstractImporter implements IImporter {
 		Map<String, String> map = null;
 		TCComponent newInstance = null;
 		for (int i = 0; i < values.size(); i++) {
-
 			// 如果单击停止按钮，会停止改程序的运行
-			if (exit.equals("停止"))
+			if (ImportAction2.getThread().getRunState().equals("停止"))
 				break;
-			// 如果单击暂停按钮，程序会进行休眠12小时
-			if (exit.equals("暂停")) {
-//				Thread.sleep(43200000);
-				// ImportAction.currentThread.suspend();
-				ImportAction.o.wait();
+			// 如果单击暂停按钮，程序会进行休眠
+			if (ImportAction2.getThread().getRunState().equals("暂停")) {
+				ImportAction2.o.wait();
 			}
-
 			if (ignoreRow(i))
 				continue;
 
