@@ -49,11 +49,31 @@ public class SFGKGDDesignImporter extends SFGKDesignImporter {
 	
 	boolean isGDDesign(int index) {
 		String type = getValue(index, "图纸类型") + "";
-		if (type.equals("轨道产品图")) {
+		if (type.equals("核电产品图")) {
 			return true;
 		}
 		return false;
 	}
+	
+//	@Override
+//	public String getItemId(int index) throws Exception {
+//		String value = "";
+//		if (isGDDesign(index)) {
+//			value = getValueFromRealName(index, "item_id");
+//			if (value == null || value.length() == 0) {
+//				throw new Exception("产品总装图不能为空！");
+//			}			
+//		} else {
+//			if (com == null) {
+//				throw new Exception("产品总装图不能为空！");
+//			}
+//			value = com.getProperty("item_id");
+//		}
+//		value += "-";
+//		String id = getID(value , 3);
+//		driver.onNewItemId(index, id);
+//		return id;
+//	}
 	
 	@Override
 	public String newItemId(int index) throws Exception {
