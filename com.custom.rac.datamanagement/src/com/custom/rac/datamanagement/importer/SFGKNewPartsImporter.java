@@ -7,9 +7,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import com.custom.rac.datamanagement.action.ImportAction;
+import com.custom.rac.datamanagement.action.ImportAction2;
 import com.custom.rac.datamanagement.util.AbstractImporter;
 import com.custom.rac.datamanagement.util.PropertyContainer;
 import com.custom.rac.datamanagement.util.XMLResult;
@@ -85,7 +84,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 			if (itemType == null) {
 				throw new Exception("物料类型不存在");
 			}
-		}	
+		}
 		return itemType;
 	}
 
@@ -122,23 +121,23 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		template = map.get("用户模板");
 		uom_tag = map.get("度量单位");
 		rev = (TCComponentItemRevision) newInstance;
-		
+
 //		tempDesc = rendering.autoBuildValue().substring(5);
 		rendering = new MPartRendering(rev, false, false);
-		
+
 		tempDesc = rendering.autoBuildProperties.get("描述").synx();
-		
-		tempDesc.trim();				
+
+		tempDesc.trim();
 		rev.setProperty("object_desc", tempDesc);
 		rev.setProperty("sf8_create_part_template", org + "-" + template);
 		rev.getItem().setProperty("uom_tag", uom_tag);
-		
+
 		if (rendering.hasObjectDescAndDetailDescButNotThisItem()) {
 			rev.getItem().delete();
 			driver.onNewItemRevDesc(index, tempDesc);
 			driver.onNewItemId(index, "");
 			String detailDesc = rev.getProperty("sf8_detail_desc");
-			tempSameId = findSameItem(tempDesc,detailDesc);
+			tempSameId = findSameItem(tempDesc, detailDesc);
 			throw new Exception("系统存在相同描述的物料:创建失败" + tempSameId);
 		} else {
 			driver.onNewItemRevDesc(index, tempDesc);
@@ -153,16 +152,15 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 	 * @return
 	 * @throws Exception
 	 */
-	public String findSameItem(String tempDesc,String detailDesc) throws Exception {
+	public String findSameItem(String tempDesc, String detailDesc) throws Exception {
 		String tempid = "";
 		List<String> tempSameItemList = new ArrayList<String>();
 		TCComponent[] result = null;
-		if(detailDesc.equals("")) {
-			result = session.search("SF8_SearchDescFromPart", new String[] { "描述" },
-					new String[] { tempDesc});
-		}else {
-			result = session.search("SF8_SearchDescFromPart", new String[] { "描述","详细说明" },
-					new String[] { tempDesc, detailDesc});
+		if (detailDesc.equals("")) {
+			result = session.search("SF8_SearchDescFromPart", new String[] { "描述" }, new String[] { tempDesc });
+		} else {
+			result = session.search("SF8_SearchDescFromPart", new String[] { "描述", "详细说明" },
+					new String[] { tempDesc, detailDesc });
 		}
 		if (result.length > 0) {
 			for (int i = 0; i < result.length; i++) {
@@ -182,7 +180,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		}
 		return tempid;
 	}
-	
+
 //	@Override
 //	public void setValues(List<Map<String, String>> values) {
 //		//替换所有特殊字符
@@ -195,16 +193,16 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 //		super.setValues(values);
 //		
 //	}
-	
+
 	public Object getValue(int index, String propertyDisplayName) {
 		Object obj = super.getValue(index, propertyDisplayName);
-		if(obj != null && obj instanceof String) {
-			return ((String)obj).replaceAll("\r|\n", "").replaceAll("\\*|×", "x");
-		}else {
+		if (obj != null && obj instanceof String) {
+			return ((String) obj).replaceAll("\r|\n", "").replaceAll("\\*|×", "x");
+		} else {
 			return obj;
 		}
 	}
-	
+
 	public String getValueFromRealName(int index, String realName) throws Exception {
 		String str = super.getValueFromRealName(index, realName);
 		return str == null ? null : str.replaceAll("\r|\n", "").replaceAll("\\*|×", "x");
@@ -313,13 +311,11 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		String icsCode = null;
 		for (int i = 0; i < values.size(); i++) {
 			// 如果单击停止按钮，会停止改程序的运行
-			if (exit.equals("停止"))
+			if (ImportAction2.getThread().getRunState().equals("停止"))
 				break;
-			// 如果单击暂停按钮，程序会进行休眠12小时
-			if (exit.equals("暂停")) {
-//							Thread.sleep(43200000);
-				// ImportAction.currentThread.suspend();
-				ImportAction.o.wait();
+			// 如果单击暂停按钮，程序会进行休眠
+			if (ImportAction2.getThread().getRunState().equals("暂停")) {
+				ImportAction2.o.wait();
 			}
 			if (ignoreRow(i))
 				continue;
@@ -327,7 +323,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 			driver.onSingleStart(i);
 			Map<String, String> map = values.get(i);
 			icsCode = map.get("物料分类ID");
-			if(icsCode.equals("126")) {
+			if (icsCode.equals("126")) {
 				throw new Exception("126分类ID错误");
 			}
 			try {
