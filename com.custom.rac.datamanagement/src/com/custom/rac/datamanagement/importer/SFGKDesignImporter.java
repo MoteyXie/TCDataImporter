@@ -15,10 +15,10 @@ import com.teamcenter.rac.kernel.TCComponentFolderType;
 import com.teamcenter.rac.kernel.TCComponentItemType;
 import com.teamcenter.rac.kernel.TCException;
 import com.teamcenter.rac.kernel.TCSession;
-import com.teamcenter.rac.util.MessageBox;
 
 /**
  * 图纸导入工具
+ * 
  * @author Administrator
  *
  */
@@ -28,7 +28,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	MyClassifyManager cls_manger = new MyClassifyManager(session);
 	TCComponentFolder folder = null;
 	public File file;
-	
+
 	@Override
 	public String getName() {
 		return "上风高科图纸导入程序";
@@ -41,7 +41,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onSetPropertyError(int index, String propertyDisplayName, Exception e) throws Exception {
-		System.out.println("第" +index+ "行异常：" + e.getMessage());
+		System.out.println("第" + index + "行异常：" + e.getMessage());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 			break;
 		case "零件图":
 			itemType = (TCComponentItemType) session.getTypeComponent("SF8_PartDesign");
-			break;			
+			break;
 		default:
 			throw new TCException("图纸类型不能为空！");
 		}
@@ -80,21 +80,21 @@ public class SFGKDesignImporter extends AbstractImporter {
 	public PropertyContainer getPropertyContainer(int index) throws Exception {
 		return PropertyContainer.itemRevision;
 	}
-	
-    public  boolean isEnglish(String str) {
-        byte[] bytes = str.getBytes();
-        int i = bytes.length;// i为字节长度
-        int j = str.length();// j为字符长度
-        boolean result = i == j ? true : false;
-        return result;
-    }
+
+	public boolean isEnglish(String str) {
+		byte[] bytes = str.getBytes();
+		int i = bytes.length;// i为字节长度
+		int j = str.length();// j为字符长度
+		boolean result = i == j ? true : false;
+		return result;
+	}
 
 	@Override
 	public void onSingleStart(int index) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		String value = getValueFromRealName(index, "item_id");
 		if (value == null || value.isEmpty()) {
-			sb.append("图纸代号不能为空/");			
+			sb.append("图纸代号不能为空/");
 		} else if (!isEnglish(value)) {
 			sb.append("图纸代号不能出现中文字符/");
 		}
@@ -105,7 +105,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 			value = obj.toString().trim();
 			file = new File(value);
 			if (file == null || !file.exists() || !file.isFile()) {
-				sb.append("电子档存放地址路径找不到文件/");				
+				sb.append("电子档存放地址路径找不到文件/");
 			}
 //			else {
 //				if (!value.toString().endsWith("dwg") && !value.toString().endsWith("DWG")) {
@@ -132,7 +132,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleError(int index, Exception e) throws Exception {
-		System.out.println("第" +index+ "行异常：" + e.getMessage());
+		System.out.println("第" + index + "行异常：" + e.getMessage());
 
 	}
 
@@ -146,26 +146,25 @@ public class SFGKDesignImporter extends AbstractImporter {
 		session.getUser().getHomeFolder().add("contents", folder);
 	}
 
-	@Override
-	public void onFinish() throws Exception {
-		MessageBox.post("导入完成","提示", MessageBox.INFORMATION);
-
-	}
+//	@Override
+//	public void onFinish() throws Exception {
+//		MessageBox.post("导入完成","提示", MessageBox.INFORMATION);
+//
+//	}
 
 	@Override
 	public boolean ignoreProperty(int index, String propertyDisplayName) throws Exception {
-		if (propertyDisplayName.equals("图纸类型") || propertyDisplayName.equals("图纸代号")
-			|| propertyDisplayName.equals("版本") || propertyDisplayName.equals("图纸名称")
-			|| propertyDisplayName.equals("图文档分类ID")){
+		if (propertyDisplayName.equals("图纸类型") || propertyDisplayName.equals("图纸代号") || propertyDisplayName.equals("版本")
+				|| propertyDisplayName.equals("图纸名称") || propertyDisplayName.equals("图文档分类ID")) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void setValue(TCComponent tcc, int index, String propertyDisplayName) throws Exception {
 		if (propertyDisplayName.equals("电子档存放地址")) {
-			MyDatasetUtil.createDateset(tcc, file.getName(), file, "TC_Attaches");						
+			MyDatasetUtil.createDateset(tcc, file.getName(), file, "TC_Attaches");
 		} else {
 			super.setValue(tcc, index, propertyDisplayName);
 		}
@@ -190,8 +189,7 @@ public class SFGKDesignImporter extends AbstractImporter {
 	@Override
 	public void onSingleMessage(int index, String msg) throws Exception {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 }

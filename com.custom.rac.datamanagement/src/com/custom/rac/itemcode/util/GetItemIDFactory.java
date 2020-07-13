@@ -37,7 +37,23 @@ public class GetItemIDFactory {
 			break;
 		case "125": id = new FPartID().getItemID(map);			
 			break;
-		case "126":id = new SPartID().getItemID(map);
+		case "126":
+			if(icsCode.startsWith("12601")) {
+				//风阀类
+				id  = new PCAirValvePartID().getItemID(map);
+			}else if(icsCode.startsWith("12602")){
+				//风机成品类
+				id = new PCPPartID().getItemID(map);
+			}else if(icsCode.startsWith("12603")) {
+				//零部件类
+				id = new PCSPartID().getItemID(map);
+			}else if(icsCode.startsWith("12604")) {
+				//通用类
+				id = new PCGeneralPartID().getItemID(map);
+			}else{
+				//其它类
+				id = new PCOtherPartID().getItemID(map);
+			}
 			break;
 		default:
 			break;

@@ -11,11 +11,7 @@ public class SPartID implements GetItemID {
 		String code1 = map.get("零部件(代码)");
 		String code2 = map.get("型号(代码)");
 		String code3 = map.get("机号(代码)");
-		if(code2.equals("000")&&code3.equals("00")) {
-			String prefix = "12"+ icsCode.substring(2, 3)+code1;
-			System.out.println(prefix);
-			return prefix+"&"+7;
-		}else if(!code2.equals("000")&&code3.equals("00")){
+		if(code2.equals("000")&&code3.equals("00")){
 			String prefix = "12"+ icsCode.substring(2, 3)+code1+code2;
 			System.out.println(prefix);
 			return prefix+"&"+4;
