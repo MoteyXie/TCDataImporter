@@ -121,7 +121,6 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		template = map.get("用户模板");
 		uom_tag = map.get("度量单位");
 		rev = (TCComponentItemRevision) newInstance;
-
 //		tempDesc = rendering.autoBuildValue().substring(5);
 		rendering = new MPartRendering(rev, false, false);
 
@@ -131,7 +130,8 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		rev.setProperty("object_desc", tempDesc);
 		rev.setProperty("sf8_create_part_template", org + "-" + template);
 		rev.getItem().setProperty("uom_tag", uom_tag);
-
+		rev.getItem().refresh();
+		rev.refresh();
 		if (rendering.hasObjectDescAndDetailDescButNotThisItem()) {
 			rev.getItem().delete();
 			driver.onNewItemRevDesc(index, tempDesc);
