@@ -13,7 +13,6 @@ import com.custom.rac.datamanagement.util.IImporter;
 import com.custom.rac.datamanagement.util.ImporterReader;
 import com.custom.rac.datamanagement.views.ExcelTableViewPart;
 import com.custom.rac.itemcode.util.ImportThread;
-import com.teamcenter.rac.util.MessageBox;
 
 public class ImportAction2 extends AbstractTableAction {
 	public static Object o = new Object();
@@ -46,12 +45,9 @@ public class ImportAction2 extends AbstractTableAction {
 		IImportDriver driver = new ExcelTableViewPartImportDriver(tableViewPart, titleRowNum + 1);
 		importer.loadDriver(driver);
 		if (thread == null) {
-			thread.setRunState("");
 			thread = new ImportThread(importer);
 			thread.start();
-		} else if (thread.getRunState().equals("停止")) {
 			thread.setRunState("");
-			MessageBox.post("已停止该程序的运行，请重新加载或重载", "提示", MessageBox.INFORMATION);
 		}
 		// 如果单击暂停按钮，启用当前线程
 		else if (thread.getRunState().equals("暂停")) {
