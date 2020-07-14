@@ -78,7 +78,7 @@ public class SFGKPartImporter extends AbstractImporter {
 		String value = getValue(index, propertyDisplayName) + "";
 		String id = tcComponent.getProperty("item_id");
 		if (propertyDisplayName.equals("物料状态")) {
-			MyStatusUtil.setStatus(tcComponent, value);
+			MyStatusUtil.setStatus(tcComponent, "量产");
 		} else if (propertyDisplayName.equals("度量单位")) {
 			rev = (TCComponentItemRevision) tcComponent;
 			rev.getItem().setProperty("uom_tag", value);
