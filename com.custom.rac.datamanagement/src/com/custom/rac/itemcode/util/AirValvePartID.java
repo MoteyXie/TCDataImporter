@@ -6,8 +6,8 @@ public class AirValvePartID implements GetItemID {
 
 	@Override
 	public String getItemID(Map<String, String> map) {
-		String prefix = "122008900";
-		return prefix+"&"+5;	
+		String prefix = "1220089";
+		return prefix+"&"+7;	
 	}
 
 }
