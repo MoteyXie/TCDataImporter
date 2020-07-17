@@ -37,21 +37,13 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 	protected int folderChildIndex = 0;
 	private MPartRendering rendering;
 	private String tempDesc = null;
-	private boolean flag1;
-	private boolean flag2;
 	private String org = null;
 	private String template = null;
 	private String uom_tag = null;
 	private String tempSameId = null;
 	SFGKServiceProxy proxy = new SFGKServiceProxy();
 
-	static {
-//		typeMap.put("成品", "SF8_PPart");
-//		typeMap.put("半成品", "SF8_SPart");
-//		typeMap.put("毛坯", "SF8_Wpart");
-//		typeMap.put("原材料", "SF8_RPart");
-//		typeMap.put("电机", "SF8_FPart");	
-//		typeMap.put("推式组件", "SF8_BPart");	
+	static {	
 		typeMap.put("123", "SF8_PPart");
 		typeMap.put("122", "SF8_SPart");
 		typeMap.put("124", "SF8_WPart");
@@ -181,19 +173,6 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		return tempid;
 	}
 
-//	@Override
-//	public void setValues(List<Map<String, String>> values) {
-//		//替换所有特殊字符
-//		for (Map<String, String> map : values) {
-//			Set<String> keys = map.keySet();
-//			for (String key : keys) {
-//				map.put(key, map.get(key).replaceAll("\r|\n", "").replaceAll("*|×", "x"));
-//			}
-//		}
-//		super.setValues(values);
-//		
-//	}
-
 	public Object getValue(int index, String propertyDisplayName) {
 		Object obj = super.getValue(index, propertyDisplayName);
 		if (obj != null && obj instanceof String) {
@@ -210,7 +189,6 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 
 	@Override
 	public void onSingleError(int index, Exception e) throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -235,7 +213,6 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		ignoreList.add("序号");
 		ignoreList.add("物料号");
 		ignoreList.add("名称");
-//		ignoreList.add("物料类型");
 		ignoreList.add("型号(代码)");
 		ignoreList.add("机号(代码)");
 		ignoreList.add("传动方式(代码)");
@@ -382,7 +359,6 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		temp = getItemPrefixandSerialLength(map);
 		prefix = temp.split("&")[0];
 		serlenth = temp.split("&")[1];
-//		id = GetIDUtil.getCurrentID(prefix,Integer.parseInt(serlenth));
 		id = GetPartItemID.getCurrentID(prefix, Integer.parseInt(serlenth));
 		System.out.println("");
 		String itemId = id;
