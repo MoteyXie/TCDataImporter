@@ -194,7 +194,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 
 	@Override
 	public void onStart() throws Exception {
-		System.out.println("导入开始");
+		System.out.println("导入开始..");
 		if (checkProperties()) {
 			System.out.println("必要属性检查通过");
 			TCComponentFolderType folderType = (TCComponentFolderType) session.getTypeComponent("Folder");
