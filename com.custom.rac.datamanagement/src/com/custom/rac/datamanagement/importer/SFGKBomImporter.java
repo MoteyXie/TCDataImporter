@@ -326,6 +326,7 @@ public class SFGKBomImporter extends AbstractImporter {
 			}
 			String subinventory = null;
 			String v = null;
+			String sequence_no = null;
 			TCComponentBOMLine subLine = null;
 
 			for (Integer i : children.keySet()) {
@@ -334,8 +335,12 @@ public class SFGKBomImporter extends AbstractImporter {
 //				设置版本属性上的
 				v = getValue(i, "用量") + "";
 				subinventory = (String) getValue(i, "子库存");
+				sequence_no = (String) getValue(i, "查找编号")+"";
 				subLine.setProperty("bl_occ_sf8_subinventory", subinventory);
 				subLine.setProperty("bl_quantity", v);
+				if(sequence_no!=null&&!sequence_no.equals("")) {
+					subLine.setProperty("bl_sequence_no", sequence_no);
+				}
 				subLine.save();
 			}
 			topLine.save();
