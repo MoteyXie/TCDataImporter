@@ -338,7 +338,7 @@ public class SFGKBomImporter extends AbstractImporter {
 				sequence_no = (String) getValue(i, "查找编号")+"";
 				subLine.setProperty("bl_occ_sf8_subinventory", subinventory);
 				subLine.setProperty("bl_quantity", v);
-				if(sequence_no!=null&&!sequence_no.equals("")) {
+				if(sequence_no!=null&&!sequence_no.equals("")&&!sequence_no.equals("null")) {
 					subLine.setProperty("bl_sequence_no", sequence_no);
 				}
 				subLine.save();
