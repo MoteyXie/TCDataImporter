@@ -1,5 +1,6 @@
 package com.custom.rac.itemcode.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class RpartID implements GetItemID {
@@ -11,6 +12,12 @@ public class RpartID implements GetItemID {
 		String prefixCode = icsCode.substring(3);
 		String prefix = "1210"+prefixCode;		
 		return prefix+"&"+8;
+	}
+	
+	@Override
+	public HashMap<String, String> getPropertyMap() {
+
+		return null;
 	}
 
 }

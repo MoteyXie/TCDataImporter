@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.custom.rac.datamanagement.action.ImportAction2;
 import com.custom.rac.datamanagement.util.AbstractImporter;
@@ -41,6 +42,8 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 	private String template = null;
 	private String uom_tag = null;
 	private String tempSameId = null;
+	private HashMap<String, String> propertyMap = null;
+	
 	SFGKServiceProxy proxy = new SFGKServiceProxy();
 
 	static {	
@@ -305,8 +308,13 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 			}
 			try {
 				newInstance = newTCComponent(i);
+				
 				addClassification(newInstance, icsCode);
-
+				if(propertyMap!=null&&propertyMap.size()>0) {
+					for (Entry<String, String> entry : propertyMap.entrySet()) {
+						newInstance.setProperty(entry.getKey(), entry.getValue());
+					}
+				}
 				for (String propertyDisplayName : map.keySet()) {
 					try {
 						if (ignoreProperty(i, propertyDisplayName))
@@ -366,6 +374,7 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 		if (id.length() != 14) {
 			throw new Exception("获取的编码不等以14位。获取物料ID出错，无法创建物料。");
 		}
+		
 
 		if (itemId == null || itemId.length() == 0) {
 			itemId = newItemId(index);
@@ -394,10 +403,13 @@ public class SFGKNewPartsImporter extends AbstractImporter {
 	 * 
 	 * @param map
 	 * @return
+	 * @throws Exception 
 	 */
-	public String getItemPrefixandSerialLength(Map<String, String> map) {
+	public String getItemPrefixandSerialLength(Map<String, String> map) throws Exception {
 		String code = null;
+		propertyMap = new HashMap<String, String>();
 		code = GetItemIDFactory.getID(map);
+		propertyMap = GetItemIDFactory.getPropertyMap();
 		return code;
 	}
 

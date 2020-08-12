@@ -1,5 +1,6 @@
 package com.custom.rac.itemcode.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class EnvirPartID implements GetItemID {
@@ -9,6 +10,12 @@ public class EnvirPartID implements GetItemID {
 		String code1 = map.get("型号(代码)");
 		String prefix = "123"+code1;		
 		return prefix+"&"+8;	
+	}
+	
+	@Override
+	public HashMap<String, String> getPropertyMap() {
+
+		return null;
 	}
 
 }

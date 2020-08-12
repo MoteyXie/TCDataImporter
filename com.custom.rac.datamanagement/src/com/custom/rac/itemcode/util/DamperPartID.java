@@ -1,5 +1,6 @@
 package com.custom.rac.itemcode.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class DamperPartID implements GetItemID {
@@ -12,6 +13,12 @@ public class DamperPartID implements GetItemID {
 		String prefix = "1210"+prefixCode;		
 		return prefix+"&"+7;
 		
+	}
+	
+	@Override
+	public HashMap<String, String> getPropertyMap() {
+
+		return null;
 	}
 
 }

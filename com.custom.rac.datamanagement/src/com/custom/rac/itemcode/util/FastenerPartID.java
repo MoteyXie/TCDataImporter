@@ -1,5 +1,6 @@
 package com.custom.rac.itemcode.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class FastenerPartID implements GetItemID {
@@ -9,6 +10,12 @@ public class FastenerPartID implements GetItemID {
 		String icsCode = map.get("物料分类ID");
 		String prefix = "1210"+icsCode.substring(3);
 		return prefix+"&"+6;	
+	}
+	
+	@Override
+	public HashMap<String, String> getPropertyMap() {
+
+		return null;
 	}
 
 }
